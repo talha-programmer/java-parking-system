@@ -1,6 +1,7 @@
 package parkingsystem.Database;
 
 import parkingsystem.BusinessLogic.User;
+import parkingsystem.Utility.DisplayMessage;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +39,8 @@ public class UserDB extends Database{
             }
 
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
         }
 
         return insertedId;
@@ -50,12 +52,13 @@ public class UserDB extends Database{
         try {
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setString(1, username);
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()){
                 password = resultSet.getString("password");
             }
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
         }
 
         return password;
@@ -67,7 +70,7 @@ public class UserDB extends Database{
         try {
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setString(1, username);
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()){
                 user.setId(resultSet.getInt("id"));
                 user.setUsername(resultSet.getString("username"));
@@ -77,7 +80,8 @@ public class UserDB extends Database{
                 user.setUserType(resultSet.getInt("user_type"));
             }
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
         }
         return  user;
     }
@@ -98,7 +102,8 @@ public class UserDB extends Database{
             }
 
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
         }
 
         return false;
@@ -121,7 +126,8 @@ public class UserDB extends Database{
             }
 
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
         }
         return false;
     }
@@ -131,16 +137,35 @@ public class UserDB extends Database{
         String query = "SELET username FROM users;";
         try {
             PreparedStatement statement = conn.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
                 usernames.add(resultSet.getString("username"));
             }
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
         }
 
         return usernames;
     }
 
+    public boolean deleteUser(int id){
+        String query = "DELETE FROM users ";
+        query += "WHERE id = ? ";
 
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, id);
+
+            int rowsEffected = statement.executeUpdate();
+            if(rowsEffected > 0){
+                return true;
+            }
+
+        } catch (SQLException exception) {
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
+        }
+        return false;
+    }
 }

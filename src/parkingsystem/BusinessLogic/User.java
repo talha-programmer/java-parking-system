@@ -83,8 +83,9 @@ public class User {
     /**
     * Authenticate by checking the password and then get whole information of the user from the DB
      * and then replace the self object with the object came through database class
+     * @return true if authentication successful, otherwise false
     * */
-    public boolean login(String username, String password){
+    public int login(String username, char[] password){
         String storedPassword =  db.getPassword(username);
 
         if(new PasswordAuthentication().authenticate(password, storedPassword)){
@@ -96,14 +97,15 @@ public class User {
                 this.email = user.getEmail();
                 this.userType = user.getUserType();
                 this.id = user.getId();
-                return true;
+                return this.id;
             }
         }
-        return false;
+        return -1;
     }
 
     /**
-    *
+    * Update the password of the user on database
+     * @return true if password updated successfully, otherwise false
     * */
     public boolean updatePassword(String currentPassword, String newPassword){
         if(new PasswordAuthentication().authenticate(currentPassword, this.password)){
@@ -114,13 +116,27 @@ public class User {
     }
 
     /**
-     *
+     * Update the profile of the user on database
+     * @return true if updated successfully, otherwise false
      * */
     public boolean updateProfile(String newFullName, String newEmail){
+        this.fullName = newFullName;
+        this.email = newEmail;
         return db.updateProfile(this.username, newFullName, newEmail);
     }
 
+    /**
+     * Get all the usernames from the database, will be used at user registration
+     * @return Arraylist of all the usernames
+     * */
     ArrayList<String> getAllUsernames(){
         return db.getAllUsernames();
+    }
+
+    /**
+     * Delete a user
+     * */
+    public boolean deleteUser(){
+        return db.deleteUser(this.id);
     }
 }

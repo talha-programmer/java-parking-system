@@ -1,5 +1,7 @@
 package parkingsystem.Database;
 
+import parkingsystem.Utility.DisplayMessage;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -25,8 +27,9 @@ public class Database {
                 System.out.println("Connected to the database test1");
             }
         } catch (SQLException | ClassNotFoundException ex) {
-            System.out.println("Error occurred while connecting to database!");
-            ex.printStackTrace();
+            String message = "Error occurred while connecting to database!\n";
+            message += ex.getMessage();
+            DisplayMessage.displayError(message);
         }
     }
 }
