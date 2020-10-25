@@ -44,6 +44,7 @@ public class LoginForm extends javax.swing.JFrame {
         btCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login");
 
         tfPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -55,7 +56,7 @@ public class LoginForm extends javax.swing.JFrame {
 
         jLabel2.setText("Password");
 
-        jLabel3.setText("jLabel3");
+        jLabel3.setText("Parking System");
 
         btLogin.setText("Login");
         btLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -65,6 +66,11 @@ public class LoginForm extends javax.swing.JFrame {
         });
 
         btCancel.setText("Cancel");
+        btCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -112,6 +118,7 @@ public class LoginForm extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tfPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPasswordActionPerformed
@@ -127,6 +134,9 @@ public class LoginForm extends javax.swing.JFrame {
         if(userId > 0){
             String message = "Logged In Successfully!";
             DisplayMessage.displayInfo(message);
+            new OwnerHome().setVisible(true);
+            this.setVisible(false);
+            
         }
         else{
             String message = "Login Failed! Check your username and password!";
@@ -134,6 +144,10 @@ public class LoginForm extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_btLoginActionPerformed
+
+    private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btCancelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

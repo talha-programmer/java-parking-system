@@ -134,7 +134,7 @@ public class UserDB extends Database{
 
     public ArrayList<String> getAllUsernames(){
         ArrayList<String> usernames = new ArrayList<>();
-        String query = "SELET username FROM users;";
+        String query = "SELECT username FROM users;";
         try {
             PreparedStatement statement = conn.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();

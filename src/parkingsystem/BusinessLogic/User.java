@@ -12,6 +12,7 @@ public class User {
     private String password;
     private String email;
     private int userType;
+    private static User loggedInUser = null;
     private final UserDB db = new UserDB();
 
     public String getFullName() {
@@ -62,11 +63,16 @@ public class User {
         this.id = id;
     }
 
+    public static User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+
     /**
     * Register the user in the database after password hashing and return true if succeed
     * Otherwise return false
     * */
-    public boolean registerUser(String fullName, String username, String password, String email, int userType){
+    public boolean registerUser(String fullName, String username, char[] password, String email, int userType){
         PasswordAuthentication authentication = new PasswordAuthentication();
         String hashedPassword = authentication.hash(password);
         this.fullName = fullName;
@@ -87,17 +93,11 @@ public class User {
     * */
     public int login(String username, char[] password){
         String storedPassword =  db.getPassword(username);
-
-        if(new PasswordAuthentication().authenticate(password, storedPassword)){
+        if(storedPassword.length() > 10 && new PasswordAuthentication().authenticate(password, storedPassword)){
             User user = db.getUser(username);
             if(user != null){
-                this.username = user.getUsername();
-                this.password = user.getPassword();
-                this.fullName = user.getFullName();
-                this.email = user.getEmail();
-                this.userType = user.getUserType();
-                this.id = user.getId();
-                return this.id;
+                loggedInUser = user;
+                return loggedInUser.id;
             }
         }
         return -1;
@@ -119,17 +119,17 @@ public class User {
      * Update the profile of the user on database
      * @return true if updated successfully, otherwise false
      * */
-    public boolean updateProfile(String newFullName, String newEmail){
+    public boolean updateProfile(String username, String newFullName, String newEmail){
         this.fullName = newFullName;
         this.email = newEmail;
-        return db.updateProfile(this.username, newFullName, newEmail);
+        return db.updateProfile(username, newFullName, newEmail);
     }
 
     /**
      * Get all the usernames from the database, will be used at user registration
      * @return Arraylist of all the usernames
      * */
-    ArrayList<String> getAllUsernames(){
+    public ArrayList<String> getAllUsernames(){
         return db.getAllUsernames();
     }
 
