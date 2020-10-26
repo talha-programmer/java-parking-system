@@ -123,8 +123,7 @@ public class UpdateProfileForm extends javax.swing.JFrame {
             User user = new User();
             String username = loggedInUser.getUsername();
             if(user.updateProfile(username, fullName, email)) {
-                String successMessage = "Profile updated successfully!";
-                DisplayMessage.displayInfo(successMessage);
+                DisplayMessage.displayInfo("Profile update successfully!");
             }else{
                 DisplayMessage.displayError("Error occurred while saving in database");
             }

@@ -136,7 +136,12 @@ public class User {
     /**
      * Delete a user
      * */
-    public boolean deleteUser(){
-        return db.deleteUser(this.id);
+    public boolean deleteUser(String username){
+
+        return db.deleteUser(username);
+    }
+
+    public ArrayList<User> getAllUsers(){
+        return db.getAllUsers();
     }
 }

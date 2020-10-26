@@ -149,13 +149,13 @@ public class UserDB extends Database{
         return usernames;
     }
 
-    public boolean deleteUser(int id){
+    public boolean deleteUser(String username){
         String query = "DELETE FROM users ";
-        query += "WHERE id = ? ";
+        query += "WHERE username = ? ";
 
         try {
             PreparedStatement statement = conn.prepareStatement(query);
-            statement.setInt(1, id);
+            statement.setString(1, username);
 
             int rowsEffected = statement.executeUpdate();
             if(rowsEffected > 0){
@@ -167,5 +167,27 @@ public class UserDB extends Database{
             DisplayMessage.displayError(message);
         }
         return false;
+    }
+
+    public ArrayList<User> getAllUsers(){
+        ArrayList<User> users = new ArrayList<>();
+        String query = "SELECT * FROM users";
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setUserType(resultSet.getInt("user_type"));
+                user.setUsername(resultSet.getString("username"));
+                user.setEmail(resultSet.getString("email"));
+                user.setFullName(resultSet.getString("full_name"));
+                users.add(user);
+            }
+        } catch (SQLException exception) {
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
+        }
+        return users;
     }
 }

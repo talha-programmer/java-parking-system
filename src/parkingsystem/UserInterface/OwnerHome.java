@@ -31,20 +31,15 @@ public class OwnerHome extends javax.swing.JFrame {
     private void initComponents() {
 
         pnHome = new javax.swing.JPanel();
-        btnAddUser = new javax.swing.JButton();
         btnUpdateProfile = new javax.swing.JButton();
+        btnUsers = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home");
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        btnAddUser.setText("Add New User");
-        btnAddUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddUserActionPerformed(evt);
-            }
-        });
+        pnHome.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         btnUpdateProfile.setText("Update Profile");
         btnUpdateProfile.addActionListener(new java.awt.event.ActionListener() {
@@ -53,51 +48,56 @@ public class OwnerHome extends javax.swing.JFrame {
             }
         });
 
+        btnUsers.setText("Users");
+        btnUsers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsersActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnHomeLayout = new javax.swing.GroupLayout(pnHome);
         pnHome.setLayout(pnHomeLayout);
         pnHomeLayout.setHorizontalGroup(
             pnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnHomeLayout.createSequentialGroup()
-                .addGap(213, 213, 213)
-                .addComponent(btnAddUser)
-                .addGap(128, 128, 128)
-                .addComponent(btnUpdateProfile)
-                .addContainerGap(182, Short.MAX_VALUE))
+                .addGap(123, 123, 123)
+                .addGroup(pnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnUpdateProfile)
+                    .addComponent(btnUsers))
+                .addContainerGap(508, Short.MAX_VALUE))
         );
         pnHomeLayout.setVerticalGroup(
             pnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnHomeLayout.createSequentialGroup()
-                .addGap(144, 144, 144)
-                .addGroup(pnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddUser)
-                    .addComponent(btnUpdateProfile))
-                .addContainerGap(308, Short.MAX_VALUE))
+                .addGap(101, 101, 101)
+                .addComponent(btnUsers)
+                .addGap(49, 49, 49)
+                .addComponent(btnUpdateProfile)
+                .addContainerGap(273, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnHome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
-        RegistrationForm regForm =  new RegistrationForm();
-        regForm.setVisible(true);
-        
-    }//GEN-LAST:event_btnAddUserActionPerformed
-
     private void btnUpdateProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateProfileActionPerformed
         new UpdateProfileForm().setVisible(true);
     }//GEN-LAST:event_btnUpdateProfileActionPerformed
+
+    private void btnUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsersActionPerformed
+        new UsersDisplayForm().setVisible(true);
+    }//GEN-LAST:event_btnUsersActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,8 +135,8 @@ public class OwnerHome extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddUser;
     private javax.swing.JButton btnUpdateProfile;
+    private javax.swing.JButton btnUsers;
     private javax.swing.JPanel pnHome;
     // End of variables declaration//GEN-END:variables
 }
