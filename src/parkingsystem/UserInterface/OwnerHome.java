@@ -33,6 +33,7 @@ public class OwnerHome extends javax.swing.JFrame {
         pnHome = new javax.swing.JPanel();
         btnUpdateProfile = new javax.swing.JButton();
         btnUsers = new javax.swing.JButton();
+        btnParkingLot = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home");
@@ -55,6 +56,13 @@ public class OwnerHome extends javax.swing.JFrame {
             }
         });
 
+        btnParkingLot.setText("Parking Lot");
+        btnParkingLot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnParkingLotActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnHomeLayout = new javax.swing.GroupLayout(pnHome);
         pnHome.setLayout(pnHomeLayout);
         pnHomeLayout.setHorizontalGroup(
@@ -62,6 +70,7 @@ public class OwnerHome extends javax.swing.JFrame {
             .addGroup(pnHomeLayout.createSequentialGroup()
                 .addGap(123, 123, 123)
                 .addGroup(pnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnParkingLot)
                     .addComponent(btnUpdateProfile)
                     .addComponent(btnUsers))
                 .addContainerGap(508, Short.MAX_VALUE))
@@ -73,7 +82,9 @@ public class OwnerHome extends javax.swing.JFrame {
                 .addComponent(btnUsers)
                 .addGap(49, 49, 49)
                 .addComponent(btnUpdateProfile)
-                .addContainerGap(273, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addComponent(btnParkingLot)
+                .addContainerGap(207, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -98,6 +109,10 @@ public class OwnerHome extends javax.swing.JFrame {
     private void btnUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsersActionPerformed
         new UsersDisplayForm().setVisible(true);
     }//GEN-LAST:event_btnUsersActionPerformed
+
+    private void btnParkingLotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParkingLotActionPerformed
+        new ParkingLotForm().setVisible(true);
+    }//GEN-LAST:event_btnParkingLotActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,6 +150,7 @@ public class OwnerHome extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnParkingLot;
     private javax.swing.JButton btnUpdateProfile;
     private javax.swing.JButton btnUsers;
     private javax.swing.JPanel pnHome;

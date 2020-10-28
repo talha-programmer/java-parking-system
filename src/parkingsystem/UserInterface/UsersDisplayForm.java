@@ -8,6 +8,7 @@ package parkingsystem.UserInterface;
 import parkingsystem.BusinessLogic.User;
 import parkingsystem.Enums.UserTypes;
 import parkingsystem.Utility.DisplayMessage;
+import parkingsystem.Utility.FormUtility;
 import parkingsystem.Utility.ValidateFields;
 
 import javax.swing.*;
@@ -319,7 +320,7 @@ public class UsersDisplayForm extends javax.swing.JFrame {
             if(user.registerUser(fullName, username, password, email, userTypeValue)) {
                 String successMessage = "User '" + username + "' registered successfully!";
                 DisplayMessage.displayInfo(successMessage);
-                clearFields(pnRegisterUser);
+                FormUtility.clearFields(pnRegisterUser);
                 updateFrame();
             }else{
                 DisplayMessage.displayError("Error occurred while saving in database");
@@ -345,7 +346,7 @@ public class UsersDisplayForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnClearFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearFormActionPerformed
-        clearFields(pnRegisterUser);
+        FormUtility.clearFields(pnRegisterUser);
     }//GEN-LAST:event_btnClearFormActionPerformed
 
     /**
@@ -446,13 +447,4 @@ public class UsersDisplayForm extends javax.swing.JFrame {
         }
     }
 
-    private void clearFields(JComponent component){
-        Component[] components = component.getComponents();
-        for (Component singleComponent : components) {
-            if (singleComponent instanceof JTextField || singleComponent instanceof JTextArea) {
-                JTextComponent specificObject = (JTextComponent) singleComponent;
-                specificObject.setText("");
-            }
-        }
-    }
 }

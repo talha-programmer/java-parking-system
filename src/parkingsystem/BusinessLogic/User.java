@@ -13,7 +13,7 @@ public class User {
     private String email;
     private int userType;
     private static User loggedInUser = null;
-    private final UserDB db = new UserDB();
+    private static final UserDB db = new UserDB();
 
     public String getFullName() {
         return fullName;

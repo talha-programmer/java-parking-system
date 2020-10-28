@@ -1,15 +1,12 @@
 package parkingsystem.BusinessLogic;
 
-public class ParkingLotCapacity {
-    int parkingLotId;
-    int vehicleType;
-    int capacity;
+import parkingsystem.Database.ParkingLotCapacityDB;
 
-    public ParkingLotCapacity(int parkingLotId, int vehicleType, int capacity) {
-        this.parkingLotId = parkingLotId;
-        this.vehicleType = vehicleType;
-        this.capacity = capacity;
-    }
+public class ParkingLotCapacity {
+    private int parkingLotId;
+    private int vehicleType;
+    private int capacity;
+    private static ParkingLotCapacityDB db = new ParkingLotCapacityDB();
 
     public int getParkingLotId() {
         return parkingLotId;
@@ -33,5 +30,9 @@ public class ParkingLotCapacity {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public boolean saveParkingLotCapacity(){
+        return db.saveParkingLotCapacity(this);
     }
 }

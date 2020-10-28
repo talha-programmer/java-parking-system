@@ -80,4 +80,31 @@ public class ParkingLotDB extends Database{
         return false;
     }
 
+    public int saveParkingLot(ParkingLot parkingLot){
+        int insertedId = -1;
+        String name = parkingLot.getName();
+        String location = parkingLot.getLocation();
+        String query = "INSERT INTO parking_lot ";
+        query += "(name, location) ";
+        query += "VALUES (?, ?) ";
+
+        try {
+            String[] key = {"id"};
+            PreparedStatement statement = conn.prepareStatement(query, key);
+            statement.setString(1, name);
+            statement.setString(2, location);
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if(resultSet.next()){
+                insertedId = resultSet.getInt(1);
+                return insertedId;
+            }
+
+        } catch (SQLException exception) {
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
+        }
+        return insertedId;
+    }
+
 }
