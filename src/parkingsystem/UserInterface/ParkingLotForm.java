@@ -6,6 +6,7 @@
 package parkingsystem.UserInterface;
 
 import parkingsystem.BusinessLogic.ParkingLot;
+import parkingsystem.BusinessLogic.User;
 import parkingsystem.Enums.VehicleTypes;
 import parkingsystem.Utility.DisplayMessage;
 import parkingsystem.Utility.FormUtility;
@@ -14,6 +15,7 @@ import parkingsystem.Utility.NumberFormatting;
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,6 +29,8 @@ public class ParkingLotForm extends javax.swing.JFrame {
     public ParkingLotForm() {
         parkingLot = new ParkingLot();
         initComponents();
+
+        updateFrame();
     }
 
     /**
@@ -53,6 +57,9 @@ public class ParkingLotForm extends javax.swing.JFrame {
         ftfRickshawCapacity = new javax.swing.JFormattedTextField();
         ftfHeavyVehicleCapacity = new javax.swing.JFormattedTextField();
         btnClear = new javax.swing.JButton();
+        pnDisplayParkingLot = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbParkingLot = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -169,20 +176,55 @@ public class ParkingLotForm extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
+        tbParkingLot.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tbParkingLot);
+
+        javax.swing.GroupLayout pnDisplayParkingLotLayout = new javax.swing.GroupLayout(pnDisplayParkingLot);
+        pnDisplayParkingLot.setLayout(pnDisplayParkingLotLayout);
+        pnDisplayParkingLotLayout.setHorizontalGroup(
+            pnDisplayParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnDisplayParkingLotLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE))
+        );
+        pnDisplayParkingLotLayout.setVerticalGroup(
+            pnDisplayParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnDisplayParkingLotLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnAddParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 361, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnDisplayParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnAddParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnDisplayParkingLot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnAddParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 94, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
@@ -239,6 +281,7 @@ public class ParkingLotForm extends javax.swing.JFrame {
             if (parkingLot.saveParkingLot()) {
                 FormUtility.clearFields(pnAddParkingLot);
                 DisplayMessage.displayInfo("Parking Lot added successfully!");
+                updateFrame();
             } else {
                 DisplayMessage.displayError("Failed to add Parking Lot in database!");
             }
@@ -298,8 +341,39 @@ public class ParkingLotForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnAddParkingLot;
+    private javax.swing.JPanel pnDisplayParkingLot;
+    private javax.swing.JTable tbParkingLot;
     private javax.swing.JTextField tfLocation;
     private javax.swing.JTextField tfName;
     // End of variables declaration//GEN-END:variables
+
+    private void updateFrame(){
+
+        ArrayList<ParkingLot> parkingLots = parkingLot.getAllParkingLot();
+        int totalParkingLots = parkingLots.size();
+        Object[][] data = new Object[totalParkingLots][];
+        Object[] columns = {"Sr.No", "Name", "Location", "Bike Capacity", "Rickshaw Capacity", "Car Capacity", "Heavy Vehicle Capacity"};
+
+        // Load details of all Parking Lots in the table
+        int count = 0;
+        for(ParkingLot parkingLot: parkingLots){
+            String name = parkingLot.getName();
+            String location = parkingLot.getLocation();
+            int bikeCapacity = parkingLot.getSingleVehicleCapacity(VehicleTypes.BIKE.getValue());
+            int rickShawCapacity = parkingLot.getSingleVehicleCapacity(VehicleTypes.RICKSHAW.getValue());
+            int carCapacity = parkingLot.getSingleVehicleCapacity(VehicleTypes.CAR.getValue());
+            int heavyVehicleCapacity = parkingLot.getSingleVehicleCapacity(VehicleTypes.HEAVY_VEHICLE.getValue());
+
+            Object[] row = {count+1, name, location, bikeCapacity, rickShawCapacity, carCapacity, heavyVehicleCapacity};
+            data[count] = row;
+            count++;
+        }
+        tbParkingLot.setModel(new javax.swing.table.DefaultTableModel(
+                data, columns
+        ));
+
+
+    }
 }

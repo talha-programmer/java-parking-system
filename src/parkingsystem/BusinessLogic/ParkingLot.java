@@ -2,6 +2,7 @@ package parkingsystem.BusinessLogic;
 
 import parkingsystem.Database.ParkingLotDB;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,12 +15,16 @@ public class ParkingLot {
     private ParkingLotCapacity parkingLotCapacity = null;
     public ParkingLot(){
         vehicleCapacity = new HashMap<>();
-
+        parkingLotCapacity = new ParkingLotCapacity();
 
     }
 
     public void setVehicleCapacity(int vehicleType, int capacity){
         vehicleCapacity.put(vehicleType, capacity);
+    }
+
+    public int getSingleVehicleCapacity(int vehicleType){
+        return vehicleCapacity.get(vehicleType);
     }
 
     public int getId() {
@@ -65,5 +70,15 @@ public class ParkingLot {
         }
         return false;
     }
+
+    public ArrayList<ParkingLot> getAllParkingLot(){
+        ArrayList<ParkingLot> parkingLots = db.getAllParkingLots();
+        for(ParkingLot parkingLot: parkingLots){
+            parkingLot.vehicleCapacity = parkingLotCapacity.getVehicleCapacity(parkingLot.id);
+        }
+
+        return parkingLots;
+    }
+
 
 }

@@ -1,6 +1,12 @@
 package parkingsystem.BusinessLogic;
 
 import parkingsystem.Database.ParkingLotCapacityDB;
+import parkingsystem.Utility.DisplayMessage;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 
 public class ParkingLotCapacity {
     private int parkingLotId;
@@ -34,5 +40,9 @@ public class ParkingLotCapacity {
 
     public boolean saveParkingLotCapacity(){
         return db.saveParkingLotCapacity(this);
+    }
+
+    public HashMap<Integer, Integer> getVehicleCapacity(int parkingLotId){
+        return db.getVehicleCapacity(parkingLotId);
     }
 }

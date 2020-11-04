@@ -6,6 +6,7 @@ import parkingsystem.Utility.DisplayMessage;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public class ParkingLotCapacityDB extends Database{
 
@@ -33,6 +34,27 @@ public class ParkingLotCapacityDB extends Database{
             DisplayMessage.displayError(message);
         }
         return false;
+    }
+
+    public HashMap<Integer, Integer> getVehicleCapacity(int parkingLotId){
+        HashMap<Integer, Integer> parkingLotCapacity = new HashMap<>();
+        String query = "SELECT * FROM parking_lot_capacity WHERE parking_lot_id = ? ";
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, parkingLotId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                int vehicleType = resultSet.getInt("vehicle_type");
+                int capacity = resultSet.getInt("capacity");
+
+                parkingLotCapacity.put(vehicleType, capacity);
+            }
+        } catch (SQLException exception) {
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
+        }
+
+        return parkingLotCapacity;
     }
 
 }

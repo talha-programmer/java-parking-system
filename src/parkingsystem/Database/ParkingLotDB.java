@@ -41,7 +41,7 @@ public class ParkingLotDB extends Database{
     public ArrayList<ParkingLot> getAllParkingLots(){
         ArrayList<ParkingLot> parkingLots = new ArrayList<>();
 
-        String query = "SELET * FROM parking_lot;";
+        String query = "SELECT * FROM parking_lot;";
         try {
             PreparedStatement statement = conn.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
@@ -106,5 +106,7 @@ public class ParkingLotDB extends Database{
         }
         return insertedId;
     }
+
+
 
 }
