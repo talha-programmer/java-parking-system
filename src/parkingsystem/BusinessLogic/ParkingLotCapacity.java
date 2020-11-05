@@ -45,4 +45,8 @@ public class ParkingLotCapacity {
     public HashMap<Integer, Integer> getVehicleCapacity(int parkingLotId){
         return db.getVehicleCapacity(parkingLotId);
     }
+
+    public boolean deleteAllVehicleCapacities(int parkingLotId) {
+        return db.deleteAllVehicleCapacities(parkingLotId);
+    }
 }

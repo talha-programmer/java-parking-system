@@ -57,4 +57,27 @@ public class ParkingLotCapacityDB extends Database{
         return parkingLotCapacity;
     }
 
+    /**
+     * Delete the data of all vehicle's capacity of a parking lot through
+     * parking lot id. To delete a parking lot, we must delete all data
+     * of parking vehicle's capacity from the database
+    * */
+    public boolean deleteAllVehicleCapacities(int parkingLotId) {
+        String query = "DELETE FROM parking_lot_capacity ";
+        query += "WHERE parking_lot_id = ? ";
+
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, parkingLotId);
+            int rowsEffected = statement.executeUpdate();
+            if(rowsEffected > 0){
+                return true;
+            }
+
+        } catch (SQLException exception) {
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
+        }
+        return false;
+    }
 }

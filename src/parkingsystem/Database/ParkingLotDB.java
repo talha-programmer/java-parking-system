@@ -60,7 +60,7 @@ public class ParkingLotDB extends Database{
         return parkingLots;
     }
 
-    boolean deleteParkingLot(int id){
+    public boolean deleteParkingLot(int id){
         String query = "DELETE FROM parking_lot ";
         query += "WHERE id = ? ";
 

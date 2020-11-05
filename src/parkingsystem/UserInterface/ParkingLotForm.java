@@ -16,18 +16,23 @@ import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
  * @author talha
  */
 public class ParkingLotForm extends javax.swing.JFrame {
-    private ParkingLot parkingLot = null;
+    private ArrayList<ParkingLot> parkingLots = null;
+    private HashMap<String, Integer> parkingLotNames = null;     // Used to store parking lot names with ids for combo box
+    private HashMap<Integer, ParkingLot> allParkingLots = null;  // Store Parking Lots with their id as the key
+    private int selectedParkingLotId = -1;
     /**
      * Creates new form ParkingLotForm
      */
     public ParkingLotForm() {
-        parkingLot = new ParkingLot();
+        parkingLotNames = new HashMap<>();
+        allParkingLots = new HashMap<>();
         initComponents();
 
         updateFrame();
@@ -57,9 +62,15 @@ public class ParkingLotForm extends javax.swing.JFrame {
         ftfRickshawCapacity = new javax.swing.JFormattedTextField();
         ftfHeavyVehicleCapacity = new javax.swing.JFormattedTextField();
         btnClear = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        cbParkingLotNamesUpdate = new javax.swing.JComboBox<>();
         pnDisplayParkingLot = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbParkingLot = new javax.swing.JTable();
+        pnDeleteParkingLot = new javax.swing.JPanel();
+        cbParkingLotNamesDelete = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -97,6 +108,14 @@ public class ParkingLotForm extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setText("Parking Lot");
+
+        cbParkingLotNamesUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbParkingLotNamesUpdateActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnAddParkingLotLayout = new javax.swing.GroupLayout(pnAddParkingLot);
         pnAddParkingLot.setLayout(pnAddParkingLotLayout);
         pnAddParkingLotLayout.setHorizontalGroup(
@@ -104,22 +123,28 @@ public class ParkingLotForm extends javax.swing.JFrame {
             .addGroup(pnAddParkingLotLayout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnAddParkingLotLayout.createSequentialGroup()
+                        .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addGap(101, 101, 101)
+                                    .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(ftfHeavyVehicleCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbParkingLotNamesUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(25, 25, 25)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnAddParkingLotLayout.createSequentialGroup()
                         .addComponent(btnClear)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSave)
                         .addGap(32, 32, 32))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnAddParkingLotLayout.createSequentialGroup()
-                        .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnAddParkingLotLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(101, 101, 101)
-                                .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnAddParkingLotLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(ftfHeavyVehicleCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnAddParkingLotLayout.createSequentialGroup()
                         .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnAddParkingLotLayout.createSequentialGroup()
@@ -138,14 +163,18 @@ public class ParkingLotForm extends javax.swing.JFrame {
                                         .addComponent(ftfBikeCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(pnAddParkingLotLayout.createSequentialGroup()
                                         .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
                                         .addComponent(tfLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(18, 18, 18))))
         );
         pnAddParkingLotLayout.setVerticalGroup(
             pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnAddParkingLotLayout.createSequentialGroup()
-                .addGap(63, 63, 63)
+                .addGap(26, 26, 26)
+                .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(cbParkingLotNamesUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -173,7 +202,7 @@ public class ParkingLotForm extends javax.swing.JFrame {
                 .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave)
                     .addComponent(btnClear))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tbParkingLot.setModel(new javax.swing.table.DefaultTableModel(
@@ -195,14 +224,50 @@ public class ParkingLotForm extends javax.swing.JFrame {
             pnDisplayParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnDisplayParkingLotLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE))
         );
         pnDisplayParkingLotLayout.setVerticalGroup(
             pnDisplayParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnDisplayParkingLotLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel7.setText("Parking Lot");
+
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnDeleteParkingLotLayout = new javax.swing.GroupLayout(pnDeleteParkingLot);
+        pnDeleteParkingLot.setLayout(pnDeleteParkingLotLayout);
+        pnDeleteParkingLotLayout.setHorizontalGroup(
+            pnDeleteParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDeleteParkingLotLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbParkingLotNamesDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
+            .addGroup(pnDeleteParkingLotLayout.createSequentialGroup()
+                .addGap(110, 110, 110)
+                .addComponent(btnDelete)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnDeleteParkingLotLayout.setVerticalGroup(
+            pnDeleteParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnDeleteParkingLotLayout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addGroup(pnDeleteParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbParkingLotNamesDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(37, 37, 37)
+                .addComponent(btnDelete)
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -210,20 +275,24 @@ public class ParkingLotForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnAddParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnAddParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(pnDeleteParkingLot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pnDisplayParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(3, 3, 3))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnDisplayParkingLot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnAddParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 94, Short.MAX_VALUE)))
+                    .addComponent(pnAddParkingLot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnDeleteParkingLot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -267,6 +336,7 @@ public class ParkingLotForm extends javax.swing.JFrame {
             message = "Please resolve the following errors:\n" + message;
             DisplayMessage.displayError(message);
         }else {
+            ParkingLot parkingLot = new ParkingLot();
             int bikeCapacityInt = Integer.parseInt(bikeCapacity);
             int carCapacityInt = Integer.parseInt(carCapacity);
             int rickshawCapacityInt = Integer.parseInt(rickshawCapacity);
@@ -277,6 +347,11 @@ public class ParkingLotForm extends javax.swing.JFrame {
             parkingLot.setVehicleCapacity(VehicleTypes.CAR.getValue(), carCapacityInt);
             parkingLot.setVehicleCapacity(VehicleTypes.RICKSHAW.getValue(), rickshawCapacityInt);
             parkingLot.setVehicleCapacity(VehicleTypes.HEAVY_VEHICLE.getValue(), heavyVehicleCapacityInt);
+
+            // If an id is selected, then the existing parking lot will be updated
+            if(selectedParkingLotId > 0){
+                parkingLot.setId(selectedParkingLotId);
+            }
 
             if (parkingLot.saveParkingLot()) {
                 FormUtility.clearFields(pnAddParkingLot);
@@ -290,8 +365,38 @@ public class ParkingLotForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        cbParkingLotNamesUpdate.setSelectedIndex(0);
         FormUtility.clearFields(pnAddParkingLot);
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        String parkingLotName = cbParkingLotNamesDelete.getSelectedItem().toString();
+        int parkingLotId = parkingLotNames.get(parkingLotName);
+        if(new ParkingLot().deleteParkingLot(parkingLotId)){
+            DisplayMessage.displayInfo("Parking Lot deleted successfully!");
+            updateFrame();
+        }else{
+            DisplayMessage.displayError("Error occurred while deleting the Parking Lot");
+        }
+
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void cbParkingLotNamesUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbParkingLotNamesUpdateActionPerformed
+        selectedParkingLotId = -1;
+        if(cbParkingLotNamesUpdate.getSelectedItem()!= null) {
+            String parkingLotName = cbParkingLotNamesUpdate.getSelectedItem().toString();
+            if (!parkingLotName.contains("Select")) {
+                selectedParkingLotId = parkingLotNames.get(parkingLotName);
+                ParkingLot parkingLot = allParkingLots.get(selectedParkingLotId);
+                tfName.setText(parkingLot.getName());
+                tfLocation.setText(parkingLot.getLocation());
+                ftfBikeCapacity.setText(Integer.toString(parkingLot.getSingleVehicleCapacity(VehicleTypes.BIKE.getValue())));
+                ftfCarCapacity.setText(Integer.toString(parkingLot.getSingleVehicleCapacity(VehicleTypes.CAR.getValue())));
+                ftfRickshawCapacity.setText(Integer.toString(parkingLot.getSingleVehicleCapacity(VehicleTypes.RICKSHAW.getValue())));
+                ftfHeavyVehicleCapacity.setText(Integer.toString(parkingLot.getSingleVehicleCapacity(VehicleTypes.HEAVY_VEHICLE.getValue())));
+            }
+        }
+    }//GEN-LAST:event_cbParkingLotNamesUpdateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -330,7 +435,10 @@ public class ParkingLotForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnSave;
+    private javax.swing.JComboBox<String> cbParkingLotNamesDelete;
+    private javax.swing.JComboBox<String> cbParkingLotNamesUpdate;
     private javax.swing.JFormattedTextField ftfBikeCapacity;
     private javax.swing.JFormattedTextField ftfCarCapacity;
     private javax.swing.JFormattedTextField ftfHeavyVehicleCapacity;
@@ -341,8 +449,11 @@ public class ParkingLotForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnAddParkingLot;
+    private javax.swing.JPanel pnDeleteParkingLot;
     private javax.swing.JPanel pnDisplayParkingLot;
     private javax.swing.JTable tbParkingLot;
     private javax.swing.JTextField tfLocation;
@@ -350,21 +461,36 @@ public class ParkingLotForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void updateFrame(){
-
-        ArrayList<ParkingLot> parkingLots = parkingLot.getAllParkingLot();
+        parkingLots = new ParkingLot().getAllParkingLot();
         int totalParkingLots = parkingLots.size();
         Object[][] data = new Object[totalParkingLots][];
         Object[] columns = {"Sr.No", "Name", "Location", "Bike Capacity", "Rickshaw Capacity", "Car Capacity", "Heavy Vehicle Capacity"};
 
+        cbParkingLotNamesDelete.removeAllItems();     // Remove all items before adding new to avoid duplicates
+        cbParkingLotNamesUpdate.removeAllItems();
+
+        cbParkingLotNamesUpdate.addItem("...Select Item...");
+        cbParkingLotNamesUpdate.setSelectedIndex(0);
+
         // Load details of all Parking Lots in the table
         int count = 0;
         for(ParkingLot parkingLot: parkingLots){
+            int id = parkingLot.getId();
             String name = parkingLot.getName();
             String location = parkingLot.getLocation();
+            parkingLotNames.put(name, id);
+
+            allParkingLots.put(id, parkingLot);
+
+            // Adding ParkingLot names in combo box
+            cbParkingLotNamesDelete.addItem(name);
+            cbParkingLotNamesUpdate.addItem(name);
+
             int bikeCapacity = parkingLot.getSingleVehicleCapacity(VehicleTypes.BIKE.getValue());
             int rickShawCapacity = parkingLot.getSingleVehicleCapacity(VehicleTypes.RICKSHAW.getValue());
             int carCapacity = parkingLot.getSingleVehicleCapacity(VehicleTypes.CAR.getValue());
             int heavyVehicleCapacity = parkingLot.getSingleVehicleCapacity(VehicleTypes.HEAVY_VEHICLE.getValue());
+
 
             Object[] row = {count+1, name, location, bikeCapacity, rickShawCapacity, carCapacity, heavyVehicleCapacity};
             data[count] = row;

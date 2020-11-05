@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ParkingLot {
-    private int id;
+    private int id = -1;
     private String name;
     private String location;
     private HashMap<Integer, Integer> vehicleCapacity;      // key represents vehicle type and value represents capacity
@@ -52,7 +52,20 @@ public class ParkingLot {
     }
 
     public boolean saveParkingLot(){
-        int insertedId = db.saveParkingLot(this);
+        int insertedId = -1;
+
+        // Update existing Parking Lot if id is set already
+        if(this.id > 0){
+            if(db.updateParkingLot(this) == false){
+                return false;
+            }
+            insertedId = this.id;
+
+            // Delete all vehicle's capacity and add them again in case of update parking lot
+            parkingLotCapacity.deleteAllVehicleCapacities(this.id);
+        }else {
+            insertedId = db.saveParkingLot(this);
+        }
         if(insertedId > 0){
             this.id = insertedId;
 
@@ -60,7 +73,7 @@ public class ParkingLot {
                 parkingLotCapacity = new ParkingLotCapacity();
                 parkingLotCapacity.setParkingLotId(this.id);
                 parkingLotCapacity.setVehicleType(key);
-                parkingLotCapacity.setCapacity(vehicleCapacity.get(key));
+                parkingLotCapacity.setCapacity(this.vehicleCapacity.get(key));
 
                 if(!parkingLotCapacity.saveParkingLotCapacity()){
                     return false;
@@ -80,5 +93,14 @@ public class ParkingLot {
         return parkingLots;
     }
 
+    public boolean deleteParkingLot(int id){
+        // Delete the data of parking lot vehicle's capacity before deleting the parking lot
+        if(parkingLotCapacity.deleteAllVehicleCapacities(id)){
+            if(db.deleteParkingLot(id)){
+                return true;
+            }
+        }
+         return false;
+    }
 
 }

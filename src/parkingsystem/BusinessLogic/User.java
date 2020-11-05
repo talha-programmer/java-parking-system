@@ -137,7 +137,6 @@ public class User {
      * Delete a user
      * */
     public boolean deleteUser(String username){
-
         return db.deleteUser(username);
     }
 
