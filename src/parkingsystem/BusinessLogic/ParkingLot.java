@@ -15,6 +15,8 @@ public class ParkingLot {
     private static ParkingLotDB db = new ParkingLotDB();
     private ParkingLotCapacity parkingLotCapacity = null;
     private ParkingFee parkingFee = null;
+
+
     public ParkingLot(){
         vehicleCapacity = new HashMap<>();
         parkingLotCapacity = new ParkingLotCapacity();

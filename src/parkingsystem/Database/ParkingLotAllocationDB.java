@@ -57,4 +57,24 @@ public class ParkingLotAllocationDB extends Database{
 
         return allPLAllocation;
     }
+
+    public boolean deleteParkingLotAllocation(ParkingLotAllocation parkingLotAllocation) {
+        String query = "DELETE FROM parking_lot_allocation ";
+        query += "WHERE parking_lot_id = ? AND user_id = ? ";
+
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, parkingLotAllocation.getParkingLotId());
+            statement.setInt(2, parkingLotAllocation.getUserId());
+            int rowsEffected = statement.executeUpdate();
+            if(rowsEffected > 0){
+                return true;
+            }
+
+        } catch (SQLException exception) {
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
+        }
+        return false;
+    }
 }

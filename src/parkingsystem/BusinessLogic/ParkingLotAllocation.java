@@ -33,4 +33,8 @@ public class ParkingLotAllocation {
     public ArrayList<ParkingLotAllocation> getAllPLAllocation(){
         return db.getAllPLAllocation();
     }
+
+    public boolean deleteParkingLotAllocation(){
+        return db.deleteParkingLotAllocation(this);
+    }
 }
