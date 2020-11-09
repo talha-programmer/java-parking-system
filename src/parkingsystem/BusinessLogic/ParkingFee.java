@@ -1,15 +1,14 @@
 package parkingsystem.BusinessLogic;
 
+import parkingsystem.Database.ParkingFeeDB;
+
+import java.util.HashMap;
+
 public class ParkingFee {
     private int parkingLotId;
     private int vehicleType;
     private float fee;
-
-    public ParkingFee(int parkingLotId, int vehicleType, float fee) {
-        this.parkingLotId = parkingLotId;
-        this.vehicleType = vehicleType;
-        this.fee = fee;
-    }
+    private static ParkingFeeDB db = new ParkingFeeDB();
 
     public int getParkingLotId() {
         return parkingLotId;
@@ -35,4 +34,11 @@ public class ParkingFee {
         this.fee = fee;
     }
 
+    public boolean saveParkingFee() {
+        return db.saveParkingFee(this);
+    }
+
+    public HashMap<Integer, Float> getParkingFee(int parkingLotId){
+        return db.getParkingFee(parkingLotId);
+    }
 }

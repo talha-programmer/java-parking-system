@@ -91,16 +91,16 @@ public class User {
      * and then replace the self object with the object came through database class
      * @return true if authentication successful, otherwise false
     * */
-    public int login(String username, char[] password){
+    public boolean login(String username, char[] password){
         String storedPassword =  db.getPassword(username);
         if(storedPassword.length() > 10 && new PasswordAuthentication().authenticate(password, storedPassword)){
             User user = db.getUser(username);
             if(user != null){
                 loggedInUser = user;
-                return loggedInUser.id;
+                return true;
             }
         }
-        return -1;
+        return false;
     }
 
     /**

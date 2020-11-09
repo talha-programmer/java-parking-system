@@ -11,11 +11,15 @@ public class ParkingLot {
     private String name;
     private String location;
     private HashMap<Integer, Integer> vehicleCapacity;      // key represents vehicle type and value represents capacity
+    private HashMap<Integer, Float> parkingFeeMap;
     private static ParkingLotDB db = new ParkingLotDB();
     private ParkingLotCapacity parkingLotCapacity = null;
+    private ParkingFee parkingFee = null;
     public ParkingLot(){
         vehicleCapacity = new HashMap<>();
         parkingLotCapacity = new ParkingLotCapacity();
+        parkingFeeMap = new HashMap<>();
+        parkingFee = new ParkingFee();
 
     }
 
@@ -26,6 +30,15 @@ public class ParkingLot {
     public int getSingleVehicleCapacity(int vehicleType){
         return vehicleCapacity.get(vehicleType);
     }
+
+    public void setParkingFee(int vehicleType, float feePerHour){
+        parkingFeeMap.put(vehicleType, feePerHour);
+    }
+
+    public float getSingleParkingFee(int vehicleType){
+        return parkingFeeMap.get(vehicleType);
+    }
+
 
     public int getId() {
         return id;
@@ -79,6 +92,16 @@ public class ParkingLot {
                     return false;
                 }
             }
+            for(int key : parkingFeeMap.keySet()){
+                parkingFee = new ParkingFee();
+                parkingFee.setParkingLotId(this.id);
+                parkingFee.setVehicleType(key);
+                parkingFee.setFee(this.parkingFeeMap.get(key));
+
+                if(!parkingFee.saveParkingFee()){
+                    return false;
+                }
+            }
             return true;
         }
         return false;
@@ -88,6 +111,7 @@ public class ParkingLot {
         ArrayList<ParkingLot> parkingLots = db.getAllParkingLots();
         for(ParkingLot parkingLot: parkingLots){
             parkingLot.vehicleCapacity = parkingLotCapacity.getVehicleCapacity(parkingLot.id);
+            parkingLot.parkingFeeMap = parkingFee.getParkingFee(parkingLot.id);
         }
 
         return parkingLots;

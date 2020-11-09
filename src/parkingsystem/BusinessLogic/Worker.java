@@ -1,11 +1,26 @@
 package parkingsystem.BusinessLogic;
 
+import parkingsystem.Database.WorkerDB;
 import parkingsystem.Enums.UserTypes;
 
-public class Worker extends User{
+import java.util.ArrayList;
+import java.util.HashMap;
 
-    public boolean registerUser(String fullName, String username, char[] password, String email) {
-        int userType = UserTypes.WORKER.getValue();
-        return super.registerUser(fullName, username, password, email, userType);
+public class Worker extends User{
+    private static WorkerDB db = new WorkerDB();
+
+    public ArrayList<Worker> getAllWorker(){
+        return db.getAllWorker();
+    }
+
+    public HashMap<String, Integer> getAllWorkerUsernames(){
+        HashMap<String, Integer> allUsernames = new HashMap<>();
+        ArrayList<Worker> allWorkers = db.getAllWorker();
+        for(Worker worker:allWorkers){
+            int userId = worker.getId();
+            String username = worker.getUsername();
+            allUsernames.put(username, userId);
+        }
+        return allUsernames;
     }
 }

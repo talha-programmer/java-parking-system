@@ -6,6 +6,7 @@
 package parkingsystem.UserInterface;
 
 import parkingsystem.BusinessLogic.User;
+import parkingsystem.Enums.UserTypes;
 import parkingsystem.Utility.DisplayMessage;
 
 import javax.swing.*;
@@ -126,17 +127,20 @@ public class LoginForm extends javax.swing.JFrame {
     }//GEN-LAST:event_tfPasswordActionPerformed
 
     private void btLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLoginActionPerformed
-        // TODO add your handling code here:
         String username = tfUsername.getText();
         char[] password = tfPassword.getPassword();
 
-        int userId = user.login(username, password);
-        if(userId > 0){
-            String message = "Logged In Successfully!";
-            DisplayMessage.displayInfo(message);
-            new OwnerHome().setVisible(true);
-            this.setVisible(false);
-            
+        if(user.login(username, password)){
+            User loggedInUser = User.getLoggedInUser();
+            int userType = loggedInUser.getUserType();
+            if(userType == UserTypes.OWNER.getValue()) {
+                new OwnerHome().setVisible(true);
+            }
+            if(userType == UserTypes.WORKER.getValue()){
+                new WorkerHome().setVisible(true);
+            }
+
+            this.dispose();
         }
         else{
             String message = "Login Failed! Check your username and password!";
