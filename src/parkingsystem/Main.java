@@ -6,7 +6,9 @@
 package parkingsystem;
 
 import parkingsystem.BusinessLogic.User;
+import parkingsystem.BusinessLogic.Vehicle;
 import parkingsystem.Database.Database;
+import parkingsystem.Database.VehicleDB;
 import parkingsystem.UserInterface.LoginForm;
 import parkingsystem.Utility.PasswordAuthentication;
 
@@ -53,11 +55,13 @@ public class Main {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+       java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new LoginForm().setVisible(true);
             }
         });
+
+
     }
     
 }

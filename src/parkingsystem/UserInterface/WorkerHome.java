@@ -5,17 +5,44 @@
  */
 package parkingsystem.UserInterface;
 
+import parkingsystem.BusinessLogic.ParkingLot;
+import parkingsystem.BusinessLogic.User;
+import parkingsystem.Enums.VehicleTypes;
+import parkingsystem.Utility.PLAllocationUtil;
+import parkingsystem.Utility.ParkedVehicleUtil;
+import parkingsystem.Utility.ParkingLotUtil;
+import parkingsystem.Utility.UserUtil;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  *
  * @author talha
  */
 public class WorkerHome extends javax.swing.JFrame {
-
+    private static User loggedInUser = User.getLoggedInUser();
+    private ParkingLot selectedPL = null;
+    private ParkingLotUtil plUtil = null;
+    private PLAllocationUtil plAllocationUtil = null;
+    private ParkedVehicleUtil parkedVehicleUtil = null;
     /**
      * Creates new form WorkerHome
      */
     public WorkerHome() {
+        plUtil = new ParkingLotUtil();
+        plAllocationUtil = new PLAllocationUtil();
+        parkedVehicleUtil = new ParkedVehicleUtil();
         initComponents();
+
+        // Get names of all parking lots which currently logged in user can manage
+        // and add the names in combo box
+        ArrayList<String> allocatedParkingLots = plAllocationUtil.getPLNamesWithUsername(loggedInUser.getUsername());
+        for(String plName: allocatedParkingLots){
+            cbSelectedParkingLot.addItem(plName);
+        }
+
+        
     }
 
     /**
@@ -27,21 +54,321 @@ public class WorkerHome extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnParkingLotDetails = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        cbSelectedParkingLot = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        lbPLName = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lbPLlocation = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lbBikeCapacity = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        lbCarCapacity = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        lbRickshawCapacity = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        lbHeavyVehicleCapacity = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        lbBikeFee = new javax.swing.JLabel();
+        lbRickshawFee = new javax.swing.JLabel();
+        lbCarFee = new javax.swing.JLabel();
+        lbHeavyVehicleFee = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        lbTotalBike = new javax.swing.JLabel();
+        lbTotalRickshaw = new javax.swing.JLabel();
+        lbTotalCar = new javax.swing.JLabel();
+        lbTotalHeavyVehicle = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Parking Lot");
+
+        cbSelectedParkingLot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSelectedParkingLotActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Name");
+
+        lbPLName.setText("lbPLName");
+
+        jLabel4.setText("Location");
+
+        lbPLlocation.setText("lbPLlocation");
+
+        jLabel3.setText("Vehicle Capacities");
+
+        jLabel6.setText("Bike Capacity");
+
+        lbBikeCapacity.setText("lbBikeCapacity");
+
+        jLabel8.setText("Car Capacity");
+
+        lbCarCapacity.setText("lbCarCapacity");
+
+        jLabel7.setText("Rickshaw Capacity");
+
+        lbRickshawCapacity.setText("lbRickshawCapacity");
+
+        jLabel9.setText("Heavy Vehicle Capacity");
+
+        lbHeavyVehicleCapacity.setText("lbHeavyVehicleCapacity");
+
+        jLabel10.setText("Parking Fee Details (Per Hour)");
+
+        jLabel11.setText("Bike Fee");
+
+        jLabel12.setText("Rickshaw Fee");
+
+        jLabel13.setText("Car Fee");
+
+        jLabel14.setText("Heavy Vehicle Fee");
+
+        lbBikeFee.setText("lbBikeFee");
+
+        lbRickshawFee.setText("lbRickshawFee");
+
+        lbCarFee.setText("lbCarFee");
+
+        lbHeavyVehicleFee.setText("lbHeavyVehicleFee");
+
+        jLabel15.setText("Currently Parked Vehicles");
+
+        jLabel16.setText("Bike");
+
+        jLabel17.setText("Rickshaw");
+
+        lbTotalBike.setText("lbTotalBike");
+
+        lbTotalRickshaw.setText("lbTotalRickshaw");
+
+        lbTotalCar.setText("lbCarFee");
+
+        lbTotalHeavyVehicle.setText("lbHeavyVehicleFee");
+
+        jLabel18.setText("Heavy Vehicle");
+
+        jLabel19.setText("Car");
+
+        javax.swing.GroupLayout pnParkingLotDetailsLayout = new javax.swing.GroupLayout(pnParkingLotDetails);
+        pnParkingLotDetails.setLayout(pnParkingLotDetailsLayout);
+        pnParkingLotDetailsLayout.setHorizontalGroup(
+            pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnParkingLotDetailsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel9))
+                .addGap(196, 196, 196))
+            .addGroup(pnParkingLotDetailsLayout.createSequentialGroup()
+                .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnParkingLotDetailsLayout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnParkingLotDetailsLayout.createSequentialGroup()
+                                .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel11))
+                                .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(pnParkingLotDetailsLayout.createSequentialGroup()
+                                        .addGap(37, 37, 37)
+                                        .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(pnParkingLotDetailsLayout.createSequentialGroup()
+                                                .addComponent(cbSelectedParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(152, 152, 152)
+                                                .addComponent(jLabel3))
+                                            .addGroup(pnParkingLotDetailsLayout.createSequentialGroup()
+                                                .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lbPLName)
+                                                    .addComponent(lbPLlocation))
+                                                .addGap(291, 291, 291)
+                                                .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lbCarCapacity)
+                                                    .addComponent(lbBikeCapacity)
+                                                    .addComponent(lbRickshawCapacity)
+                                                    .addComponent(lbHeavyVehicleCapacity)))))
+                                    .addGroup(pnParkingLotDetailsLayout.createSequentialGroup()
+                                        .addGap(66, 66, 66)
+                                        .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lbRickshawFee)
+                                            .addComponent(lbBikeFee)
+                                            .addComponent(lbHeavyVehicleFee)
+                                            .addComponent(lbCarFee))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(pnParkingLotDetailsLayout.createSequentialGroup()
+                                                .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel16)
+                                                    .addComponent(jLabel18)
+                                                    .addComponent(jLabel19)
+                                                    .addComponent(jLabel17))
+                                                .addGap(32, 32, 32)
+                                                .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lbTotalRickshaw)
+                                                    .addComponent(lbTotalBike)
+                                                    .addComponent(lbTotalHeavyVehicle)
+                                                    .addComponent(lbTotalCar)))
+                                            .addComponent(jLabel15))
+                                        .addGap(72, 72, 72))))
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel12)))
+                    .addGroup(pnParkingLotDetailsLayout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jLabel10)))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+        pnParkingLotDetailsLayout.setVerticalGroup(
+            pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnParkingLotDetailsLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(cbSelectedParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(lbBikeCapacity))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnParkingLotDetailsLayout.createSequentialGroup()
+                        .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(lbPLName))
+                        .addGap(28, 28, 28))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnParkingLotDetailsLayout.createSequentialGroup()
+                        .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(lbRickshawCapacity))
+                        .addGap(18, 18, 18)))
+                .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(lbPLlocation)
+                        .addComponent(jLabel8))
+                    .addComponent(lbCarCapacity))
+                .addGap(18, 18, 18)
+                .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbHeavyVehicleCapacity)
+                    .addComponent(jLabel9))
+                .addGap(57, 57, 57)
+                .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnParkingLotDetailsLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(lbBikeFee))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(lbRickshawFee))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(lbCarFee))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(lbHeavyVehicleFee)))
+                    .addGroup(pnParkingLotDetailsLayout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addGap(18, 18, 18)
+                        .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel16)
+                            .addComponent(lbTotalBike))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel17)
+                            .addComponent(lbTotalRickshaw))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel19)
+                            .addComponent(lbTotalCar))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnParkingLotDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel18)
+                            .addComponent(lbTotalHeavyVehicle))))
+                .addContainerGap(60, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 678, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnParkingLotDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnParkingLotDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cbSelectedParkingLotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSelectedParkingLotActionPerformed
+        String selectedPLName = cbSelectedParkingLot.getSelectedItem().toString();
+        selectedPL = plUtil.getParkingLotFromName(selectedPLName);
+        int plId = selectedPL.getId();
+        String plName = selectedPL.getName();
+        String plLocation = selectedPL.getLocation();
+        String bikeCapacity = Integer.toString(selectedPL.getSingleVehicleCapacity(VehicleTypes.BIKE.getValue()));
+        String rickshawCapacity = Integer.toString(selectedPL.getSingleVehicleCapacity(VehicleTypes.RICKSHAW.getValue()));
+        String carCapacity = Integer.toString(selectedPL.getSingleVehicleCapacity(VehicleTypes.CAR.getValue()));
+        String heavyVehicleCapacity = Integer.toString(selectedPL.getSingleVehicleCapacity(VehicleTypes.HEAVY_VEHICLE.getValue()));
+
+        String bikeFee = "Rs " + selectedPL.getSingleParkingFee(VehicleTypes.BIKE.getValue());
+        String rickshawFee = "Rs " + selectedPL.getSingleParkingFee(VehicleTypes.RICKSHAW.getValue());
+        String carFee = "Rs " + selectedPL.getSingleParkingFee(VehicleTypes.CAR.getValue());
+        String heavyVehicleFee = "Rs " + selectedPL.getSingleParkingFee(VehicleTypes.HEAVY_VEHICLE.getValue());
+
+        HashMap<Integer, Integer> totalParkedVehicles = parkedVehicleUtil.getTotalParkedVehicles(plId);
+        String totalBike = Integer.toString(totalParkedVehicles.get(VehicleTypes.BIKE.getValue()));
+        String totalRickshaw = Integer.toString(totalParkedVehicles.get(VehicleTypes.RICKSHAW.getValue()));
+        String totalCar = Integer.toString(totalParkedVehicles.get(VehicleTypes.CAR.getValue()));
+        String totalHeavyVehicle = Integer.toString(totalParkedVehicles.get(VehicleTypes.HEAVY_VEHICLE.getValue()));
+
+        lbPLName.setText(plName);
+        lbPLlocation.setText(plLocation);
+        lbBikeCapacity.setText(bikeCapacity);
+        lbRickshawCapacity.setText(rickshawCapacity);
+        lbCarCapacity.setText(carCapacity);
+        lbHeavyVehicleCapacity.setText(heavyVehicleCapacity);
+
+        lbBikeFee.setText(bikeFee);
+        lbRickshawFee.setText(rickshawFee);
+        lbCarFee.setText(carFee);
+        lbHeavyVehicleFee.setText(heavyVehicleFee);
+
+        lbTotalBike.setText(totalBike);
+        lbTotalRickshaw.setText(totalRickshaw);
+        lbTotalCar.setText(totalCar);
+        lbTotalHeavyVehicle.setText(totalHeavyVehicle);
+
+    }//GEN-LAST:event_cbSelectedParkingLotActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +406,39 @@ public class WorkerHome extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbSelectedParkingLot;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lbBikeCapacity;
+    private javax.swing.JLabel lbBikeFee;
+    private javax.swing.JLabel lbCarCapacity;
+    private javax.swing.JLabel lbCarFee;
+    private javax.swing.JLabel lbHeavyVehicleCapacity;
+    private javax.swing.JLabel lbHeavyVehicleFee;
+    private javax.swing.JLabel lbPLName;
+    private javax.swing.JLabel lbPLlocation;
+    private javax.swing.JLabel lbRickshawCapacity;
+    private javax.swing.JLabel lbRickshawFee;
+    private javax.swing.JLabel lbTotalBike;
+    private javax.swing.JLabel lbTotalCar;
+    private javax.swing.JLabel lbTotalHeavyVehicle;
+    private javax.swing.JLabel lbTotalRickshaw;
+    private javax.swing.JPanel pnParkingLotDetails;
     // End of variables declaration//GEN-END:variables
 }
