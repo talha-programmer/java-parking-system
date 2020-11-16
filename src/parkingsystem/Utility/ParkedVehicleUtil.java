@@ -24,7 +24,7 @@ public class ParkedVehicleUtil {
         totalVehicles.put(VehicleTypes.HEAVY_VEHICLE.getValue(), 0);
 
         for(ParkedVehicle tmpParkedVehicle: allParkedVehicles){
-            int vehicleId = tmpParkedVehicle.getVehicleId();
+            int vehicleId = tmpParkedVehicle.getVehicleId(); 
             int vehicleType = vehicleUtil.getVehicleWithId(vehicleId).getVehicleType();
             totalVehicles.put(vehicleType, totalVehicles.get(vehicleType) + 1);
         }

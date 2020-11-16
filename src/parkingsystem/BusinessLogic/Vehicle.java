@@ -3,9 +3,10 @@ package parkingsystem.BusinessLogic;
 import parkingsystem.Database.VehicleDB;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Vehicle {
-    private int id;
+    private int id = -1;
     private String regNumber;
     private String ownerName = null;        // Owner name is not mandatory
     private String vehicleName;
@@ -53,16 +54,27 @@ public class Vehicle {
         this.id = id;
     }
 
-    public boolean saveVehicle(){
-        int id = db.saveVehicle(this);
+    public int saveVehicle(){
+        // Update the vehicle if already saved, otherwise add new vehicle
         if(id > 0){
-            this.id = id;
-            return true;
+            db.updateVehicle(this);
+            return id;
+        } else {
+            return db.saveVehicle(this);
         }
-        return false;
     }
 
     public ArrayList<Vehicle> getAllVehicle(){
         return db.getAllVehicle();
     }
+
+    public HashMap<String, Integer> getRegNumbersAndIds(String matchText){
+        return db.getRegNumbersAndIds(matchText);
+    }
+
+    public ArrayList<String> getMatchedVehicleNames(String matchText){
+        return db.getMatchedVehicleNames(matchText);
+    }
+
+
 }

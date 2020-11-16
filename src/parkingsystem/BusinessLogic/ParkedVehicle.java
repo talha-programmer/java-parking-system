@@ -54,5 +54,10 @@ public class ParkedVehicle {
         return db.getParkedVehicleWithPLId(parkingLotId);
     }
 
+    public int saveParkedVehicle(){
+        this.id = db.saveParkedVehicle(this);
+        return this.id;
+    }
+
 
 }
