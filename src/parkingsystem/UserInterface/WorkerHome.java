@@ -115,21 +115,6 @@ public class WorkerHome extends javax.swing.JFrame {
             }
         });
 
-        // Create anonymous text field connected with combo box of reg number in Vehicle Exit panel
-        // to get matching registration numbers from database
-        final JTextField tfRegNumberVExit = (JTextField)     cbRegNumberVExit.getEditor().getEditorComponent();
-        tfRegNumberVExit.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent ke) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        String text = tfRegNumberVExit.getText();
-                        if(!text.isBlank()) {
-                            regNumberVExitFilter(text);
-                        }
-                    }
-                });
-            }
-        });
 
     }
 
@@ -181,21 +166,6 @@ public class WorkerHome extends javax.swing.JFrame {
         cbTokenNumberVExit.setSelectedItem(text);
     }
 
-
-    /**
-     * Get matched reg numbers of vehicles from database and add them in combo box
-     * */
-    private void regNumberVExitFilter(String text){
-        vehicleRegNumbers = vehicle.getRegNumbersAndIds(text);
-        cbRegNumberVExit.removeAllItems();
-        for (String regNumber : vehicleRegNumbers.keySet()) {
-            cbRegNumberVExit.addItem(regNumber);
-        }
-        if(vehicleRegNumbers.size()>0) {
-            cbRegNumberVExit.showPopup();
-        }
-        cbRegNumberVExit.setSelectedItem(text.toUpperCase());      // Force Reg Number to be in uppercase
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -269,7 +239,6 @@ public class WorkerHome extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         lbVehicleNameVExit = new javax.swing.JLabel();
-        cbRegNumberVExit = new javax.swing.JComboBox<>();
         jLabel28 = new javax.swing.JLabel();
         lbVehicleTypeVExit = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
@@ -289,6 +258,7 @@ public class WorkerHome extends javax.swing.JFrame {
         jLabel36 = new javax.swing.JLabel();
         lbChangeAmountVExit = new javax.swing.JLabel();
         btnVehicleExit = new javax.swing.JButton();
+        lbRegNumberVExit = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -599,13 +569,6 @@ public class WorkerHome extends javax.swing.JFrame {
 
         lbVehicleNameVExit.setText("Nil");
 
-        cbRegNumberVExit.setEditable(true);
-        cbRegNumberVExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbRegNumberVExitActionPerformed(evt);
-            }
-        });
-
         jLabel28.setText("Vehicle Type");
 
         lbVehicleTypeVExit.setText("Nil");
@@ -659,6 +622,8 @@ public class WorkerHome extends javax.swing.JFrame {
             }
         });
 
+        lbRegNumberVExit.setText("Nil");
+
         javax.swing.GroupLayout pnVehicleExitLayout = new javax.swing.GroupLayout(pnVehicleExit);
         pnVehicleExit.setLayout(pnVehicleExitLayout);
         pnVehicleExitLayout.setHorizontalGroup(
@@ -683,11 +648,12 @@ public class WorkerHome extends javax.swing.JFrame {
                     .addComponent(jLabel30)
                     .addComponent(jLabel32))
                 .addGap(28, 28, 28)
-                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbParkingFeeVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbRegNumberVExit, 0, 150, Short.MAX_VALUE)
-                    .addComponent(lbVehicleNameVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbTimeExitVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lbParkingFeeVExit, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                        .addComponent(lbVehicleNameVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbTimeExitVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbRegNumberVExit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(11, 11, 11))
             .addGroup(pnVehicleExitLayout.createSequentialGroup()
                 .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -716,9 +682,9 @@ public class WorkerHome extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel26)
-                    .addComponent(cbRegNumberVExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel25)
-                    .addComponent(cbTokenNumberVExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbTokenNumberVExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbRegNumberVExit))
                 .addGap(18, 18, 18)
                 .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel29)
@@ -964,8 +930,7 @@ public class WorkerHome extends javax.swing.JFrame {
         }
         // Now displaying all values in labels, fields and combo boxes
         // Display Nil if the provided id is invalid
-        cbRegNumberVExit.removeAllItems();
-        cbRegNumberVExit.setSelectedItem(regNumber);
+        lbRegNumberVExit.setText(regNumber);
         lbCustomerNameVExit.setText(ownerName);
         lbVehicleNameVExit.setText(vehicleName);
         lbParkingFeeVExit.setText(parkingFeeStr);
@@ -974,70 +939,6 @@ public class WorkerHome extends javax.swing.JFrame {
         lbTotalFeeVExit.setText(totalFeeStr);
         lbVehicleTypeVExit.setText(vehicleTypeName);
     }//GEN-LAST:event_cbTokenNumberVExitActionPerformed
-
-    private void cbRegNumberVExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRegNumberVExitActionPerformed
-
-        String entranceTimeStr = "Nil", exitTimeStr = "Nil", vehicleTypeName = "Nil", regNumber = "Nil",
-                vehicleName = "Nil", ownerName = "Nil", parkingFeeStr = "Nil", totalFeeStr = "Nil";
-        Object cbRegNumberObj = cbRegNumberVExit.getSelectedItem();
-
-        if(cbRegNumberObj != null){
-            regNumber = cbRegNumberObj.toString();
-            int vehicleId = -1;
-            if(vehicleRegNumbers.containsKey(regNumber)) {
-
-                vehicleId = vehicleRegNumbers.get(regNumber);
-            }
-            if(vehicleId > 0) {
-                int parkingLotId = selectedPL.getId();
-                ParkedVehicle parkedVehicle = parkedVehicleUtil.getParkedVehicleWithVehicleId(parkingLotId, vehicleId);
-
-                if (parkedVehicle != null) {
-                    parkedVehicleId = parkedVehicle.getId();
-                    Timestamp entranceTime = parkedVehicle.getParkTime();
-                    Timestamp exitTime = new Timestamp(System.currentTimeMillis());
-
-                    entranceTimeStr = TimeFormatting.getDateTimeString(entranceTime);
-                    exitTimeStr = TimeFormatting.getDateTimeString(exitTime);
-
-                    Vehicle vehicle = vehicleUtil.getVehicleWithId(vehicleId);
-                    int vehicleTypeValue = vehicle.getVehicleType();
-                    vehicleTypeName = VehicleTypes.getNameFromValue(vehicleTypeValue);
-                    regNumber = vehicle.getRegNumber();
-                    vehicleName = vehicle.getVehicleName();
-                    ownerName = vehicle.getOwnerName();
-
-                    float parkingFee = selectedPL.getSingleParkingFee(vehicleTypeValue);
-                    float parkHours = TimeFormatting.getHoursDifference(entranceTime, exitTime);
-                    float totalFee = parkingFee * parkHours;
-
-                    parkingFeeStr = "Rs " + parkingFee + " (Per Hour)";
-                    totalFeeStr = "Rs " + totalFee;
-
-                    inventory = new Inventory();
-                    inventory.setParkingLotId(parkingLotId);
-                    inventory.setTimeEntrance(entranceTime);
-                    inventory.setTimeExit(exitTime);
-                    inventory.setVehicleId(vehicleId);
-                    inventory.setTotalFee(totalFee);
-
-                }
-
-            }
-        }
-        // Now displaying all values in labels, fields and combo boxes
-        // Display Nil if the provided id is invalid
-        if(parkedVehicleId > 0) {
-            cbTokenNumberVExit.setSelectedItem(parkedVehicleId);
-        }
-        lbCustomerNameVExit.setText(ownerName);
-        lbVehicleNameVExit.setText(vehicleName);
-        lbParkingFeeVExit.setText(parkingFeeStr);
-        lbTimeEntranceVExit.setText(entranceTimeStr);
-        lbTimeExitVExit.setText(exitTimeStr);
-        lbTotalFeeVExit.setText(totalFeeStr);
-        lbVehicleTypeVExit.setText(vehicleTypeName);
-    }//GEN-LAST:event_cbRegNumberVExitActionPerformed
 
     private void ftfPayedAmountVExitKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ftfPayedAmountVExitKeyReleased
         float payedAmount = Float.parseFloat(ftfPayedAmountVExit.getText());
@@ -1113,7 +1014,6 @@ public class WorkerHome extends javax.swing.JFrame {
     private javax.swing.JButton btnParkVehicle;
     private javax.swing.JButton btnVehicleExit;
     private javax.swing.JComboBox<String> cbRegNumber;
-    private javax.swing.JComboBox<String> cbRegNumberVExit;
     private javax.swing.JComboBox<String> cbSelectedParkingLot;
     private javax.swing.JComboBox<String> cbTokenNumberVExit;
     private javax.swing.JComboBox<String> cbVehicleName;
@@ -1171,6 +1071,7 @@ public class WorkerHome extends javax.swing.JFrame {
     private javax.swing.JLabel lbPLlocation;
     private javax.swing.JLabel lbParkVehicle;
     private javax.swing.JLabel lbParkingFeeVExit;
+    private javax.swing.JLabel lbRegNumberVExit;
     private javax.swing.JLabel lbRickshawCapacity;
     private javax.swing.JLabel lbRickshawFee;
     private javax.swing.JLabel lbTimeEntranceVExit;
