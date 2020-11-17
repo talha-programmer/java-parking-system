@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -32,6 +33,8 @@ public class WorkerHome extends javax.swing.JFrame {
     private HashMap<String, Integer> vehicleRegNumbers = null;      // Key: vehicle reg number, value: vehicle id
     private ArrayList<String> vehicleTypeNames = null;
     private HashMap<Integer, Integer> totalParkedVehicles = null;   // Key: vehicle type, value: total parked vehicles of that vehicle type
+    private Inventory inventory = null;
+    private int parkedVehicleId;
 
     /**
      * Creates new form WorkerHome
@@ -96,7 +99,41 @@ public class WorkerHome extends javax.swing.JFrame {
             }
         });
 
+        // Create anonymous text field connected with combo box of Token Number
+        // to get matching Parked Vehicle's id from database
+        final JTextField tfTokenNumber = (JTextField)     cbTokenNumberVExit.getEditor().getEditorComponent();
+        tfTokenNumber.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent ke) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        String text = tfTokenNumber.getText();
+                        if(!text.isBlank()) {
+                            tokenNumberFilter(text);
+                        }
+                    }
+                });
+            }
+        });
+
+        // Create anonymous text field connected with combo box of reg number in Vehicle Exit panel
+        // to get matching registration numbers from database
+        final JTextField tfRegNumberVExit = (JTextField)     cbRegNumberVExit.getEditor().getEditorComponent();
+        tfRegNumberVExit.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent ke) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        String text = tfRegNumberVExit.getText();
+                        if(!text.isBlank()) {
+                            regNumberVExitFilter(text);
+                        }
+                    }
+                });
+            }
+        });
+
     }
+
+
 
     /**
      * Get matched reg numbers of vehicles from database and add them in combo box
@@ -126,6 +163,38 @@ public class WorkerHome extends javax.swing.JFrame {
             cbVehicleName.showPopup();
         }
         cbVehicleName.setSelectedItem(text);
+    }
+
+    /**
+     * Get matched ids of parked vehicle
+     * */
+    private void tokenNumberFilter(String text) {
+        ParkedVehicle parkedVehicle = new ParkedVehicle();
+        ArrayList<Integer> parkedVehicleIds = parkedVehicle.getMatchedIds(text, selectedPL.getId());
+        cbTokenNumberVExit.removeAllItems();
+        for (int id : parkedVehicleIds) {
+            cbTokenNumberVExit.addItem(id + "");
+        }
+        if(parkedVehicleIds.size()>0) {
+            cbTokenNumberVExit.showPopup();
+        }
+        cbTokenNumberVExit.setSelectedItem(text);
+    }
+
+
+    /**
+     * Get matched reg numbers of vehicles from database and add them in combo box
+     * */
+    private void regNumberVExitFilter(String text){
+        vehicleRegNumbers = vehicle.getRegNumbersAndIds(text);
+        cbRegNumberVExit.removeAllItems();
+        for (String regNumber : vehicleRegNumbers.keySet()) {
+            cbRegNumberVExit.addItem(regNumber);
+        }
+        if(vehicleRegNumbers.size()>0) {
+            cbRegNumberVExit.showPopup();
+        }
+        cbRegNumberVExit.setSelectedItem(text.toUpperCase());      // Force Reg Number to be in uppercase
     }
 
     /**
@@ -183,16 +252,43 @@ public class WorkerHome extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         cbSelectedParkingLot = new javax.swing.JComboBox<>();
         pnParkVehicle = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        pnVehicleEntrance = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
+        cbRegNumber = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
-        tfOwnerName = new javax.swing.JTextField();
-        jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         cbVehicleType = new javax.swing.JComboBox<>();
-        cbRegNumber = new javax.swing.JComboBox<>();
         cbVehicleName = new javax.swing.JComboBox<>();
+        tfOwnerName = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
         btnParkVehicle = new javax.swing.JButton();
+        pnVehicleExit = new javax.swing.JPanel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        lbVehicleNameVExit = new javax.swing.JLabel();
+        cbRegNumberVExit = new javax.swing.JComboBox<>();
+        jLabel28 = new javax.swing.JLabel();
+        lbVehicleTypeVExit = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        lbCustomerNameVExit = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        lbParkingFeeVExit = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        lbTimeEntranceVExit = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        lbTimeExitVExit = new javax.swing.JLabel();
+        cbTokenNumberVExit = new javax.swing.JComboBox<>();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        lbTotalFeeVExit = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        ftfPayedAmountVExit = new javax.swing.JFormattedTextField();
+        jLabel36 = new javax.swing.JLabel();
+        lbChangeAmountVExit = new javax.swing.JLabel();
+        btnVehicleExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -401,15 +497,13 @@ public class WorkerHome extends javax.swing.JFrame {
 
         pnParkVehicle.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel20.setText("Vehicle Details");
+        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
+
+        pnVehicleEntrance.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel20.setText("Vehicle Entrance");
 
         jLabel21.setText("Registration Number");
-
-        jLabel22.setText("Vehicle Name");
-
-        jLabel23.setText("Owner Name");
-
-        jLabel24.setText("Vehicle Type");
 
         cbRegNumber.setEditable(true);
         cbRegNumber.addActionListener(new java.awt.event.ActionListener() {
@@ -417,13 +511,14 @@ public class WorkerHome extends javax.swing.JFrame {
                 cbRegNumberActionPerformed(evt);
             }
         });
-        cbRegNumber.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                cbRegNumberKeyReleased(evt);
-            }
-        });
+
+        jLabel22.setText("Vehicle Name");
+
+        jLabel24.setText("Vehicle Type");
 
         cbVehicleName.setEditable(true);
+
+        jLabel23.setText("Owner Name");
 
         btnParkVehicle.setText("Go");
         btnParkVehicle.addActionListener(new java.awt.event.ActionListener() {
@@ -432,64 +527,252 @@ public class WorkerHome extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout pnVehicleEntranceLayout = new javax.swing.GroupLayout(pnVehicleEntrance);
+        pnVehicleEntrance.setLayout(pnVehicleEntranceLayout);
+        pnVehicleEntranceLayout.setHorizontalGroup(
+            pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnVehicleEntranceLayout.createSequentialGroup()
+                .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnVehicleEntranceLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnParkVehicle, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(pnVehicleEntranceLayout.createSequentialGroup()
+                                    .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel21)
+                                        .addComponent(jLabel23)
+                                        .addComponent(jLabel22))
+                                    .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(pnVehicleEntranceLayout.createSequentialGroup()
+                                            .addGap(57, 57, 57)
+                                            .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(tfOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(cbRegNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnVehicleEntranceLayout.createSequentialGroup()
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(cbVehicleName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(pnVehicleEntranceLayout.createSequentialGroup()
+                                    .addComponent(jLabel24)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbVehicleType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(pnVehicleEntranceLayout.createSequentialGroup()
+                        .addGap(128, 128, 128)
+                        .addComponent(jLabel20)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnVehicleEntranceLayout.setVerticalGroup(
+            pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnVehicleEntranceLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel20)
+                .addGap(18, 18, 18)
+                .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(cbRegNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22)
+                    .addComponent(cbVehicleName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(cbVehicleType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel23))
+                .addGap(40, 40, 40)
+                .addComponent(btnParkVehicle)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Vehicle Entrance", pnVehicleEntrance);
+
+        pnVehicleExit.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel25.setText("Token Number");
+
+        jLabel26.setText("Registration Number");
+
+        jLabel27.setText("Vehicle Name");
+
+        lbVehicleNameVExit.setText("Nil");
+
+        cbRegNumberVExit.setEditable(true);
+        cbRegNumberVExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbRegNumberVExitActionPerformed(evt);
+            }
+        });
+
+        jLabel28.setText("Vehicle Type");
+
+        lbVehicleTypeVExit.setText("Nil");
+
+        jLabel29.setText("Customer Name");
+
+        lbCustomerNameVExit.setText("Nil");
+
+        jLabel30.setText("Parking Fee");
+
+        lbParkingFeeVExit.setText("Nil");
+
+        jLabel31.setText("Time Entrance");
+
+        lbTimeEntranceVExit.setText("Nil");
+
+        jLabel32.setText("Time Exit");
+
+        lbTimeExitVExit.setText("Nil");
+
+        cbTokenNumberVExit.setEditable(true);
+        cbTokenNumberVExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTokenNumberVExitActionPerformed(evt);
+            }
+        });
+
+        jLabel33.setText("Payment ");
+
+        jLabel34.setText("Total Fee");
+
+        lbTotalFeeVExit.setText("Nil");
+
+        jLabel35.setText("Payed Amount");
+
+        ftfPayedAmountVExit.setFormatterFactory(NumberFormatting.floatFormatterFactory());
+        ftfPayedAmountVExit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ftfPayedAmountVExitKeyReleased(evt);
+            }
+        });
+
+        jLabel36.setText("Change Amount");
+
+        lbChangeAmountVExit.setText("Nil");
+
+        btnVehicleExit.setText("Go");
+        btnVehicleExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVehicleExitActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnVehicleExitLayout = new javax.swing.GroupLayout(pnVehicleExit);
+        pnVehicleExit.setLayout(pnVehicleExitLayout);
+        pnVehicleExitLayout.setHorizontalGroup(
+            pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnVehicleExitLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel29)
+                    .addComponent(jLabel25)
+                    .addComponent(jLabel28)
+                    .addComponent(jLabel31))
+                .addGap(35, 35, 35)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbCustomerNameVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbVehicleTypeVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbTimeEntranceVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbTokenNumberVExit, 0, 150, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel26)
+                    .addComponent(jLabel27)
+                    .addComponent(jLabel30)
+                    .addComponent(jLabel32))
+                .addGap(28, 28, 28)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbParkingFeeVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbRegNumberVExit, 0, 150, Short.MAX_VALUE)
+                    .addComponent(lbVehicleNameVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbTimeExitVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(11, 11, 11))
+            .addGroup(pnVehicleExitLayout.createSequentialGroup()
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnVehicleExitLayout.createSequentialGroup()
+                        .addGap(167, 167, 167)
+                        .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel34)
+                            .addComponent(jLabel35)
+                            .addComponent(jLabel36))
+                        .addGap(44, 44, 44)
+                        .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbTotalFeeVExit, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ftfPayedAmountVExit, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                            .addComponent(lbChangeAmountVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(pnVehicleExitLayout.createSequentialGroup()
+                        .addGap(240, 240, 240)
+                        .addComponent(jLabel33))
+                    .addGroup(pnVehicleExitLayout.createSequentialGroup()
+                        .addGap(248, 248, 248)
+                        .addComponent(btnVehicleExit)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnVehicleExitLayout.setVerticalGroup(
+            pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnVehicleExitLayout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(cbRegNumberVExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel25)
+                    .addComponent(cbTokenNumberVExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(lbCustomerNameVExit)
+                    .addComponent(jLabel27)
+                    .addComponent(lbVehicleNameVExit))
+                .addGap(18, 18, 18)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(lbVehicleTypeVExit)
+                    .addComponent(jLabel30)
+                    .addComponent(lbParkingFeeVExit))
+                .addGap(18, 18, 18)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel31)
+                    .addComponent(lbTimeEntranceVExit)
+                    .addComponent(jLabel32)
+                    .addComponent(lbTimeExitVExit))
+                .addGap(32, 32, 32)
+                .addComponent(jLabel33)
+                .addGap(18, 18, 18)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel34)
+                    .addComponent(lbTotalFeeVExit))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel35)
+                    .addComponent(ftfPayedAmountVExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel36)
+                    .addComponent(lbChangeAmountVExit))
+                .addGap(18, 18, 18)
+                .addComponent(btnVehicleExit)
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Vehicle Exit", pnVehicleExit);
+
         javax.swing.GroupLayout pnParkVehicleLayout = new javax.swing.GroupLayout(pnParkVehicle);
         pnParkVehicle.setLayout(pnParkVehicleLayout);
         pnParkVehicleLayout.setHorizontalGroup(
             pnParkVehicleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnParkVehicleLayout.createSequentialGroup()
-                .addGroup(pnParkVehicleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnParkVehicle)
-                    .addGroup(pnParkVehicleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnParkVehicleLayout.createSequentialGroup()
-                            .addGap(267, 267, 267)
-                            .addComponent(jLabel20))
-                        .addGroup(pnParkVehicleLayout.createSequentialGroup()
-                            .addGap(48, 48, 48)
-                            .addGroup(pnParkVehicleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(pnParkVehicleLayout.createSequentialGroup()
-                                    .addGroup(pnParkVehicleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel21)
-                                        .addComponent(jLabel23)
-                                        .addComponent(jLabel22))
-                                    .addGroup(pnParkVehicleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(pnParkVehicleLayout.createSequentialGroup()
-                                            .addGap(57, 57, 57)
-                                            .addGroup(pnParkVehicleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(tfOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(cbRegNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnParkVehicleLayout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(cbVehicleName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGroup(pnParkVehicleLayout.createSequentialGroup()
-                                    .addComponent(jLabel24)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbVehicleType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(315, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
         pnParkVehicleLayout.setVerticalGroup(
             pnParkVehicleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnParkVehicleLayout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jLabel20)
-                .addGap(18, 18, 18)
-                .addGroup(pnParkVehicleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel21)
-                    .addComponent(cbRegNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnParkVehicleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel22)
-                    .addComponent(cbVehicleName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnParkVehicleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24)
-                    .addComponent(cbVehicleType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnParkVehicleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23))
-                .addGap(50, 50, 50)
-                .addComponent(btnParkVehicle)
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnMain.add(pnParkVehicle, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 124, 700, 450));
@@ -617,6 +900,8 @@ public class WorkerHome extends javax.swing.JFrame {
                 parkedVehicle.setParkTime(currentTime);
                 int parkedVehicleId = parkedVehicle.saveParkedVehicle();
                 if (parkedVehicleId > 0) {
+                    ParkingReceiptFrame receiptFrame = new ParkingReceiptFrame(parkedVehicle);
+                    receiptFrame.setVisible(true);
                     DisplayMessage.displayInfo("Parked Successfully!");
                     updateFrame();
                     FormUtility.clearFields(pnParkVehicle);
@@ -628,9 +913,166 @@ public class WorkerHome extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnParkVehicleActionPerformed
 
-    private void cbRegNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbRegNumberKeyReleased
+    private void cbTokenNumberVExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTokenNumberVExitActionPerformed
+        String entranceTimeStr = "Nil", exitTimeStr = "Nil", vehicleTypeName = "Nil", regNumber = "Nil",
+                vehicleName = "Nil", ownerName = "Nil", parkingFeeStr = "Nil", totalFeeStr = "Nil";
+        Object cbTokenObject = cbTokenNumberVExit.getSelectedItem();
+        inventory = null;
+        parkedVehicleId = -1;
+        if(cbTokenObject != null){
+            String pvIdStr = cbTokenObject.toString();
 
-    }//GEN-LAST:event_cbRegNumberKeyReleased
+            if(pvIdStr.matches("[0-9]+")) {      // If valid id provided
+                parkedVehicleId = Integer.parseInt(pvIdStr);
+                int parkingLotId = selectedPL.getId();
+                ParkedVehicle parkedVehicle = parkedVehicleUtil.getParkedVehicleWithPLId(parkingLotId, parkedVehicleId);
+
+
+                if (parkedVehicle != null) {
+
+                    int vehicleId = parkedVehicle.getVehicleId();
+                    Timestamp entranceTime = parkedVehicle.getParkTime();
+                    Timestamp exitTime = new Timestamp(System.currentTimeMillis());
+
+                    entranceTimeStr = TimeFormatting.getDateTimeString(entranceTime);
+                    exitTimeStr = TimeFormatting.getDateTimeString(exitTime);
+
+                    Vehicle vehicle = vehicleUtil.getVehicleWithId(vehicleId);
+                    int vehicleTypeValue = vehicle.getVehicleType();
+                    vehicleTypeName = VehicleTypes.getNameFromValue(vehicleTypeValue);
+                    regNumber = vehicle.getRegNumber();
+                    vehicleName = vehicle.getVehicleName();
+                    ownerName = vehicle.getOwnerName();
+
+                    float parkingFee = selectedPL.getSingleParkingFee(vehicleTypeValue);
+                    float parkHours = TimeFormatting.getHoursDifference(entranceTime, exitTime);
+                    float totalFee = parkingFee * parkHours;
+
+                    parkingFeeStr = "Rs " + parkingFee + " (Per Hour)";
+                    totalFeeStr = "Rs " + totalFee;
+
+                    inventory = new Inventory();
+                    inventory.setParkingLotId(parkingLotId);
+                    inventory.setTimeEntrance(entranceTime);
+                    inventory.setTimeExit(exitTime);
+                    inventory.setVehicleId(vehicleId);
+                    inventory.setTotalFee(totalFee);
+
+                }
+            }
+
+        }
+        // Now displaying all values in labels, fields and combo boxes
+        // Display Nil if the provided id is invalid
+        cbRegNumberVExit.removeAllItems();
+        cbRegNumberVExit.setSelectedItem(regNumber);
+        lbCustomerNameVExit.setText(ownerName);
+        lbVehicleNameVExit.setText(vehicleName);
+        lbParkingFeeVExit.setText(parkingFeeStr);
+        lbTimeEntranceVExit.setText(entranceTimeStr);
+        lbTimeExitVExit.setText(exitTimeStr);
+        lbTotalFeeVExit.setText(totalFeeStr);
+        lbVehicleTypeVExit.setText(vehicleTypeName);
+    }//GEN-LAST:event_cbTokenNumberVExitActionPerformed
+
+    private void cbRegNumberVExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRegNumberVExitActionPerformed
+
+        String entranceTimeStr = "Nil", exitTimeStr = "Nil", vehicleTypeName = "Nil", regNumber = "Nil",
+                vehicleName = "Nil", ownerName = "Nil", parkingFeeStr = "Nil", totalFeeStr = "Nil";
+        Object cbRegNumberObj = cbRegNumberVExit.getSelectedItem();
+
+        if(cbRegNumberObj != null){
+            regNumber = cbRegNumberObj.toString();
+            int vehicleId = -1;
+            if(vehicleRegNumbers.containsKey(regNumber)) {
+
+                vehicleId = vehicleRegNumbers.get(regNumber);
+            }
+            if(vehicleId > 0) {
+                int parkingLotId = selectedPL.getId();
+                ParkedVehicle parkedVehicle = parkedVehicleUtil.getParkedVehicleWithVehicleId(parkingLotId, vehicleId);
+
+                if (parkedVehicle != null) {
+                    parkedVehicleId = parkedVehicle.getId();
+                    Timestamp entranceTime = parkedVehicle.getParkTime();
+                    Timestamp exitTime = new Timestamp(System.currentTimeMillis());
+
+                    entranceTimeStr = TimeFormatting.getDateTimeString(entranceTime);
+                    exitTimeStr = TimeFormatting.getDateTimeString(exitTime);
+
+                    Vehicle vehicle = vehicleUtil.getVehicleWithId(vehicleId);
+                    int vehicleTypeValue = vehicle.getVehicleType();
+                    vehicleTypeName = VehicleTypes.getNameFromValue(vehicleTypeValue);
+                    regNumber = vehicle.getRegNumber();
+                    vehicleName = vehicle.getVehicleName();
+                    ownerName = vehicle.getOwnerName();
+
+                    float parkingFee = selectedPL.getSingleParkingFee(vehicleTypeValue);
+                    float parkHours = TimeFormatting.getHoursDifference(entranceTime, exitTime);
+                    float totalFee = parkingFee * parkHours;
+
+                    parkingFeeStr = "Rs " + parkingFee + " (Per Hour)";
+                    totalFeeStr = "Rs " + totalFee;
+
+                    inventory = new Inventory();
+                    inventory.setParkingLotId(parkingLotId);
+                    inventory.setTimeEntrance(entranceTime);
+                    inventory.setTimeExit(exitTime);
+                    inventory.setVehicleId(vehicleId);
+                    inventory.setTotalFee(totalFee);
+
+                }
+
+            }
+        }
+        // Now displaying all values in labels, fields and combo boxes
+        // Display Nil if the provided id is invalid
+        if(parkedVehicleId > 0) {
+            cbTokenNumberVExit.setSelectedItem(parkedVehicleId);
+        }
+        lbCustomerNameVExit.setText(ownerName);
+        lbVehicleNameVExit.setText(vehicleName);
+        lbParkingFeeVExit.setText(parkingFeeStr);
+        lbTimeEntranceVExit.setText(entranceTimeStr);
+        lbTimeExitVExit.setText(exitTimeStr);
+        lbTotalFeeVExit.setText(totalFeeStr);
+        lbVehicleTypeVExit.setText(vehicleTypeName);
+    }//GEN-LAST:event_cbRegNumberVExitActionPerformed
+
+    private void ftfPayedAmountVExitKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ftfPayedAmountVExitKeyReleased
+        float payedAmount = Float.parseFloat(ftfPayedAmountVExit.getText());
+        if(inventory != null){
+            float totalFee = inventory.getTotalFee();
+            if(payedAmount > totalFee){
+                lbChangeAmountVExit.setText("Rs " + (payedAmount - totalFee));
+            }
+        }
+    }//GEN-LAST:event_ftfPayedAmountVExitKeyReleased
+
+    private void btnVehicleExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVehicleExitActionPerformed
+        if(inventory == null){
+            DisplayMessage.displayError("Please provide correct token number or vehicle registration number");
+        }else{
+            float payedAmount = Float.parseFloat(ftfPayedAmountVExit.getText());
+            if(payedAmount < inventory.getTotalFee()){
+                DisplayMessage.displayError("Payed amount is less than total fee\n" +
+                        "Please enter amount greater than or equal to total fee!");
+            }else{
+                if(inventory.saveInventory()){
+                    ParkedVehicle pv = new ParkedVehicle();
+                    if(pv.deleteParkedVehicle(parkedVehicleId)){
+                        PaymentReceiptFrame receiptFrame = new PaymentReceiptFrame(inventory, payedAmount);
+                        receiptFrame.setVisible(true);
+                        DisplayMessage.displayInfo("Saved");
+                    }else{
+                        DisplayMessage.displayError("Failed");
+                    }
+                }else{
+                    DisplayMessage.displayError("Operation Failed!");
+                }
+            }
+        }
+    }//GEN-LAST:event_btnVehicleExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -669,10 +1111,14 @@ public class WorkerHome extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnParkVehicle;
+    private javax.swing.JButton btnVehicleExit;
     private javax.swing.JComboBox<String> cbRegNumber;
+    private javax.swing.JComboBox<String> cbRegNumberVExit;
     private javax.swing.JComboBox<String> cbSelectedParkingLot;
+    private javax.swing.JComboBox<String> cbTokenNumberVExit;
     private javax.swing.JComboBox<String> cbVehicleName;
     private javax.swing.JComboBox<String> cbVehicleType;
+    private javax.swing.JFormattedTextField ftfPayedAmountVExit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -690,7 +1136,19 @@ public class WorkerHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -699,22 +1157,31 @@ public class WorkerHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lbBikeCapacity;
     private javax.swing.JLabel lbBikeFee;
     private javax.swing.JLabel lbCarCapacity;
     private javax.swing.JLabel lbCarFee;
+    private javax.swing.JLabel lbChangeAmountVExit;
+    private javax.swing.JLabel lbCustomerNameVExit;
     private javax.swing.JLabel lbHeavyVehicleCapacity;
     private javax.swing.JLabel lbHeavyVehicleFee;
     private javax.swing.JLabel lbHome;
     private javax.swing.JLabel lbPLName;
     private javax.swing.JLabel lbPLlocation;
     private javax.swing.JLabel lbParkVehicle;
+    private javax.swing.JLabel lbParkingFeeVExit;
     private javax.swing.JLabel lbRickshawCapacity;
     private javax.swing.JLabel lbRickshawFee;
+    private javax.swing.JLabel lbTimeEntranceVExit;
+    private javax.swing.JLabel lbTimeExitVExit;
     private javax.swing.JLabel lbTotalBike;
     private javax.swing.JLabel lbTotalCar;
+    private javax.swing.JLabel lbTotalFeeVExit;
     private javax.swing.JLabel lbTotalHeavyVehicle;
     private javax.swing.JLabel lbTotalRickshaw;
+    private javax.swing.JLabel lbVehicleNameVExit;
+    private javax.swing.JLabel lbVehicleTypeVExit;
     private javax.swing.JPanel pnHome;
     private javax.swing.JPanel pnMain;
     private javax.swing.JPanel pnMenu;
@@ -723,6 +1190,8 @@ public class WorkerHome extends javax.swing.JFrame {
     private javax.swing.JPanel pnParkingFee;
     private javax.swing.JPanel pnParkingLot;
     private javax.swing.JPanel pnTitle;
+    private javax.swing.JPanel pnVehicleEntrance;
+    private javax.swing.JPanel pnVehicleExit;
     private javax.swing.JTextField tfOwnerName;
     // End of variables declaration//GEN-END:variables
 

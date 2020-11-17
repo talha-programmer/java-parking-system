@@ -59,5 +59,12 @@ public class ParkedVehicle {
         return this.id;
     }
 
+    public ArrayList<Integer> getMatchedIds(String matchText, int parkingLotId){
+        return db.getMatchedIds(matchText, parkingLotId);
+    }
 
+
+    public boolean deleteParkedVehicle(int parkedVehicleId) {
+        return db.deleteParkedVehicle(parkedVehicleId);
+    }
 }

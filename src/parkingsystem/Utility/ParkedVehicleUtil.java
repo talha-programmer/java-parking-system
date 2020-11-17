@@ -11,6 +11,14 @@ public class ParkedVehicleUtil {
     private ParkedVehicle parkedVehicle = new ParkedVehicle();
     private Vehicle vehicle = new Vehicle();
     private VehicleUtil vehicleUtil = new VehicleUtil();
+    private HashMap<Integer, ParkedVehicle> allParkedVehicles = new HashMap<>();
+
+    public ParkedVehicleUtil(){
+        ArrayList<ParkedVehicle> parkedVehicles =   parkedVehicle.getAllParkedVehicle();
+        for(ParkedVehicle parkedVehicle: parkedVehicles){
+            allParkedVehicles.put(parkedVehicle.getId(), parkedVehicle);
+        }
+    }
 
     public HashMap<Integer, Integer> getTotalParkedVehicles(int parkingLotId){
         // Key represents Vehicle Type and value represents total vehicles parked
@@ -30,5 +38,29 @@ public class ParkedVehicleUtil {
         }
 
         return totalVehicles;
+    }
+
+    public ParkedVehicle getParkedVehicleWithId(int pvId){
+        return allParkedVehicles.getOrDefault(pvId, null);
+    }
+
+    public ParkedVehicle getParkedVehicleWithPLId(int parkingLotId, int parkedVehicleId){
+        ArrayList<ParkedVehicle> pvInCurrentPL = parkedVehicle.getParkedVehicleWithPLId(parkingLotId);
+        for(ParkedVehicle pv: pvInCurrentPL){
+            if(pv.getId() == parkedVehicleId){
+                return pv;
+            }
+        }
+        return null;
+    }
+
+    public ParkedVehicle getParkedVehicleWithVehicleId(int parkingLotId, int vehicleId) {
+        ArrayList<ParkedVehicle> pvInCurrentPL = parkedVehicle.getParkedVehicleWithPLId(parkingLotId);
+        for(ParkedVehicle pv: pvInCurrentPL){
+            if(pv.getVehicleId() == vehicleId){
+                return pv;
+            }
+        }
+        return null;
     }
 }

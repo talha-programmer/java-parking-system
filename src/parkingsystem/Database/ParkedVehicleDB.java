@@ -21,6 +21,7 @@ public class ParkedVehicleDB extends Database{
             while (resultSet.next()){
                 ParkedVehicle parkedVehicle = new ParkedVehicle();
                 parkedVehicle.setId(resultSet.getInt("id"));
+                parkedVehicle.setVehicleId(resultSet.getInt("vehicle_id"));
                 parkedVehicle.setParkingLotId(resultSet.getInt("parking_lot_id"));
                 parkedVehicle.setParkTime(resultSet.getTimestamp("time_parked"));
                 parkedVehicles.add(parkedVehicle);
@@ -86,5 +87,47 @@ public class ParkedVehicleDB extends Database{
         }
 
         return parkedVehicles;
+    }
+
+    public ArrayList<Integer> getMatchedIds(String matchText, int parkingLotId) {
+        ArrayList<Integer> matchedIds = new ArrayList<>();
+        String query = "SELECT id FROM parked_vehicle WHERE " +
+                "id LIKE '" + matchText + "%' AND parking_lot_id = ? ";
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, parkingLotId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                matchedIds.add(id);
+            }
+        } catch (SQLException exception) {
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
+        }
+
+
+        return matchedIds;
+    }
+
+    public boolean deleteParkedVehicle(int parkedVehicleId) {
+        String query = "DELETE FROM parked_vehicle ";
+        query += "WHERE id = ? ";
+
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, parkedVehicleId);
+
+            int rowsEffected = statement.executeUpdate();
+            if(rowsEffected > 0){
+                return true;
+            }
+
+        } catch (SQLException exception) {
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
+        }
+
+        return false;
     }
 }
