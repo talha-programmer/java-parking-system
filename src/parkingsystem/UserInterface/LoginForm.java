@@ -55,12 +55,17 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Parking System");
 
-        jLabel1.setFont(new java.awt.Font("Noto Sans", 0, 16)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel1.setText("Username");
 
         tfUsername.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        tfUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfUsernameActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setFont(new java.awt.Font("Noto Sans", 0, 16)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel2.setText("Password");
 
         tfPassword.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
@@ -70,7 +75,7 @@ public class LoginForm extends javax.swing.JFrame {
             }
         });
 
-        btCancel.setFont(new java.awt.Font("Noto Sans", 0, 16)); // NOI18N
+        btCancel.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         btCancel.setText("Cancel");
         btCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,7 +83,7 @@ public class LoginForm extends javax.swing.JFrame {
             }
         });
 
-        btLogin.setFont(new java.awt.Font("Noto Sans", 0, 16)); // NOI18N
+        btLogin.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         btLogin.setText("Login");
         btLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +105,7 @@ public class LoginForm extends javax.swing.JFrame {
                         .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                         .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -173,6 +178,10 @@ public class LoginForm extends javax.swing.JFrame {
     private void btCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelActionPerformed
         this.dispose();
     }//GEN-LAST:event_btCancelActionPerformed
+
+    private void tfUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfUsernameActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

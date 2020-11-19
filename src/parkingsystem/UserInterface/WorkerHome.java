@@ -119,10 +119,11 @@ public class WorkerHome extends javax.swing.JFrame {
             }
         });
 
-        // Add details of currently logged in user in update profile panel
+        // Add details of currently logged in user in update profile panel and title username
         String username = loggedInUser.getUsername();
         String fullName = loggedInUser.getFullName();
         String email = loggedInUser.getEmail();
+        lbCurrentUser.setText("User: " + username);
         lbUsernameUP.setText(username);
         tfFullNameUP.setText(fullName);
         tfEmailUP.setText(email);
@@ -225,6 +226,7 @@ public class WorkerHome extends javax.swing.JFrame {
         lbPLlocation = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lbPLName = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
         pnMenu = new javax.swing.JPanel();
         lbParkVehicle = new javax.swing.JLabel();
         lbHome = new javax.swing.JLabel();
@@ -233,21 +235,26 @@ public class WorkerHome extends javax.swing.JFrame {
         pnTitle = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        lbCurrentUser = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         cbSelectedParkingLot = new javax.swing.JComboBox<>();
         pnParkVehicle = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         pnVehicleEntrance = new javax.swing.JPanel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        cbRegNumber = new javax.swing.JComboBox<>();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        cbVehicleType = new javax.swing.JComboBox<>();
-        cbVehicleName = new javax.swing.JComboBox<>();
-        tfOwnerName = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
+        cbVehicleType = new javax.swing.JComboBox<>();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        tfOwnerName = new javax.swing.JTextField();
         btnParkVehicle = new javax.swing.JButton();
+        cbVehicleName = new javax.swing.JComboBox<>();
+        cbRegNumber = new javax.swing.JComboBox<>();
+        jLabel21 = new javax.swing.JLabel();
+        pnAllParkedVehicles = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbAllParkedVehicles = new javax.swing.JTable();
         pnVehicleExit = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
@@ -273,9 +280,6 @@ public class WorkerHome extends javax.swing.JFrame {
         lbChangeAmountVExit = new javax.swing.JLabel();
         btnVehicleExit = new javax.swing.JButton();
         lbRegNumberVExit = new javax.swing.JLabel();
-        pnAllParkedVehicles = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbAllParkedVehicles = new javax.swing.JTable();
         pnSalesReport = new javax.swing.JPanel();
         jLabel37 = new javax.swing.JLabel();
         dcDateFrom = new com.toedter.calendar.JDateChooser();
@@ -318,120 +322,185 @@ public class WorkerHome extends javax.swing.JFrame {
 
         pnHome.setBackground(new java.awt.Color(255, 255, 255));
         pnHome.setVerifyInputWhenFocusTarget(false);
-        pnHome.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnParkingFee.setBackground(new java.awt.Color(255, 255, 255));
+        pnParkingFee.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         pnParkingFee.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lbHeavyVehicleFee.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         lbHeavyVehicleFee.setText("lbHeavyVehicleFee");
-        pnParkingFee.add(lbHeavyVehicleFee, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 171, -1, -1));
+        pnParkingFee.add(lbHeavyVehicleFee, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 179, -1, -1));
 
+        jLabel14.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel14.setText("Heavy Vehicle Fee");
-        pnParkingFee.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 171, -1, -1));
+        pnParkingFee.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 179, -1, -1));
 
+        jLabel13.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel13.setText("Car Fee");
-        pnParkingFee.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 134, -1, -1));
+        pnParkingFee.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 141, -1, -1));
 
+        jLabel12.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel12.setText("Rickshaw Fee");
-        pnParkingFee.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 97, -1, -1));
+        pnParkingFee.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 103, -1, -1));
 
+        jLabel11.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel11.setText("Bike Fee");
-        pnParkingFee.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 60, -1, -1));
+        pnParkingFee.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 65, -1, -1));
 
+        lbBikeFee.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         lbBikeFee.setText("lbBikeFee");
-        pnParkingFee.add(lbBikeFee, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 60, -1, -1));
+        pnParkingFee.add(lbBikeFee, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 65, -1, -1));
 
+        lbRickshawFee.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         lbRickshawFee.setText("lbRickshawFee");
-        pnParkingFee.add(lbRickshawFee, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 97, -1, -1));
+        pnParkingFee.add(lbRickshawFee, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 103, -1, -1));
 
+        lbCarFee.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         lbCarFee.setText("lbCarFee");
-        pnParkingFee.add(lbCarFee, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 134, -1, -1));
+        pnParkingFee.add(lbCarFee, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 141, -1, -1));
 
+        jLabel10.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Parking Fee Details (Per Hour)");
-        pnParkingFee.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 23, -1, -1));
-
-        pnHome.add(pnParkingFee, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+        pnParkingFee.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 18, 297, -1));
 
         pnParkedVehicles.setBackground(new java.awt.Color(255, 255, 255));
+        pnParkedVehicles.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         pnParkedVehicles.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel15.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Currently Parked Vehicles");
-        pnParkedVehicles.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, -1, -1));
+        pnParkedVehicles.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 13, 300, -1));
 
+        jLabel16.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel16.setText("Bike");
-        pnParkedVehicles.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 43, -1, -1));
+        pnParkedVehicles.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 60, -1, -1));
 
+        jLabel17.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel17.setText("Rickshaw");
-        pnParkedVehicles.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 80, -1, -1));
+        pnParkedVehicles.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 98, -1, -1));
 
+        jLabel19.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel19.setText("Car");
-        pnParkedVehicles.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 117, -1, -1));
+        pnParkedVehicles.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 136, -1, -1));
 
+        jLabel18.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel18.setText("Heavy Vehicle");
-        pnParkedVehicles.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 154, -1, -1));
+        pnParkedVehicles.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 174, -1, -1));
 
+        lbTotalHeavyVehicle.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         lbTotalHeavyVehicle.setText("lbHeavyVehicleFee");
-        pnParkedVehicles.add(lbTotalHeavyVehicle, new org.netbeans.lib.awtextra.AbsoluteConstraints(124, 154, -1, -1));
+        pnParkedVehicles.add(lbTotalHeavyVehicle, new org.netbeans.lib.awtextra.AbsoluteConstraints(154, 174, -1, -1));
 
+        lbTotalCar.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         lbTotalCar.setText("lbCarFee");
-        pnParkedVehicles.add(lbTotalCar, new org.netbeans.lib.awtextra.AbsoluteConstraints(124, 117, -1, -1));
+        pnParkedVehicles.add(lbTotalCar, new org.netbeans.lib.awtextra.AbsoluteConstraints(154, 136, -1, -1));
 
+        lbTotalRickshaw.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         lbTotalRickshaw.setText("lbTotalRickshaw");
-        pnParkedVehicles.add(lbTotalRickshaw, new org.netbeans.lib.awtextra.AbsoluteConstraints(124, 80, -1, -1));
+        pnParkedVehicles.add(lbTotalRickshaw, new org.netbeans.lib.awtextra.AbsoluteConstraints(154, 98, -1, -1));
 
+        lbTotalBike.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         lbTotalBike.setText("lbTotalBike");
-        pnParkedVehicles.add(lbTotalBike, new org.netbeans.lib.awtextra.AbsoluteConstraints(124, 43, -1, -1));
-
-        pnHome.add(pnParkedVehicles, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, -1, 180));
+        pnParkedVehicles.add(lbTotalBike, new org.netbeans.lib.awtextra.AbsoluteConstraints(154, 60, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel3.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Vehicle Capacities");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 6, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 7, 374, -1));
 
+        jLabel6.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel6.setText("Bike Capacity");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 43, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 51, -1, -1));
 
+        jLabel7.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel7.setText("Rickshaw Capacity");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 68, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 83, -1, -1));
 
+        jLabel8.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel8.setText("Car Capacity");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 105, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 115, -1, -1));
 
+        jLabel9.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel9.setText("Heavy Vehicle Capacity");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 142, -1, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 147, -1, -1));
 
+        lbHeavyVehicleCapacity.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         lbHeavyVehicleCapacity.setText("lbHeavyVehicleCapacity");
-        jPanel1.add(lbHeavyVehicleCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(172, 142, -1, -1));
+        jPanel1.add(lbHeavyVehicleCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(208, 147, -1, -1));
 
+        lbCarCapacity.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         lbCarCapacity.setText("lbCarCapacity");
-        jPanel1.add(lbCarCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(172, 105, -1, -1));
+        jPanel1.add(lbCarCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(208, 115, -1, -1));
 
+        lbRickshawCapacity.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         lbRickshawCapacity.setText("lbRickshawCapacity");
-        jPanel1.add(lbRickshawCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(172, 68, -1, -1));
+        jPanel1.add(lbRickshawCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(208, 83, -1, -1));
 
+        lbBikeCapacity.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         lbBikeCapacity.setText("lbBikeCapacity");
-        jPanel1.add(lbBikeCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(172, 43, -1, -1));
-
-        pnHome.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, -1, -1));
+        jPanel1.add(lbBikeCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(208, 51, -1, -1));
 
         pnParkingLot.setBackground(new java.awt.Color(255, 255, 255));
+        pnParkingLot.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         pnParkingLot.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel4.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         jLabel4.setText("Location");
-        pnParkingLot.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 80, -1, -1));
+        pnParkingLot.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 119, -1, -1));
 
+        lbPLlocation.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         lbPLlocation.setText("lbPLlocation");
-        pnParkingLot.add(lbPLlocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(95, 80, -1, -1));
+        pnParkingLot.add(lbPLlocation, new org.netbeans.lib.awtextra.AbsoluteConstraints(111, 119, -1, -1));
 
-        jLabel2.setText("Parking Lot");
-        pnParkingLot.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, -1, -1));
+        jLabel2.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel2.setText("Name");
+        pnParkingLot.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 71, -1, -1));
 
+        lbPLName.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
         lbPLName.setText("lbPLName");
-        pnParkingLot.add(lbPLName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
+        pnParkingLot.add(lbPLName, new org.netbeans.lib.awtextra.AbsoluteConstraints(111, 71, -1, -1));
 
-        pnHome.add(pnParkingLot, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+        jLabel48.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
+        jLabel48.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel48.setText("Parking Lot");
+        pnParkingLot.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 15, 248, -1));
+
+        javax.swing.GroupLayout pnHomeLayout = new javax.swing.GroupLayout(pnHome);
+        pnHome.setLayout(pnHomeLayout);
+        pnHomeLayout.setHorizontalGroup(
+            pnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnHomeLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pnHomeLayout.createSequentialGroup()
+                        .addComponent(pnParkingFee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pnParkedVehicles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnHomeLayout.createSequentialGroup()
+                        .addComponent(pnParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+        pnHomeLayout.setVerticalGroup(
+            pnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnHomeLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                    .addComponent(pnParkingLot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(pnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnParkingFee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnParkedVehicles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
         pnMain.add(pnHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 124, 700, 450));
 
@@ -491,18 +560,18 @@ public class WorkerHome extends javax.swing.JFrame {
         pnMenuLayout.setHorizontalGroup(
             pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnMenuLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(27, 27, 27)
                 .addGroup(pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbHome, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                    .addComponent(lbParkVehicle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbSalesReport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbUpdateProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(lbUpdateProfile)
+                    .addComponent(lbParkVehicle)
+                    .addComponent(lbHome)
+                    .addComponent(lbSalesReport))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         pnMenuLayout.setVerticalGroup(
             pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnMenuLayout.createSequentialGroup()
-                .addGap(96, 96, 96)
+                .addGap(138, 138, 138)
                 .addComponent(lbHome, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lbParkVehicle, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -510,28 +579,43 @@ public class WorkerHome extends javax.swing.JFrame {
                 .addComponent(lbSalesReport, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lbUpdateProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(298, Short.MAX_VALUE))
+                .addContainerGap(256, Short.MAX_VALUE))
         );
 
         pnMain.add(pnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pnTitle.setBackground(new java.awt.Color(255, 255, 255));
-        pnTitle.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.setBackground(new java.awt.Color(53, 59, 72));
 
         jLabel5.setFont(new java.awt.Font("Noto Sans", 1, 36)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 102));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Parking System");
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 70));
 
-        pnTitle.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 70));
+        lbCurrentUser.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
+        lbCurrentUser.setForeground(new java.awt.Color(255, 255, 255));
+        lbCurrentUser.setText("User: ");
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(135, 135, 135)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                .addComponent(lbCurrentUser, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(lbCurrentUser, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        jLabel1.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
         jLabel1.setText("Parking Lot");
-        pnTitle.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
 
         cbSelectedParkingLot.setMaximumRowCount(100);
         cbSelectedParkingLot.addActionListener(new java.awt.event.ActionListener() {
@@ -539,7 +623,28 @@ public class WorkerHome extends javax.swing.JFrame {
                 cbSelectedParkingLotActionPerformed(evt);
             }
         });
-        pnTitle.add(cbSelectedParkingLot, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 80, 130, -1));
+
+        javax.swing.GroupLayout pnTitleLayout = new javax.swing.GroupLayout(pnTitle);
+        pnTitle.setLayout(pnTitleLayout);
+        pnTitleLayout.setHorizontalGroup(
+            pnTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(pnTitleLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1)
+                .addGap(28, 28, 28)
+                .addComponent(cbSelectedParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        pnTitleLayout.setVerticalGroup(
+            pnTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnTitleLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(cbSelectedParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2))
+        );
 
         pnMain.add(pnTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 710, 120));
 
@@ -549,9 +654,31 @@ public class WorkerHome extends javax.swing.JFrame {
 
         pnVehicleEntrance.setBackground(new java.awt.Color(255, 255, 255));
 
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jLabel23.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel23.setText("Owner Name");
+
+        jLabel20.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("Vehicle Entrance");
 
-        jLabel21.setText("Registration Number");
+        jLabel24.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel24.setText("Vehicle Type");
+
+        jLabel22.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel22.setText("Vehicle Name");
+
+        btnParkVehicle.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        btnParkVehicle.setText("Go");
+        btnParkVehicle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnParkVehicleActionPerformed(evt);
+            }
+        });
+
+        cbVehicleName.setEditable(true);
 
         cbRegNumber.setEditable(true);
         cbRegNumber.addActionListener(new java.awt.event.ActionListener() {
@@ -560,247 +687,79 @@ public class WorkerHome extends javax.swing.JFrame {
             }
         });
 
-        jLabel22.setText("Vehicle Name");
+        jLabel21.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel21.setText("Registration Number");
 
-        jLabel24.setText("Vehicle Type");
-
-        cbVehicleName.setEditable(true);
-
-        jLabel23.setText("Owner Name");
-
-        btnParkVehicle.setText("Go");
-        btnParkVehicle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnParkVehicleActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21)
+                            .addComponent(jLabel23)
+                            .addComponent(jLabel22))
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbVehicleName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbRegNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbVehicleType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel24))
+                .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnParkVehicle)
+                .addGap(150, 150, 150))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel20)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(cbRegNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22)
+                    .addComponent(cbVehicleName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(cbVehicleType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel23))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(btnParkVehicle)
+                .addGap(19, 19, 19))
+        );
 
         javax.swing.GroupLayout pnVehicleEntranceLayout = new javax.swing.GroupLayout(pnVehicleEntrance);
         pnVehicleEntrance.setLayout(pnVehicleEntranceLayout);
         pnVehicleEntranceLayout.setHorizontalGroup(
             pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnVehicleEntranceLayout.createSequentialGroup()
-                .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnVehicleEntranceLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnParkVehicle, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(pnVehicleEntranceLayout.createSequentialGroup()
-                                    .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel21)
-                                        .addComponent(jLabel23)
-                                        .addComponent(jLabel22))
-                                    .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(pnVehicleEntranceLayout.createSequentialGroup()
-                                            .addGap(57, 57, 57)
-                                            .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(tfOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(cbRegNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnVehicleEntranceLayout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(cbVehicleName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGroup(pnVehicleEntranceLayout.createSequentialGroup()
-                                    .addComponent(jLabel24)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbVehicleType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(pnVehicleEntranceLayout.createSequentialGroup()
-                        .addGap(128, 128, 128)
-                        .addComponent(jLabel20)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnVehicleEntranceLayout.createSequentialGroup()
+                .addContainerGap(154, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(159, 159, 159))
         );
         pnVehicleEntranceLayout.setVerticalGroup(
             pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnVehicleEntranceLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel20)
-                .addGap(18, 18, 18)
-                .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel21)
-                    .addComponent(cbRegNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel22)
-                    .addComponent(cbVehicleName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24)
-                    .addComponent(cbVehicleType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnVehicleEntranceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfOwnerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23))
-                .addGap(40, 40, 40)
-                .addComponent(btnParkVehicle)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(47, 47, 47)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Vehicle Entrance", pnVehicleEntrance);
-
-        pnVehicleExit.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel25.setText("Token Number");
-
-        jLabel26.setText("Registration Number");
-
-        jLabel27.setText("Vehicle Name");
-
-        lbVehicleNameVExit.setText("Nil");
-
-        jLabel28.setText("Vehicle Type");
-
-        lbVehicleTypeVExit.setText("Nil");
-
-        jLabel29.setText("Customer Name");
-
-        lbCustomerNameVExit.setText("Nil");
-
-        jLabel30.setText("Parking Fee");
-
-        lbParkingFeeVExit.setText("Nil");
-
-        jLabel31.setText("Time Entrance");
-
-        lbTimeEntranceVExit.setText("Nil");
-
-        jLabel32.setText("Time Exit");
-
-        lbTimeExitVExit.setText("Nil");
-
-        cbTokenNumberVExit.setEditable(true);
-        cbTokenNumberVExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbTokenNumberVExitActionPerformed(evt);
-            }
-        });
-
-        jLabel33.setText("Payment ");
-
-        jLabel34.setText("Total Fee");
-
-        lbTotalFeeVExit.setText("Nil");
-
-        jLabel35.setText("Payed Amount");
-
-        ftfPayedAmountVExit.setFormatterFactory(NumberFormatting.floatFormatterFactory());
-        ftfPayedAmountVExit.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                ftfPayedAmountVExitKeyReleased(evt);
-            }
-        });
-
-        jLabel36.setText("Change Amount");
-
-        lbChangeAmountVExit.setText("Nil");
-
-        btnVehicleExit.setText("Go");
-        btnVehicleExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVehicleExitActionPerformed(evt);
-            }
-        });
-
-        lbRegNumberVExit.setText("Nil");
-
-        javax.swing.GroupLayout pnVehicleExitLayout = new javax.swing.GroupLayout(pnVehicleExit);
-        pnVehicleExit.setLayout(pnVehicleExitLayout);
-        pnVehicleExitLayout.setHorizontalGroup(
-            pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnVehicleExitLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel29)
-                    .addComponent(jLabel25)
-                    .addComponent(jLabel28)
-                    .addComponent(jLabel31))
-                .addGap(35, 35, 35)
-                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbCustomerNameVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbVehicleTypeVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbTimeEntranceVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbTokenNumberVExit, 0, 150, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel26)
-                    .addComponent(jLabel27)
-                    .addComponent(jLabel30)
-                    .addComponent(jLabel32))
-                .addGap(28, 28, 28)
-                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lbParkingFeeVExit, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                        .addComponent(lbVehicleNameVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbTimeExitVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(lbRegNumberVExit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11))
-            .addGroup(pnVehicleExitLayout.createSequentialGroup()
-                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnVehicleExitLayout.createSequentialGroup()
-                        .addGap(167, 167, 167)
-                        .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel34)
-                            .addComponent(jLabel35)
-                            .addComponent(jLabel36))
-                        .addGap(44, 44, 44)
-                        .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lbTotalFeeVExit, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ftfPayedAmountVExit, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                            .addComponent(lbChangeAmountVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(pnVehicleExitLayout.createSequentialGroup()
-                        .addGap(240, 240, 240)
-                        .addComponent(jLabel33))
-                    .addGroup(pnVehicleExitLayout.createSequentialGroup()
-                        .addGap(248, 248, 248)
-                        .addComponent(btnVehicleExit)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        pnVehicleExitLayout.setVerticalGroup(
-            pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnVehicleExitLayout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel26)
-                    .addComponent(jLabel25)
-                    .addComponent(cbTokenNumberVExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbRegNumberVExit))
-                .addGap(18, 18, 18)
-                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel29)
-                    .addComponent(lbCustomerNameVExit)
-                    .addComponent(jLabel27)
-                    .addComponent(lbVehicleNameVExit))
-                .addGap(18, 18, 18)
-                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel28)
-                    .addComponent(lbVehicleTypeVExit)
-                    .addComponent(jLabel30)
-                    .addComponent(lbParkingFeeVExit))
-                .addGap(18, 18, 18)
-                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel31)
-                    .addComponent(lbTimeEntranceVExit)
-                    .addComponent(jLabel32)
-                    .addComponent(lbTimeExitVExit))
-                .addGap(32, 32, 32)
-                .addComponent(jLabel33)
-                .addGap(18, 18, 18)
-                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel34)
-                    .addComponent(lbTotalFeeVExit))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel35)
-                    .addComponent(ftfPayedAmountVExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel36)
-                    .addComponent(lbChangeAmountVExit))
-                .addGap(18, 18, 18)
-                .addComponent(btnVehicleExit)
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Vehicle Exit", pnVehicleExit);
 
         pnAllParkedVehicles.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -839,6 +798,193 @@ public class WorkerHome extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("All Parked Vehicles", pnAllParkedVehicles);
 
+        pnVehicleExit.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel25.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel25.setText("Token Number");
+
+        jLabel26.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel26.setText("Registration Number");
+
+        jLabel27.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel27.setText("Vehicle Name");
+
+        lbVehicleNameVExit.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        lbVehicleNameVExit.setText("Nil");
+
+        jLabel28.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel28.setText("Vehicle Type");
+
+        lbVehicleTypeVExit.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        lbVehicleTypeVExit.setText("Nil");
+
+        jLabel29.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel29.setText("Customer Name");
+
+        lbCustomerNameVExit.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        lbCustomerNameVExit.setText("Nil");
+
+        jLabel30.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel30.setText("Parking Fee");
+
+        lbParkingFeeVExit.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        lbParkingFeeVExit.setText("Nil");
+
+        jLabel31.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel31.setText("Time Entrance");
+
+        lbTimeEntranceVExit.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        lbTimeEntranceVExit.setText("Nil");
+
+        jLabel32.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel32.setText("Time Exit");
+
+        lbTimeExitVExit.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        lbTimeExitVExit.setText("Nil");
+
+        cbTokenNumberVExit.setEditable(true);
+        cbTokenNumberVExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTokenNumberVExitActionPerformed(evt);
+            }
+        });
+
+        jLabel33.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
+        jLabel33.setText("Payment ");
+
+        jLabel34.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel34.setText("Total Fee");
+
+        lbTotalFeeVExit.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        lbTotalFeeVExit.setText("Nil");
+
+        jLabel35.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel35.setText("Payed Amount");
+
+        ftfPayedAmountVExit.setFormatterFactory(NumberFormatting.floatFormatterFactory());
+        ftfPayedAmountVExit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ftfPayedAmountVExitKeyReleased(evt);
+            }
+        });
+
+        jLabel36.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel36.setText("Change Amount");
+
+        lbChangeAmountVExit.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        lbChangeAmountVExit.setText("Nil");
+
+        btnVehicleExit.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        btnVehicleExit.setText("Go");
+        btnVehicleExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVehicleExitActionPerformed(evt);
+            }
+        });
+
+        lbRegNumberVExit.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        lbRegNumberVExit.setText("Nil");
+
+        javax.swing.GroupLayout pnVehicleExitLayout = new javax.swing.GroupLayout(pnVehicleExit);
+        pnVehicleExit.setLayout(pnVehicleExitLayout);
+        pnVehicleExitLayout.setHorizontalGroup(
+            pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnVehicleExitLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel29)
+                    .addComponent(jLabel25)
+                    .addComponent(jLabel28)
+                    .addComponent(jLabel31))
+                .addGap(35, 35, 35)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbCustomerNameVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbVehicleTypeVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbTimeEntranceVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbTokenNumberVExit, 0, 150, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel26)
+                    .addComponent(jLabel27)
+                    .addComponent(jLabel30)
+                    .addComponent(jLabel32))
+                .addGap(28, 28, 28)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(lbParkingFeeVExit, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                        .addComponent(lbVehicleNameVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lbTimeExitVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbRegNumberVExit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11))
+            .addGroup(pnVehicleExitLayout.createSequentialGroup()
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnVehicleExitLayout.createSequentialGroup()
+                        .addGap(167, 167, 167)
+                        .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel34)
+                            .addComponent(jLabel35)
+                            .addComponent(jLabel36))
+                        .addGap(44, 44, 44)
+                        .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbTotalFeeVExit, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ftfPayedAmountVExit, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                            .addComponent(lbChangeAmountVExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(pnVehicleExitLayout.createSequentialGroup()
+                        .addGap(240, 240, 240)
+                        .addComponent(jLabel33))
+                    .addGroup(pnVehicleExitLayout.createSequentialGroup()
+                        .addGap(248, 248, 248)
+                        .addComponent(btnVehicleExit)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnVehicleExitLayout.setVerticalGroup(
+            pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnVehicleExitLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(jLabel25)
+                    .addComponent(cbTokenNumberVExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbRegNumberVExit))
+                .addGap(18, 18, 18)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(lbCustomerNameVExit)
+                    .addComponent(jLabel27)
+                    .addComponent(lbVehicleNameVExit))
+                .addGap(18, 18, 18)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(lbVehicleTypeVExit)
+                    .addComponent(jLabel30)
+                    .addComponent(lbParkingFeeVExit))
+                .addGap(18, 18, 18)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel31)
+                    .addComponent(lbTimeEntranceVExit)
+                    .addComponent(jLabel32)
+                    .addComponent(lbTimeExitVExit))
+                .addGap(38, 38, 38)
+                .addComponent(jLabel33)
+                .addGap(18, 18, 18)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel34)
+                    .addComponent(lbTotalFeeVExit))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel35)
+                    .addComponent(ftfPayedAmountVExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnVehicleExitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel36)
+                    .addComponent(lbChangeAmountVExit))
+                .addGap(18, 18, 18)
+                .addComponent(btnVehicleExit)
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Vehicle Exit", pnVehicleExit);
+
         javax.swing.GroupLayout pnParkVehicleLayout = new javax.swing.GroupLayout(pnParkVehicle);
         pnParkVehicle.setLayout(pnParkVehicleLayout);
         pnParkVehicleLayout.setHorizontalGroup(
@@ -859,6 +1005,7 @@ public class WorkerHome extends javax.swing.JFrame {
         pnMain.add(pnParkVehicle, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 124, 700, 450));
 
         pnSalesReport.setBackground(new java.awt.Color(255, 255, 255));
+        pnSalesReport.setPreferredSize(new java.awt.Dimension(708, 450));
 
         jLabel37.setText("Date From");
 
@@ -1184,7 +1331,7 @@ public class WorkerHome extends javax.swing.JFrame {
         pnSalesReport.setVisible(true);
         pnHome.setVisible(false);
         pnParkVehicle.setVisible(false);
-        pnSalesReport.setVisible(false);
+        pnUpdateProfile.setVisible(false);
     }//GEN-LAST:event_lbSalesReportMouseClicked
 
     private void lbUpdateProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbUpdateProfileMouseClicked
@@ -1577,6 +1724,7 @@ public class WorkerHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1587,6 +1735,7 @@ public class WorkerHome extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1596,6 +1745,7 @@ public class WorkerHome extends javax.swing.JFrame {
     private javax.swing.JLabel lbCarCapacity;
     private javax.swing.JLabel lbCarFee;
     private javax.swing.JLabel lbChangeAmountVExit;
+    private javax.swing.JLabel lbCurrentUser;
     private javax.swing.JLabel lbCustomerNameVExit;
     private javax.swing.JLabel lbHeavyVehicleCapacity;
     private javax.swing.JLabel lbHeavyVehicleFee;

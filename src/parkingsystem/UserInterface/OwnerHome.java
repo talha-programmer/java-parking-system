@@ -17,6 +17,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -1373,92 +1374,84 @@ public class OwnerHome extends javax.swing.JFrame {
      *  through their respective classes.
      * */
     private void btnSavePLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSavePLActionPerformed
+        ParkingLotUtil plUtil = new ParkingLotUtil();
+        ArrayList<String> allPLNames = plUtil.getAllPLNames();
+
         // Getting all the text fields in String first because exception occurs in case of
         // directly parsing to int if no input is provided in the form
         String name = tfName.getText();
         String location = tfLocation.getText();
-        String bikeCapacity = ftfBikeCapacity.getText();
-        String rickshawCapacity = ftfRickshawCapacity.getText();
-        String carCapacity = ftfCarCapacity.getText();
-        String heavyVehicleCapacity = ftfHeavyVehicleCapacity.getText();
 
-        String bikeFee = ftfBikeFee.getText();
-        String rickshawFee = ftfRickshawFee.getText();
-        String carFee = ftfCarFee.getText();
-        String heavyVehicleFee = ftfHeavyVehicleFee.getText();
+        String bikeCapacity = ftfBikeCapacity.getText().replace("," , "");
+        String rickshawCapacity = ftfRickshawCapacity.getText().replace("," , "");
+        String carCapacity = ftfCarCapacity.getText().replace("," , "");
+        String heavyVehicleCapacity = ftfHeavyVehicleCapacity.getText().replace("," , "");
 
-        // Perform validation checks for all fields
-        String message = "";
-        if(location.isBlank()){
-            message += "- Location is required\n";
-        }
-        if(name.isBlank()){
-            message += "- Name is required\n";
-        }
+        String bikeFee = ftfBikeFee.getText().replace("," , "");
+        String rickshawFee = ftfRickshawFee.getText().replace("," , "");
+        String carFee = ftfCarFee.getText().replace("," , "");
+        String heavyVehicleFee = ftfHeavyVehicleFee.getText().replace("," , "");
 
-        if(bikeCapacity.isBlank()){
-            message += "- Provide valid value for Bike Capacity (In Numbers)\n";
-        }
 
-        if(carCapacity.isBlank()){
-            message += "- Provide valid value for Car Capacity (In Numbers)\n";
-        }
-        if(rickshawCapacity.isBlank()){
-            message += "- Provide valid value for Rickshaw Capacity (In Numbers)\n";
-        }
-        if(heavyVehicleCapacity.isBlank()){
-            message += "- Provide valid value for Heavy Vehicle Capacity (In Numbers)\n";
-        }
-        if(bikeFee.isBlank()){
-            message += "- Provide valid value for Bike Fee (In Numbers)\n";
-        }
-
-        if(carFee.isBlank()){
-            message += "- Provide valid value for Car Fee (In Numbers)\n";
-        }
-        if(rickshawFee.isBlank()){
-            message += "- Provide valid value for Rickshaw Fee (In Numbers)\n";
-        }
-        if(heavyVehicleFee.isBlank()){
-            message += "- Provide valid value for Heavy Vehicle Fee (In Numbers)\n";
-        }
-        if(!message.isBlank()){
-            message = "Please resolve the following errors:\n" + message;
-            DisplayMessage.displayError(message);
-        }else {
-            ParkingLot parkingLot = new ParkingLot();
-            int bikeCapacityInt = Integer.parseInt(bikeCapacity);
-            int carCapacityInt = Integer.parseInt(carCapacity);
-            int rickshawCapacityInt = Integer.parseInt(rickshawCapacity);
-            int heavyVehicleCapacityInt = Integer.parseInt(heavyVehicleCapacity);
-            float bikeFeeFloat = Float.parseFloat(bikeFee);
-            float carFeeFloat = Float.parseFloat(carFee);
-            float rickshawFeeFloat = Float.parseFloat(rickshawFee);
-            float heavyVehicleFeeFloat = Float.parseFloat(heavyVehicleFee);
-
-            parkingLot.setName(name);
-            parkingLot.setLocation(location);
-            parkingLot.setVehicleCapacity(VehicleTypes.BIKE.getValue(), bikeCapacityInt);
-            parkingLot.setVehicleCapacity(VehicleTypes.CAR.getValue(), carCapacityInt);
-            parkingLot.setVehicleCapacity(VehicleTypes.RICKSHAW.getValue(), rickshawCapacityInt);
-            parkingLot.setVehicleCapacity(VehicleTypes.HEAVY_VEHICLE.getValue(), heavyVehicleCapacityInt);
-
-            parkingLot.setParkingFee(VehicleTypes.BIKE.getValue(), bikeFeeFloat);
-            parkingLot.setParkingFee(VehicleTypes.CAR.getValue(), carFeeFloat);
-            parkingLot.setParkingFee(VehicleTypes.RICKSHAW.getValue(), rickshawFeeFloat);
-            parkingLot.setParkingFee(VehicleTypes.HEAVY_VEHICLE.getValue(), heavyVehicleFeeFloat);
-
-            // If an id is selected, then the existing parking lot will be updated
-            if(selectedParkingLotId > 0){
-                parkingLot.setId(selectedParkingLotId);
+        HashMap<String, String> requiredFields = (HashMap<String, String>) Map.of(
+                "Parking Lot Name", name,
+                "Location", location,
+                "Bike Capacity", bikeCapacity,
+                "Rickshaw Capacity", rickshawCapacity,
+                "Heavy Vehicle Capacity", heavyVehicleCapacity,
+                "Bike Fee", bikeFee,
+                "Rickshaw Fee", rickshawFee,
+                "Car Fee", carFee,
+                "Heavy Vehicle Fee", heavyVehicleFee
+        );
+        String errorMessage = FormUtility.errorMessageForRequiredFields(requiredFields);
+        if(errorMessage.isBlank()){
+            DisplayMessage.displayError(errorMessage);
+        } else {
+            // Check if Parking Lot name already exists.
+            // Parking Lot name must be unique
+            String message = "";
+            if (allPLNames.contains(name)) {
+                message += "- Another parking lot already registered with this name!\n " +
+                        "Please provide a different Parking Lot Name\n";
             }
-
-            if (parkingLot.saveParkingLot()) {
-                FormUtility.clearFields(pnAddParkingLot);
-                DisplayMessage.displayInfo("Parking Lot added successfully!");
-                updateFrame();
+            if (!message.isBlank()) {
+                DisplayMessage.displayError(message);
             } else {
-                DisplayMessage.displayError("Failed to add Parking Lot in database!");
+                ParkingLot parkingLot = new ParkingLot();
+                int bikeCapacityInt = Integer.parseInt(bikeCapacity);
+                int carCapacityInt = Integer.parseInt(carCapacity);
+                int rickshawCapacityInt = Integer.parseInt(rickshawCapacity);
+                int heavyVehicleCapacityInt = Integer.parseInt(heavyVehicleCapacity);
+                float bikeFeeFloat = Float.parseFloat(bikeFee);
+                float carFeeFloat = Float.parseFloat(carFee);
+                float rickshawFeeFloat = Float.parseFloat(rickshawFee);
+                float heavyVehicleFeeFloat = Float.parseFloat(heavyVehicleFee);
+
+                parkingLot.setName(name);
+                parkingLot.setLocation(location);
+                parkingLot.setVehicleCapacity(VehicleTypes.BIKE.getValue(), bikeCapacityInt);
+                parkingLot.setVehicleCapacity(VehicleTypes.CAR.getValue(), carCapacityInt);
+                parkingLot.setVehicleCapacity(VehicleTypes.RICKSHAW.getValue(), rickshawCapacityInt);
+                parkingLot.setVehicleCapacity(VehicleTypes.HEAVY_VEHICLE.getValue(), heavyVehicleCapacityInt);
+
+                parkingLot.setParkingFee(VehicleTypes.BIKE.getValue(), bikeFeeFloat);
+                parkingLot.setParkingFee(VehicleTypes.CAR.getValue(), carFeeFloat);
+                parkingLot.setParkingFee(VehicleTypes.RICKSHAW.getValue(), rickshawFeeFloat);
+                parkingLot.setParkingFee(VehicleTypes.HEAVY_VEHICLE.getValue(), heavyVehicleFeeFloat);
+
+                // If an id is selected, then the existing parking lot will be updated
+                if (selectedParkingLotId > 0) {
+                    parkingLot.setId(selectedParkingLotId);
+                }
+
+                if (parkingLot.saveParkingLot()) {
+                    FormUtility.clearFields(pnAddParkingLot);
+                    DisplayMessage.displayInfo("Parking Lot added successfully!");
+                    updateFrame();
+                } else {
+                    DisplayMessage.displayError("Failed to add Parking Lot in database!");
+                }
             }
         }
     }//GEN-LAST:event_btnSavePLActionPerformed
