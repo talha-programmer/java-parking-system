@@ -1198,13 +1198,11 @@
                                   <Component id="jLabel32" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="lbParkingFeeVExit" pref="150" max="32767" attributes="0"/>
-                                      <Component id="lbVehicleNameVExit" max="32767" attributes="0"/>
-                                      <Component id="lbTimeExitVExit" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Component id="lbRegNumberVExit" min="-2" pref="60" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="lbParkingFeeVExit" pref="150" max="32767" attributes="0"/>
+                                  <Component id="lbVehicleNameVExit" max="32767" attributes="0"/>
+                                  <Component id="lbTimeExitVExit" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lbRegNumberVExit" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                           </Group>
@@ -1620,11 +1618,11 @@
                                   <Component id="jLabel40" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lbTotalTransactions" min="-2" pref="86" max="-2" attributes="0"/>
-                                  <Component id="lbTotalCash" min="-2" pref="86" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="lbTotalTransactions" pref="126" max="32767" attributes="0"/>
+                                  <Component id="lbTotalCash" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>

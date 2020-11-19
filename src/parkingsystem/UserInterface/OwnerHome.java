@@ -1345,17 +1345,17 @@ public class OwnerHome extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 2, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel40))
                 .addGap(39, 39, 39)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbTotalTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbTotalCash, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(81, 81, 81))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbTotalCash, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                    .addComponent(lbTotalTransactions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1378,11 +1378,6 @@ public class OwnerHome extends javax.swing.JFrame {
         jLabel32.setText("Parking Lot");
 
         cbSelectedParkingLot.setMaximumRowCount(100);
-        cbSelectedParkingLot.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbSelectedParkingLotActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnSalesReportLayout = new javax.swing.GroupLayout(pnSalesReport);
         pnSalesReport.setLayout(pnSalesReportLayout);
@@ -1831,67 +1826,63 @@ public class OwnerHome extends javax.swing.JFrame {
     private void btnDisplayReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayReportActionPerformed
         Date dateFrom = dcDateFrom.getDate();
         Date dateTo = dcDateTo.getDate();
+        String plName = cbSelectedParkingLot.getSelectedItem().toString();
+        ParkingLotUtil plUtil = new ParkingLotUtil();
+        if(!plName.contains("Select")) {
+            selectedPL = plUtil.getParkingLotFromName(plName);
+            HashMap<String, String> requiredFields = new HashMap<>();
+            requiredFields.put("Date From", dateFrom.toString());
+            requiredFields.put("Date To", dateTo.toString());
 
-        HashMap<String, String> requiredFields = new HashMap<>();
-        requiredFields.put("Date From", dateFrom.toString());
-        requiredFields.put("Date To", dateTo.toString());
+            String errorMessage = FormUtility.errorMessageForRequiredFields(requiredFields);
+            if (!errorMessage.isBlank()) {
+                DisplayMessage.displayError(errorMessage);
+            } else {
+                Timestamp dateFromTS = TimeFormatting.getTimestampFromDate(dateFrom);
+                Timestamp dateToTS = TimeFormatting.getTimestampFromDate(dateTo);
+                if (dateFromTS == null || dateToTS == null) {
+                    DisplayMessage.displayError("Invalid dates provided! \nEnter again!");
+                } else if (dateToTS.getTime() < dateFromTS.getTime()) {
+                    DisplayMessage.displayError("'Date To' must be greater then or equal to 'Date From' ");
+                } else {
+                    Inventory inventory = new Inventory();
+                    VehicleUtil vehicleUtil = new VehicleUtil();
 
-        String errorMessage = FormUtility.errorMessageForRequiredFields(requiredFields);
-        if(!errorMessage.isBlank()){
-            DisplayMessage.displayError(errorMessage);
-        }else {
-            Timestamp dateFromTS = TimeFormatting.getTimestampFromDate(dateFrom);
-            Timestamp dateToTS = TimeFormatting.getTimestampFromDate(dateTo);
-            if (dateFromTS == null || dateToTS == null) {
-                DisplayMessage.displayError("Invalid dates provided! \nEnter again!");
-            } else if (dateToTS.getTime() < dateFromTS.getTime()) {
-                DisplayMessage.displayError("'Date To' must be greater then or equal to 'Date From' ");
-            } else{
-                Inventory inventory = new Inventory();
-                VehicleUtil vehicleUtil = new VehicleUtil();
+                    // Increase the date to timestamp till the end of day
+                    dateToTS.setTime(dateToTS.getTime() + (86340 * 1000));
 
-                // Increase the date to timestamp till the end of day
-                dateToTS.setTime(dateToTS.getTime()+(86340*1000));
+                    ArrayList<Inventory> inventoryList = inventory.getInventoryWithDates(selectedPL.getId(), dateFromTS, dateToTS);
+                    Object[][] data = new Object[inventoryList.size()][];
+                    Object[] columns = {"Sr No.", "Registration Number", "Vehicle Type", "Time Entrance", "Time Exit", "Total Fee"};
+                    int counter = 0;
+                    float totalCash = 0;
+                    for (Inventory inv : inventoryList) {
+                        int vehicleId = inv.getVehicleId();
 
-                ArrayList<Inventory> inventoryList = inventory.getInventoryWithDates(selectedPL.getId(), dateFromTS, dateToTS);
-                Object[][] data = new Object[inventoryList.size()][];
-                Object[] columns = {"Sr No.", "Registration Number", "Vehicle Type", "Time Entrance", "Time Exit", "Total Fee"};
-                int counter = 0;
-                float totalCash = 0;
-                for(Inventory inv:inventoryList){
-                    int vehicleId = inv.getVehicleId();
+                        Vehicle vehicle = vehicleUtil.getVehicleWithId(vehicleId);
+                        int vehicleTypeValue = vehicle.getVehicleType();
+                        String vehicleTypeName = VehicleTypes.getNameFromValue(vehicleTypeValue);
+                        String regNumber = vehicle.getRegNumber();
+                        Timestamp timeEntrance = inv.getTimeEntrance();
+                        Timestamp timeExit = inv.getTimeExit();
+                        String timeEntranceStr = TimeFormatting.getDateTimeString(timeEntrance);
+                        String timeExitStr = TimeFormatting.getDateTimeString(timeExit);
+                        String totalFee = "Rs " + inv.getTotalFee();
+                        totalCash += inv.getTotalFee();
 
-                    Vehicle vehicle = vehicleUtil.getVehicleWithId(vehicleId);
-                    int vehicleTypeValue = vehicle.getVehicleType();
-                    String vehicleTypeName = VehicleTypes.getNameFromValue(vehicleTypeValue);
-                    String regNumber = vehicle.getRegNumber();
-                    Timestamp timeEntrance = inv.getTimeEntrance();
-                    Timestamp timeExit = inv.getTimeExit();
-                    String timeEntranceStr = TimeFormatting.getDateTimeString(timeEntrance);
-                    String timeExitStr = TimeFormatting.getDateTimeString(timeExit);
-                    String totalFee = "Rs " + inv.getTotalFee();
-                    totalCash += inv.getTotalFee();
+                        data[counter] = new Object[]{counter + 1, regNumber, vehicleTypeName, timeEntranceStr, timeExitStr, totalFee};
+                        counter++;
+                    }
 
-                    data[counter] = new Object[]{counter+1, regNumber, vehicleTypeName, timeEntranceStr, timeExitStr, totalFee};
-                    counter++;
+                    tbSalesReport.setModel(new DefaultTableModel(data, columns));
+                    lbTotalCash.setText("Rs " + totalCash);
+                    lbTotalTransactions.setText(counter + "");
+
                 }
-
-                tbSalesReport.setModel(new DefaultTableModel(data, columns));
-                lbTotalCash.setText("Rs "+ totalCash);
-                lbTotalTransactions.setText(counter+"");
-
             }
         }
 
     }//GEN-LAST:event_btnDisplayReportActionPerformed
-
-    private void cbSelectedParkingLotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSelectedParkingLotActionPerformed
-        String selectedPLName = cbSelectedParkingLot.getSelectedItem().toString();
-        ParkingLotUtil plUtil = new ParkingLotUtil();
-        selectedPL = plUtil.getParkingLotFromName(selectedPLName);
-
-        updateFrame();
-    }//GEN-LAST:event_cbSelectedParkingLotActionPerformed
 
 
 
@@ -2067,8 +2058,12 @@ public class OwnerHome extends javax.swing.JFrame {
 
         // Update parking lot names in sales report combo box
         ArrayList<String> allPLNames = new ParkingLotUtil().getAllPLNames();
-        String[] plNames = allPLNames.toArray(new String[0]);
-        cbSelectedParkingLot.setModel(new DefaultComboBoxModel<String>(plNames));
+        cbSelectedParkingLot.removeAllItems();
+        System.out.println(allPLNames);
+        cbSelectedParkingLot.addItem("...Select Item....");
+        for(String name: allPLNames){
+            cbSelectedParkingLot.addItem(name);
+        }
 
     }
 
