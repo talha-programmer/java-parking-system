@@ -588,7 +588,7 @@ public class WorkerHome extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(53, 59, 72));
 
-        jLabel5.setFont(new java.awt.Font("Noto Sans", 1, 36)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Noto Sans", 1, 30)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Parking System");
