@@ -32,7 +32,8 @@ public class ParkingLotUtil {
     }
 
     public String getPLNameFromId(int id){
-        return parkingLotWithIds.get(id).getName();
+        ParkingLot pl = parkingLotWithIds.getOrDefault(id, null);
+        return pl == null ? null: pl.getName();
     }
 
     public int getPLIdFromName(String name){

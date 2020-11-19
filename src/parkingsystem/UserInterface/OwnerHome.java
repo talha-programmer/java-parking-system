@@ -5,19 +5,15 @@
  */
 package parkingsystem.UserInterface;
 
-import parkingsystem.BusinessLogic.ParkingLot;
-import parkingsystem.BusinessLogic.ParkingLotAllocation;
-import parkingsystem.BusinessLogic.User;
-import parkingsystem.BusinessLogic.Worker;
+import parkingsystem.BusinessLogic.*;
 import parkingsystem.Enums.UserTypes;
 import parkingsystem.Enums.VehicleTypes;
 import parkingsystem.Utility.*;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import javax.swing.table.DefaultTableModel;
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  *
@@ -30,6 +26,8 @@ public class OwnerHome extends javax.swing.JFrame {
     private int selectedParkingLotId = -1;
     private HashMap<String, Integer> allWorkersUsername = null;
 
+    // Declarations for sales report panel
+    private ParkingLot selectedPL = null;
 
     /**
      * Creates new form OwnerHome
@@ -53,6 +51,7 @@ public class OwnerHome extends javax.swing.JFrame {
         pnUser.setVisible(true);
         pnParkingLot.setVisible(false);
         pnUpdateProfile.setVisible(false);
+        pnSalesReport.setVisible(false);
 
         updateFrame();
     }
@@ -72,6 +71,7 @@ public class OwnerHome extends javax.swing.JFrame {
         lbParkingLot = new javax.swing.JLabel();
         lbUpdateProfile = new javax.swing.JLabel();
         lbLogout = new javax.swing.JLabel();
+        lbSalesReport = new javax.swing.JLabel();
         pnTitle = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         lbCurrentUser = new javax.swing.JLabel();
@@ -175,11 +175,28 @@ public class OwnerHome extends javax.swing.JFrame {
         jLabel30 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbPLAllocation = new javax.swing.JTable();
+        pnSalesReport = new javax.swing.JPanel();
+        jLabel37 = new javax.swing.JLabel();
+        dcDateFrom = new com.toedter.calendar.JDateChooser();
+        jLabel38 = new javax.swing.JLabel();
+        dcDateTo = new com.toedter.calendar.JDateChooser();
+        btnDisplayReport = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tbSalesReport = new javax.swing.JTable();
+        jLabel39 = new javax.swing.JLabel();
+        lbTotalCash = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        lbTotalTransactions = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        cbSelectedParkingLot = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home");
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setResizable(false);
 
         pnMain.setBackground(new java.awt.Color(255, 255, 255));
         pnMain.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -238,6 +255,18 @@ public class OwnerHome extends javax.swing.JFrame {
             }
         });
 
+        lbSalesReport.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
+        lbSalesReport.setForeground(new java.awt.Color(255, 255, 255));
+        lbSalesReport.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbSalesReport.setText("Sales Report");
+        lbSalesReport.setFocusable(false);
+        lbSalesReport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbSalesReport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbSalesReportMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnSideMenuLayout = new javax.swing.GroupLayout(pnSideMenu);
         pnSideMenu.setLayout(pnSideMenuLayout);
         pnSideMenuLayout.setHorizontalGroup(
@@ -245,6 +274,7 @@ public class OwnerHome extends javax.swing.JFrame {
             .addGroup(pnSideMenuLayout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(pnSideMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbSalesReport)
                     .addComponent(lbLogout)
                     .addComponent(lbUpdateProfile)
                     .addComponent(lbParkingLot)
@@ -261,8 +291,10 @@ public class OwnerHome extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lbUpdateProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(lbSalesReport, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(lbLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addContainerGap(177, Short.MAX_VALUE))
         );
 
         pnMain.add(pnSideMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, -1, 510));
@@ -698,7 +730,7 @@ public class OwnerHome extends javax.swing.JFrame {
         pnUpdateProfileLayout.setHorizontalGroup(
             pnUpdateProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnUpdateProfileLayout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -761,7 +793,7 @@ public class OwnerHome extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 38, Short.MAX_VALUE))
+                .addGap(0, 355, Short.MAX_VALUE))
         );
 
         jScrollPane3.setViewportView(jPanel2);
@@ -1053,7 +1085,7 @@ public class OwnerHome extends javax.swing.JFrame {
             .addGroup(pnDeleteParkingLotLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addContainerGap(543, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Delete Parking Lot", pnDeleteParkingLot);
@@ -1118,7 +1150,7 @@ public class OwnerHome extends javax.swing.JFrame {
                 .addGroup(pnAddPLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel25)
                     .addComponent(cbWorkers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addGroup(pnAddPLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
                     .addComponent(cbParkingLotAllot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1178,7 +1210,7 @@ public class OwnerHome extends javax.swing.JFrame {
             .addGroup(pnDeletePLAllocationLayout.createSequentialGroup()
                 .addGap(115, 115, 115)
                 .addComponent(btnDeletePLAllocation, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
         pnDeletePLAllocationLayout.setVerticalGroup(
             pnDeletePLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1189,13 +1221,13 @@ public class OwnerHome extends javax.swing.JFrame {
                 .addGroup(pnDeletePLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel26)
                     .addComponent(cbWorkerDeletePLAllocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
+                .addGap(18, 18, 18)
                 .addGroup(pnDeletePLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27)
                     .addComponent(cbParkingLotDeletePLAllocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnDeletePLAllocation)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
@@ -1223,24 +1255,23 @@ public class OwnerHome extends javax.swing.JFrame {
             pnWorkerAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnWorkerAllocationLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(pnWorkerAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnDeletePLAllocation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnAddPLAllocation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGroup(pnWorkerAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnAddPLAllocation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnDeletePLAllocation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnWorkerAllocationLayout.setVerticalGroup(
             pnWorkerAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnWorkerAllocationLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
                 .addGroup(pnWorkerAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnWorkerAllocationLayout.createSequentialGroup()
-                        .addGap(8, 8, 8)
+                    .addGroup(pnWorkerAllocationLayout.createSequentialGroup()
                         .addComponent(pnAddPLAllocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnDeletePLAllocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(pnDeletePLAllocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(378, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Allocate Worker for Parking Lot", pnWorkerAllocation);
@@ -1249,9 +1280,9 @@ public class OwnerHome extends javax.swing.JFrame {
         pnParkingLot.setLayout(pnParkingLotLayout);
         pnParkingLotLayout.setHorizontalGroup(
             pnParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnParkingLotLayout.createSequentialGroup()
+            .addGroup(pnParkingLotLayout.createSequentialGroup()
                 .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnParkingLotLayout.setVerticalGroup(
             pnParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1262,6 +1293,145 @@ public class OwnerHome extends javax.swing.JFrame {
         );
 
         pnMain.add(pnParkingLot, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 710, 510));
+
+        pnSalesReport.setBackground(new java.awt.Color(255, 255, 255));
+        pnSalesReport.setPreferredSize(new java.awt.Dimension(708, 450));
+
+        jLabel37.setText("Date From");
+
+        dcDateFrom.setDateFormatString("dd-MM-yyyy");
+
+        jLabel38.setText("Date To");
+
+        dcDateTo.setDateFormatString("dd-MM-yyyy");
+
+        btnDisplayReport.setText("Display Report");
+        btnDisplayReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDisplayReportActionPerformed(evt);
+            }
+        });
+
+        jScrollPane4.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane4.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+
+        tbSalesReport.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane5.setViewportView(tbSalesReport);
+
+        jLabel39.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
+        jLabel39.setText("Total Cash");
+
+        lbTotalCash.setFont(new java.awt.Font("Noto Sans", 0, 16)); // NOI18N
+        lbTotalCash.setText("Nil");
+
+        jLabel40.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
+        jLabel40.setText("Total Transactions");
+
+        lbTotalTransactions.setFont(new java.awt.Font("Noto Sans", 0, 16)); // NOI18N
+        lbTotalTransactions.setText("Nil");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel40))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbTotalTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbTotalCash, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(81, 81, 81))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel39)
+                    .addComponent(lbTotalCash))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel40)
+                    .addComponent(lbTotalTransactions))
+                .addGap(0, 175, Short.MAX_VALUE))
+        );
+
+        jScrollPane4.setViewportView(jPanel7);
+
+        jLabel32.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
+        jLabel32.setText("Parking Lot");
+
+        cbSelectedParkingLot.setMaximumRowCount(100);
+        cbSelectedParkingLot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSelectedParkingLotActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnSalesReportLayout = new javax.swing.GroupLayout(pnSalesReport);
+        pnSalesReport.setLayout(pnSalesReportLayout);
+        pnSalesReportLayout.setHorizontalGroup(
+            pnSalesReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnSalesReportLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel37)
+                .addGap(18, 18, 18)
+                .addComponent(dcDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(dcDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDisplayReport)
+                .addGap(24, 24, 24))
+            .addGroup(pnSalesReportLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(pnSalesReportLayout.createSequentialGroup()
+                .addGap(191, 191, 191)
+                .addComponent(jLabel32)
+                .addGap(28, 28, 28)
+                .addComponent(cbSelectedParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnSalesReportLayout.setVerticalGroup(
+            pnSalesReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnSalesReportLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(pnSalesReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel32)
+                    .addComponent(cbSelectedParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnSalesReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnDisplayReport)
+                    .addGroup(pnSalesReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(dcDateTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dcDateFrom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        pnMain.add(pnSalesReport, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 710, 510));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1282,19 +1452,30 @@ public class OwnerHome extends javax.swing.JFrame {
         pnParkingLot.setVisible(true);
         pnUser.setVisible(false);
         pnUpdateProfile.setVisible(false);
+        pnSalesReport.setVisible(false);
     }//GEN-LAST:event_lbParkingLotMouseClicked
 
     private void lbUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbUserMouseClicked
         pnUser.setVisible(true);
         pnParkingLot.setVisible(false);
         pnUpdateProfile.setVisible(false);
+        pnSalesReport.setVisible(false);
     }//GEN-LAST:event_lbUserMouseClicked
 
     private void lbUpdateProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbUpdateProfileMouseClicked
         pnUpdateProfile.setVisible(true);
         pnParkingLot.setVisible(false);
         pnUser.setVisible(false);
+        pnSalesReport.setVisible(false);
     }//GEN-LAST:event_lbUpdateProfileMouseClicked
+
+    private void lbSalesReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbSalesReportMouseClicked
+        pnSalesReport.setVisible(true);
+        pnUpdateProfile.setVisible(false);
+        pnParkingLot.setVisible(false);
+        pnUser.setVisible(false);
+
+    }//GEN-LAST:event_lbSalesReportMouseClicked
 
     /**
      * Panel: Update Profile
@@ -1393,19 +1574,20 @@ public class OwnerHome extends javax.swing.JFrame {
         String heavyVehicleFee = ftfHeavyVehicleFee.getText().replace("," , "");
 
 
-        HashMap<String, String> requiredFields = (HashMap<String, String>) Map.of(
-                "Parking Lot Name", name,
-                "Location", location,
-                "Bike Capacity", bikeCapacity,
-                "Rickshaw Capacity", rickshawCapacity,
-                "Heavy Vehicle Capacity", heavyVehicleCapacity,
-                "Bike Fee", bikeFee,
-                "Rickshaw Fee", rickshawFee,
-                "Car Fee", carFee,
-                "Heavy Vehicle Fee", heavyVehicleFee
-        );
+        HashMap<String, String> requiredFields = new HashMap<>();
+        requiredFields.put("Parking Lot Name", name);
+        requiredFields.put("Location", location);
+        requiredFields.put("Bike Capacity", bikeCapacity);
+        requiredFields.put("Rickshaw Capacity", rickshawCapacity);
+        requiredFields.put("Heavy Vehicle Capacity", heavyVehicleCapacity);
+        requiredFields.put("Bike Fee", bikeFee);
+        requiredFields.put("Rickshaw Fee", rickshawFee);
+        requiredFields.put("Car Fee", carFee);
+        requiredFields.put("Heavy Vehicle Fee", heavyVehicleFee);
+
+
         String errorMessage = FormUtility.errorMessageForRequiredFields(requiredFields);
-        if(errorMessage.isBlank()){
+        if(!errorMessage.isBlank()){
             DisplayMessage.displayError(errorMessage);
         } else {
             // Check if Parking Lot name already exists.
@@ -1414,8 +1596,6 @@ public class OwnerHome extends javax.swing.JFrame {
             if (allPLNames.contains(name)) {
                 message += "- Another parking lot already registered with this name!\n " +
                         "Please provide a different Parking Lot Name\n";
-            }
-            if (!message.isBlank()) {
                 DisplayMessage.displayError(message);
             } else {
                 ParkingLot parkingLot = new ParkingLot();
@@ -1560,7 +1740,12 @@ public class OwnerHome extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeletePLAllocationActionPerformed
 
     private void lbLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbLogoutMouseClicked
-        // TODO add your handling code here:
+        String message = "Are you sure you want to logout?";
+        if(DisplayMessage.displayConfirmDialog(message) ==0) {
+            this.setVisible(false);
+            new LoginForm().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_lbLogoutMouseClicked
 
     /**
@@ -1643,6 +1828,73 @@ public class OwnerHome extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSaveUserActionPerformed
 
+    private void btnDisplayReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayReportActionPerformed
+        Date dateFrom = dcDateFrom.getDate();
+        Date dateTo = dcDateTo.getDate();
+
+        HashMap<String, String> requiredFields = new HashMap<>();
+        requiredFields.put("Date From", dateFrom.toString());
+        requiredFields.put("Date To", dateTo.toString());
+
+        String errorMessage = FormUtility.errorMessageForRequiredFields(requiredFields);
+        if(!errorMessage.isBlank()){
+            DisplayMessage.displayError(errorMessage);
+        }else {
+            Timestamp dateFromTS = TimeFormatting.getTimestampFromDate(dateFrom);
+            Timestamp dateToTS = TimeFormatting.getTimestampFromDate(dateTo);
+            if (dateFromTS == null || dateToTS == null) {
+                DisplayMessage.displayError("Invalid dates provided! \nEnter again!");
+            } else if (dateToTS.getTime() < dateFromTS.getTime()) {
+                DisplayMessage.displayError("'Date To' must be greater then or equal to 'Date From' ");
+            } else{
+                Inventory inventory = new Inventory();
+                VehicleUtil vehicleUtil = new VehicleUtil();
+
+                // Increase the date to timestamp till the end of day
+                dateToTS.setTime(dateToTS.getTime()+(86340*1000));
+
+                ArrayList<Inventory> inventoryList = inventory.getInventoryWithDates(selectedPL.getId(), dateFromTS, dateToTS);
+                Object[][] data = new Object[inventoryList.size()][];
+                Object[] columns = {"Sr No.", "Registration Number", "Vehicle Type", "Time Entrance", "Time Exit", "Total Fee"};
+                int counter = 0;
+                float totalCash = 0;
+                for(Inventory inv:inventoryList){
+                    int vehicleId = inv.getVehicleId();
+
+                    Vehicle vehicle = vehicleUtil.getVehicleWithId(vehicleId);
+                    int vehicleTypeValue = vehicle.getVehicleType();
+                    String vehicleTypeName = VehicleTypes.getNameFromValue(vehicleTypeValue);
+                    String regNumber = vehicle.getRegNumber();
+                    Timestamp timeEntrance = inv.getTimeEntrance();
+                    Timestamp timeExit = inv.getTimeExit();
+                    String timeEntranceStr = TimeFormatting.getDateTimeString(timeEntrance);
+                    String timeExitStr = TimeFormatting.getDateTimeString(timeExit);
+                    String totalFee = "Rs " + inv.getTotalFee();
+                    totalCash += inv.getTotalFee();
+
+                    data[counter] = new Object[]{counter+1, regNumber, vehicleTypeName, timeEntranceStr, timeExitStr, totalFee};
+                    counter++;
+                }
+
+                tbSalesReport.setModel(new DefaultTableModel(data, columns));
+                lbTotalCash.setText("Rs "+ totalCash);
+                lbTotalTransactions.setText(counter+"");
+
+            }
+        }
+
+    }//GEN-LAST:event_btnDisplayReportActionPerformed
+
+    private void cbSelectedParkingLotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSelectedParkingLotActionPerformed
+        String selectedPLName = cbSelectedParkingLot.getSelectedItem().toString();
+        ParkingLotUtil plUtil = new ParkingLotUtil();
+        selectedPL = plUtil.getParkingLotFromName(selectedPLName);
+
+        updateFrame();
+    }//GEN-LAST:event_cbSelectedParkingLotActionPerformed
+
+
+
     /**
      * @param args the command line arguments
      */
@@ -1685,6 +1937,7 @@ public class OwnerHome extends javax.swing.JFrame {
     private javax.swing.JButton btnDeletePL;
     private javax.swing.JButton btnDeletePLAllocation;
     private javax.swing.JButton btnDeleteUser;
+    private javax.swing.JButton btnDisplayReport;
     private javax.swing.JButton btnSavePL;
     private javax.swing.JButton btnSavePLAllocation;
     private javax.swing.JButton btnSaveUP;
@@ -1693,10 +1946,13 @@ public class OwnerHome extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbParkingLotDeletePLAllocation;
     private javax.swing.JComboBox<String> cbParkingLotNamesDelete;
     private javax.swing.JComboBox<String> cbParkingLotNamesUpdate;
+    private javax.swing.JComboBox<String> cbSelectedParkingLot;
     private javax.swing.JComboBox<String> cbUserType;
     private javax.swing.JComboBox<String> cbUsernames;
     private javax.swing.JComboBox<String> cbWorkerDeletePLAllocation;
     private javax.swing.JComboBox<String> cbWorkers;
+    private com.toedter.calendar.JDateChooser dcDateFrom;
+    private com.toedter.calendar.JDateChooser dcDateTo;
     private javax.swing.JFormattedTextField ftfBikeCapacity;
     private javax.swing.JFormattedTextField ftfBikeFee;
     private javax.swing.JFormattedTextField ftfCarCapacity;
@@ -1730,7 +1986,12 @@ public class OwnerHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
@@ -1749,14 +2010,20 @@ public class OwnerHome extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JLabel lbCurrentUser;
     private javax.swing.JLabel lbLogout;
     private javax.swing.JLabel lbParkingLot;
+    private javax.swing.JLabel lbSalesReport;
+    private javax.swing.JLabel lbTotalCash;
+    private javax.swing.JLabel lbTotalTransactions;
     private javax.swing.JLabel lbUpdateProfile;
     private javax.swing.JLabel lbUser;
     private javax.swing.JLabel lbUsernameUP;
@@ -1772,6 +2039,7 @@ public class OwnerHome extends javax.swing.JFrame {
     private javax.swing.JPanel pnMain;
     private javax.swing.JPanel pnParkingLot;
     private javax.swing.JPanel pnRegisterUser;
+    private javax.swing.JPanel pnSalesReport;
     private javax.swing.JPanel pnSideMenu;
     private javax.swing.JPanel pnTitle;
     private javax.swing.JPanel pnUpdateProfile;
@@ -1780,6 +2048,7 @@ public class OwnerHome extends javax.swing.JFrame {
     private javax.swing.JScrollPane spUserList;
     private javax.swing.JTable tbPLAllocation;
     private javax.swing.JTable tbParkingLot;
+    private javax.swing.JTable tbSalesReport;
     private javax.swing.JTable tbUserList;
     private javax.swing.JTextField tfEmail;
     private javax.swing.JTextField tfEmailUP;
@@ -1792,8 +2061,14 @@ public class OwnerHome extends javax.swing.JFrame {
 
 
     private void updateFrame(){
+
         updateUserPanel();
         updateParkingLotPanel();
+
+        // Update parking lot names in sales report combo box
+        ArrayList<String> allPLNames = new ParkingLotUtil().getAllPLNames();
+        String[] plNames = allPLNames.toArray(new String[0]);
+        cbSelectedParkingLot.setModel(new DefaultComboBoxModel<String>(plNames));
 
     }
 

@@ -96,6 +96,7 @@ public class ParkingReceiptFrame extends javax.swing.JFrame {
         btnClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         pnMain.setBackground(new java.awt.Color(255, 255, 255));
 
