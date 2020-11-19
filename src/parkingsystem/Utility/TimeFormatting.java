@@ -1,8 +1,11 @@
 package parkingsystem.Utility;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class TimeFormatting {
 
@@ -33,5 +36,21 @@ public class TimeFormatting {
         long diffDays = difference / (24 * 60 * 60 * 1000);
 
         return (float) ((diffDays * 24.0 + diffHours) + diffMinutes/60.0);
+    }
+
+    /**
+     * Get timestamp from date provided in string
+     * Date format provided should be 'dd-MM-yyyy'
+     * */
+    public static Timestamp getTimestampFromDate(Date date){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        String dateStr = formatter.format(date);
+        try {
+            Date localDate = formatter.parse(dateStr);
+            return new Timestamp(localDate.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

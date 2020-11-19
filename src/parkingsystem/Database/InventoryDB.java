@@ -7,6 +7,7 @@ import parkingsystem.Utility.DisplayMessage;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class InventoryDB extends Database {
@@ -39,5 +40,35 @@ public class InventoryDB extends Database {
         }
 
         return insertedId;
+    }
+
+    public ArrayList<Inventory> getInventoryWithDates(int parkingLotId, Timestamp dateFrom, Timestamp dateTo) {
+        ArrayList<Inventory> allInventory = new ArrayList<>();
+
+        String query = "SELECT * FROM inventory WHERE time_entrance >= ? AND time_entrance <= ? AND parking_lot_id = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setTimestamp(1, dateFrom);
+            statement.setTimestamp(2, dateTo);
+            statement.setInt(3, parkingLotId);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                Inventory inventory = new Inventory();
+                inventory.setId(resultSet.getInt("id"));
+                inventory.setVehicleId(resultSet.getInt("vehicle_id"));
+                inventory.setParkingLotId(resultSet.getInt("parking_lot_id"));
+                inventory.setTotalFee(resultSet.getFloat("total_fee"));
+                inventory.setTimeEntrance(resultSet.getTimestamp("time_entrance"));
+                inventory.setTimeExit(resultSet.getTimestamp("time_exit"));
+
+                allInventory.add(inventory);
+            }
+        } catch (SQLException exception) {
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
+        }
+
+        return allInventory;
     }
 }

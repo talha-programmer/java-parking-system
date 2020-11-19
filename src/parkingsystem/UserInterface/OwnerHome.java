@@ -5,7 +5,18 @@
  */
 package parkingsystem.UserInterface;
 
+import parkingsystem.BusinessLogic.ParkingLot;
+import parkingsystem.BusinessLogic.ParkingLotAllocation;
 import parkingsystem.BusinessLogic.User;
+import parkingsystem.BusinessLogic.Worker;
+import parkingsystem.Enums.UserTypes;
+import parkingsystem.Enums.VehicleTypes;
+import parkingsystem.Utility.*;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  *
@@ -13,12 +24,36 @@ import parkingsystem.BusinessLogic.User;
  */
 public class OwnerHome extends javax.swing.JFrame {
     private User loggedInUser = null;
+
+    // Declarations for parking lot panel
+    private int selectedParkingLotId = -1;
+    private HashMap<String, Integer> allWorkersUsername = null;
+
+
     /**
      * Creates new form OwnerHome
      */
     public OwnerHome() {
         initComponents();
         loggedInUser = User.getLoggedInUser();
+        String username = loggedInUser.getUsername();
+        lbCurrentUser.setText("User: " + username);
+
+        // Fill the combo box of User Type in User Panel
+        ArrayList<String> userTypes = UserTypes.getAllNames();
+        cbUserType.setModel(new DefaultComboBoxModel<String>(userTypes.toArray(new String[0])));
+
+        // Set username in update profile panel
+        lbUsernameUP.setText(username);
+        tfFullNameUP.setText(loggedInUser.getFullName());
+        tfEmailUP.setText(loggedInUser.getEmail());
+
+        // Display only User panel
+        pnUser.setVisible(true);
+        pnParkingLot.setVisible(false);
+        pnUpdateProfile.setVisible(false);
+
+        updateFrame();
     }
 
     /**
@@ -30,89 +65,1590 @@ public class OwnerHome extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnHome = new javax.swing.JPanel();
-        btnUpdateProfile = new javax.swing.JButton();
-        btnUsers = new javax.swing.JButton();
-        btnParkingLot = new javax.swing.JButton();
+        pnMain = new javax.swing.JPanel();
+        pnSideMenu = new javax.swing.JPanel();
+        lbUser = new javax.swing.JLabel();
+        lbParkingLot = new javax.swing.JLabel();
+        lbUpdateProfile = new javax.swing.JLabel();
+        lbLogout = new javax.swing.JLabel();
+        pnTitle = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        lbCurrentUser = new javax.swing.JLabel();
+        pnUser = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        pnAllUsers = new javax.swing.JPanel();
+        spUserList = new javax.swing.JScrollPane();
+        tbUserList = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        pnRegisterUser = new javax.swing.JPanel();
+        pfConfirmPassword = new javax.swing.JPasswordField();
+        jLabel2 = new javax.swing.JLabel();
+        btnSaveUser = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        cbUserType = new javax.swing.JComboBox<>();
+        tfUsername = new javax.swing.JTextField();
+        tfFullName = new javax.swing.JTextField();
+        tfEmail = new javax.swing.JTextField();
+        pfPassword = new javax.swing.JPasswordField();
+        jLabel1 = new javax.swing.JLabel();
+        btnClearUserForm = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        btnDeleteUser = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        cbUsernames = new javax.swing.JComboBox<>();
+        jLabel31 = new javax.swing.JLabel();
+        pnUpdateProfile = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel41 = new javax.swing.JLabel();
+        lbUsernameUP = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        tfFullNameUP = new javax.swing.JTextField();
+        tfEmailUP = new javax.swing.JTextField();
+        jLabel43 = new javax.swing.JLabel();
+        btnSaveUP = new javax.swing.JButton();
+        jLabel47 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        pfCurrentPasswordUP = new javax.swing.JPasswordField();
+        jLabel46 = new javax.swing.JLabel();
+        pfNewPassword = new javax.swing.JPasswordField();
+        btnChangePasswordUP = new javax.swing.JButton();
+        pnParkingLot = new javax.swing.JPanel();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbParkingLot = new javax.swing.JTable();
+        pnAddParkingLot = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        tfName = new javax.swing.JTextField();
+        tfLocation = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        btnSavePL = new javax.swing.JButton();
+        ftfBikeCapacity = new javax.swing.JFormattedTextField();
+        ftfCarCapacity = new javax.swing.JFormattedTextField();
+        ftfRickshawCapacity = new javax.swing.JFormattedTextField();
+        ftfHeavyVehicleCapacity = new javax.swing.JFormattedTextField();
+        btnClearPL = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        cbParkingLotNamesUpdate = new javax.swing.JComboBox<>();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        ftfBikeFee = new javax.swing.JFormattedTextField();
+        jLabel21 = new javax.swing.JLabel();
+        ftfRickshawFee = new javax.swing.JFormattedTextField();
+        jLabel22 = new javax.swing.JLabel();
+        ftfCarFee = new javax.swing.JFormattedTextField();
+        ftfHeavyVehicleFee = new javax.swing.JFormattedTextField();
+        jLabel23 = new javax.swing.JLabel();
+        pnDeleteParkingLot = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        cbParkingLotNamesDelete = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        btnDeletePL = new javax.swing.JButton();
+        jLabel28 = new javax.swing.JLabel();
+        pnWorkerAllocation = new javax.swing.JPanel();
+        pnAddPLAllocation = new javax.swing.JPanel();
+        cbParkingLotAllot = new javax.swing.JComboBox<>();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        cbWorkers = new javax.swing.JComboBox<>();
+        btnSavePLAllocation = new javax.swing.JButton();
+        jLabel29 = new javax.swing.JLabel();
+        pnDeletePLAllocation = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        cbWorkerDeletePLAllocation = new javax.swing.JComboBox<>();
+        cbParkingLotDeletePLAllocation = new javax.swing.JComboBox<>();
+        btnDeletePLAllocation = new javax.swing.JButton();
+        jLabel30 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbPLAllocation = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home");
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        pnHome.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pnMain.setBackground(new java.awt.Color(255, 255, 255));
+        pnMain.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pnMain.setMinimumSize(new java.awt.Dimension(890, 580));
+        pnMain.setPreferredSize(new java.awt.Dimension(890, 580));
+        pnMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnUpdateProfile.setText("Update Profile");
-        btnUpdateProfile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateProfileActionPerformed(evt);
+        pnSideMenu.setBackground(new java.awt.Color(53, 59, 72));
+        pnSideMenu.setPreferredSize(new java.awt.Dimension(181, 580));
+
+        lbUser.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
+        lbUser.setForeground(new java.awt.Color(255, 255, 255));
+        lbUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbUser.setText("Users");
+        lbUser.setFocusable(false);
+        lbUser.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbUserMouseClicked(evt);
             }
         });
 
-        btnUsers.setText("Users");
-        btnUsers.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUsersActionPerformed(evt);
+        lbParkingLot.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
+        lbParkingLot.setForeground(new java.awt.Color(255, 255, 255));
+        lbParkingLot.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbParkingLot.setText("Parking Lot");
+        lbParkingLot.setFocusable(false);
+        lbParkingLot.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbParkingLot.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbParkingLotMouseClicked(evt);
             }
         });
 
-        btnParkingLot.setText("Parking Lot");
-        btnParkingLot.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnParkingLotActionPerformed(evt);
+        lbUpdateProfile.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
+        lbUpdateProfile.setForeground(new java.awt.Color(255, 255, 255));
+        lbUpdateProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbUpdateProfile.setText("Update Profile");
+        lbUpdateProfile.setFocusable(false);
+        lbUpdateProfile.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbUpdateProfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbUpdateProfileMouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout pnHomeLayout = new javax.swing.GroupLayout(pnHome);
-        pnHome.setLayout(pnHomeLayout);
-        pnHomeLayout.setHorizontalGroup(
-            pnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnHomeLayout.createSequentialGroup()
-                .addGap(123, 123, 123)
-                .addGroup(pnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnParkingLot)
-                    .addComponent(btnUpdateProfile)
-                    .addComponent(btnUsers))
-                .addContainerGap(508, Short.MAX_VALUE))
+        lbLogout.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
+        lbLogout.setForeground(new java.awt.Color(255, 255, 255));
+        lbLogout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbLogout.setText("Logout");
+        lbLogout.setFocusable(false);
+        lbLogout.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbLogoutMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnSideMenuLayout = new javax.swing.GroupLayout(pnSideMenu);
+        pnSideMenu.setLayout(pnSideMenuLayout);
+        pnSideMenuLayout.setHorizontalGroup(
+            pnSideMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnSideMenuLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(pnSideMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbLogout)
+                    .addComponent(lbUpdateProfile)
+                    .addComponent(lbParkingLot)
+                    .addComponent(lbUser))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
-        pnHomeLayout.setVerticalGroup(
-            pnHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnHomeLayout.createSequentialGroup()
-                .addGap(101, 101, 101)
-                .addComponent(btnUsers)
-                .addGap(49, 49, 49)
-                .addComponent(btnUpdateProfile)
-                .addGap(37, 37, 37)
-                .addComponent(btnParkingLot)
-                .addContainerGap(207, Short.MAX_VALUE))
+        pnSideMenuLayout.setVerticalGroup(
+            pnSideMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnSideMenuLayout.createSequentialGroup()
+                .addGap(96, 96, 96)
+                .addComponent(lbUser, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lbParkingLot, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lbUpdateProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lbLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(228, Short.MAX_VALUE))
         );
+
+        pnMain.add(pnSideMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, -1, 510));
+
+        pnTitle.setBackground(new java.awt.Color(53, 59, 72));
+
+        jLabel5.setFont(new java.awt.Font("Noto Sans", 1, 32)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Parking System");
+        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+
+        lbCurrentUser.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
+        lbCurrentUser.setForeground(new java.awt.Color(255, 255, 255));
+        lbCurrentUser.setText("User: ");
+
+        javax.swing.GroupLayout pnTitleLayout = new javax.swing.GroupLayout(pnTitle);
+        pnTitle.setLayout(pnTitleLayout);
+        pnTitleLayout.setHorizontalGroup(
+            pnTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnTitleLayout.createSequentialGroup()
+                .addGap(300, 300, 300)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+                .addComponent(lbCurrentUser, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        pnTitleLayout.setVerticalGroup(
+            pnTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnTitleLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(pnTitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbCurrentUser, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
+        pnMain.add(pnTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 70));
+
+        pnUser.setBackground(new java.awt.Color(255, 255, 255));
+
+        jTabbedPane1.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        pnAllUsers.setBackground(new java.awt.Color(255, 255, 255));
+
+        tbUserList.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        tbUserList.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        spUserList.setViewportView(tbUserList);
+
+        javax.swing.GroupLayout pnAllUsersLayout = new javax.swing.GroupLayout(pnAllUsers);
+        pnAllUsers.setLayout(pnAllUsersLayout);
+        pnAllUsersLayout.setHorizontalGroup(
+            pnAllUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnAllUsersLayout.createSequentialGroup()
+                .addContainerGap(71, Short.MAX_VALUE)
+                .addComponent(spUserList, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68))
+        );
+        pnAllUsersLayout.setVerticalGroup(
+            pnAllUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnAllUsersLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(spUserList, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("All Users", pnAllUsers);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        pnRegisterUser.setBackground(new java.awt.Color(255, 255, 255));
+        pnRegisterUser.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        pfConfirmPassword.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel2.setText("Username");
+
+        btnSaveUser.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        btnSaveUser.setText("Save");
+        btnSaveUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveUserActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel3.setText("Full Name");
+
+        jLabel4.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel4.setText("Email");
+
+        jLabel6.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel6.setText("Password");
+
+        jLabel7.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel7.setText("Confirm Password");
+
+        cbUserType.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        tfUsername.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        tfFullName.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        tfEmail.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        pfPassword.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel1.setText("User Type");
+
+        btnClearUserForm.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        btnClearUserForm.setText("Clear Form");
+        btnClearUserForm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearUserFormActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Noto Sans", 0, 20)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Create New User");
+
+        javax.swing.GroupLayout pnRegisterUserLayout = new javax.swing.GroupLayout(pnRegisterUser);
+        pnRegisterUser.setLayout(pnRegisterUserLayout);
+        pnRegisterUserLayout.setHorizontalGroup(
+            pnRegisterUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnRegisterUserLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(pnRegisterUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnClearUserForm, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel7))
+                .addGap(41, 41, 41)
+                .addGroup(pnRegisterUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnRegisterUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(tfUsername)
+                        .addComponent(cbUserType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tfFullName)
+                        .addComponent(tfEmail, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(pfPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                        .addComponent(pfConfirmPassword))
+                    .addComponent(btnSaveUser, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
+            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        pnRegisterUserLayout.setVerticalGroup(
+            pnRegisterUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnRegisterUserLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel9)
+                .addGap(24, 24, 24)
+                .addGroup(pnRegisterUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(cbUserType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnRegisterUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnRegisterUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(tfFullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnRegisterUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnRegisterUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(pfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnRegisterUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(pfConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(pnRegisterUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSaveUser)
+                    .addComponent(btnClearUserForm))
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        btnDeleteUser.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        btnDeleteUser.setText("Delete");
+        btnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteUserActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel8.setText("Select User");
+
+        cbUsernames.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        jLabel31.setFont(new java.awt.Font("Noto Sans", 0, 20)); // NOI18N
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel31.setText("Delete User");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel8)
+                .addGap(26, 26, 26)
+                .addComponent(cbUsernames, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(79, 79, 79))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(cbUsernames, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addComponent(btnDeleteUser)
+                .addGap(32, 32, 32))
+        );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(pnRegisterUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(7, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addComponent(pnRegisterUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Add / Delete User", jPanel3);
+
+        javax.swing.GroupLayout pnUserLayout = new javax.swing.GroupLayout(pnUser);
+        pnUser.setLayout(pnUserLayout);
+        pnUserLayout.setHorizontalGroup(
+            pnUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnUserLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        pnUserLayout.setVerticalGroup(
+            pnUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnUserLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        pnMain.add(pnUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 710, 510));
+
+        pnUpdateProfile.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jLabel41.setFont(new java.awt.Font("Noto Sans", 1, 14)); // NOI18N
+        jLabel41.setText("Username");
+
+        lbUsernameUP.setFont(new java.awt.Font("Noto Sans", 1, 14)); // NOI18N
+        lbUsernameUP.setText("Nil");
+
+        jLabel42.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel42.setText("Full Name");
+
+        tfFullNameUP.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        tfEmailUP.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        jLabel43.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel43.setText("Email");
+
+        btnSaveUP.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        btnSaveUP.setText("Save");
+        btnSaveUP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveUPActionPerformed(evt);
+            }
+        });
+
+        jLabel47.setFont(new java.awt.Font("Noto Sans", 0, 20)); // NOI18N
+        jLabel47.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel47.setText("Update Profile");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel47, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel42)
+                            .addComponent(jLabel43)
+                            .addComponent(jLabel41))
+                        .addGap(33, 33, 33)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfFullNameUP)
+                            .addComponent(lbUsernameUP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfEmailUP, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(btnSaveUP, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel47)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel41)
+                    .addComponent(lbUsernameUP))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel42)
+                    .addComponent(tfFullNameUP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel43)
+                    .addComponent(tfEmailUP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addComponent(btnSaveUP)
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jLabel44.setFont(new java.awt.Font("Noto Sans", 0, 20)); // NOI18N
+        jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel44.setText("Change Password");
+
+        jLabel45.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel45.setText("Current Password");
+
+        pfCurrentPasswordUP.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        jLabel46.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel46.setText("New Password");
+
+        pfNewPassword.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        btnChangePasswordUP.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        btnChangePasswordUP.setText("Save");
+        btnChangePasswordUP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangePasswordUPActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel45)
+                    .addComponent(jLabel46))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pfNewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pfCurrentPasswordUP, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
+            .addComponent(jLabel44, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnChangePasswordUP, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(99, 99, 99))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel44)
+                .addGap(40, 40, 40)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel45)
+                    .addComponent(pfCurrentPasswordUP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel46)
+                    .addComponent(pfNewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnChangePasswordUP)
+                .addGap(46, 46, 46))
+        );
+
+        javax.swing.GroupLayout pnUpdateProfileLayout = new javax.swing.GroupLayout(pnUpdateProfile);
+        pnUpdateProfile.setLayout(pnUpdateProfileLayout);
+        pnUpdateProfileLayout.setHorizontalGroup(
+            pnUpdateProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnUpdateProfileLayout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+        );
+        pnUpdateProfileLayout.setVerticalGroup(
+            pnUpdateProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnUpdateProfileLayout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addGroup(pnUpdateProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(146, Short.MAX_VALUE))
+        );
+
+        pnMain.add(pnUpdateProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 710, 510));
+
+        pnParkingLot.setBackground(new java.awt.Color(255, 255, 255));
+
+        jTabbedPane2.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+
+        tbParkingLot.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        tbParkingLot.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "Title 10", "Title 11"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tbParkingLot);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1117, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 38, Short.MAX_VALUE))
+        );
+
+        jScrollPane3.setViewportView(jPanel2);
+
+        jTabbedPane2.addTab("All Parking Lots", jScrollPane3);
+
+        pnAddParkingLot.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel11.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel11.setText("Name");
+
+        tfName.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        tfLocation.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        jLabel12.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel12.setText("Location");
+
+        jLabel13.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel13.setText("Car Capacity");
+
+        jLabel14.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel14.setText("Bike Capacity");
+
+        jLabel15.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel15.setText("Rickshaw Capacity");
+
+        jLabel16.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel16.setText("Heavy Vehicle Capacity");
+
+        btnSavePL.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        btnSavePL.setText("Save");
+        btnSavePL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSavePLActionPerformed(evt);
+            }
+        });
+
+        ftfBikeCapacity.setFormatterFactory(NumberFormatting.intFormatterFactory());
+
+        ftfCarCapacity.setFormatterFactory(NumberFormatting.intFormatterFactory());
+
+        ftfRickshawCapacity.setFormatterFactory(NumberFormatting.intFormatterFactory());
+
+        ftfHeavyVehicleCapacity.setFormatterFactory(NumberFormatting.intFormatterFactory());
+
+        btnClearPL.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        btnClearPL.setText("Clear");
+        btnClearPL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearPLActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel17.setText("Parking Lot");
+
+        cbParkingLotNamesUpdate.setFont(new java.awt.Font("Noto Sans", 0, 13)); // NOI18N
+        cbParkingLotNamesUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbParkingLotNamesUpdateActionPerformed(evt);
+            }
+        });
+
+        jLabel18.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("Add parking fee (per hour) for each vehicle type");
+
+        jLabel19.setFont(new java.awt.Font("Noto Sans", 0, 18)); // NOI18N
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("Add Vehicle Capacity for Each Vehicle Type");
+
+        jLabel20.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel20.setText("Bike Fee");
+
+        ftfBikeFee.setFormatterFactory(NumberFormatting.floatFormatterFactory());
+
+        jLabel21.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel21.setText("Rickshaw Fee");
+
+        ftfRickshawFee.setFormatterFactory(NumberFormatting.floatFormatterFactory());
+
+        jLabel22.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel22.setText("Car Fee");
+
+        ftfCarFee.setFormatterFactory(NumberFormatting.floatFormatterFactory());
+
+        ftfHeavyVehicleFee.setFormatterFactory(NumberFormatting.floatFormatterFactory());
+
+        jLabel23.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel23.setText("Heavy Vehicle Fee");
+
+        javax.swing.GroupLayout pnAddParkingLotLayout = new javax.swing.GroupLayout(pnAddParkingLot);
+        pnAddParkingLot.setLayout(pnAddParkingLotLayout);
+        pnAddParkingLotLayout.setHorizontalGroup(
+            pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                        .addGap(202, 202, 202)
+                        .addComponent(jLabel17)
+                        .addGap(33, 33, 33)
+                        .addComponent(cbParkingLotNamesUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel13))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ftfCarCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ftfBikeCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(100, 100, 100)
+                        .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addGap(20, 20, 20)
+                                .addComponent(ftfHeavyVehicleCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addGap(47, 47, 47)
+                                .addComponent(ftfRickshawCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnClearPL, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                                .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel20)
+                                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(50, 50, 50)
+                                .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ftfCarFee, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ftfBikeFee, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(108, 108, 108)
+                                .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel23)
+                                    .addComponent(jLabel21))))
+                        .addGap(37, 37, 37)
+                        .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnSavePL, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(ftfRickshawFee)
+                            .addComponent(ftfHeavyVehicleFee)))
+                    .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(47, 47, 47)
+                                .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(82, 82, 82)
+                                .addComponent(jLabel12)
+                                .addGap(38, 38, 38)
+                                .addComponent(tfLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(67, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnAddParkingLotLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnAddParkingLotLayout.setVerticalGroup(
+            pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbParkingLotNamesUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17))
+                .addGap(27, 27, 27)
+                .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(tfLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addGap(21, 21, 21)
+                .addComponent(jLabel19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ftfBikeCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel15))
+                    .addComponent(ftfRickshawCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(ftfHeavyVehicleCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel16))
+                    .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(ftfCarCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(30, 30, 30)
+                .addComponent(jLabel18)
+                .addGap(18, 18, 18)
+                .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ftfBikeFee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel21)
+                            .addComponent(ftfRickshawFee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel22)
+                            .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel23)
+                                .addComponent(ftfHeavyVehicleFee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(pnAddParkingLotLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(ftfCarFee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(31, 31, 31)
+                .addGroup(pnAddParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnClearPL)
+                    .addComponent(btnSavePL)))
+        );
+
+        jTabbedPane2.addTab("Add Parking Lot", pnAddParkingLot);
+
+        pnDeleteParkingLot.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        cbParkingLotNamesDelete.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        jLabel10.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel10.setText("Parking Lot");
+
+        btnDeletePL.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        btnDeletePL.setText("Delete");
+        btnDeletePL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletePLActionPerformed(evt);
+            }
+        });
+
+        jLabel28.setFont(new java.awt.Font("Noto Sans", 1, 18)); // NOI18N
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setText("Delete Parking Lot");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbParkingLotNamesDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(btnDeletePL)
+                .addContainerGap(124, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jLabel28)
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(cbParkingLotNamesDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(38, 38, 38)
+                .addComponent(btnDeletePL)
+                .addContainerGap(44, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout pnDeleteParkingLotLayout = new javax.swing.GroupLayout(pnDeleteParkingLot);
+        pnDeleteParkingLot.setLayout(pnDeleteParkingLotLayout);
+        pnDeleteParkingLotLayout.setHorizontalGroup(
+            pnDeleteParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnDeleteParkingLotLayout.createSequentialGroup()
+                .addGap(94, 94, 94)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(313, Short.MAX_VALUE))
+        );
+        pnDeleteParkingLotLayout.setVerticalGroup(
+            pnDeleteParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnDeleteParkingLotLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(184, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Delete Parking Lot", pnDeleteParkingLot);
+
+        pnWorkerAllocation.setBackground(new java.awt.Color(255, 255, 255));
+
+        pnAddPLAllocation.setBackground(new java.awt.Color(255, 255, 255));
+        pnAddPLAllocation.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        cbParkingLotAllot.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        cbParkingLotAllot.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+
+        jLabel24.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel24.setText("Parking Lot");
+
+        jLabel25.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel25.setText("Worker");
+
+        cbWorkers.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        btnSavePLAllocation.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        btnSavePLAllocation.setText("Save");
+        btnSavePLAllocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSavePLAllocationActionPerformed(evt);
+            }
+        });
+
+        jLabel29.setFont(new java.awt.Font("Noto Sans", 1, 18)); // NOI18N
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel29.setText("Add Allocation");
+
+        javax.swing.GroupLayout pnAddPLAllocationLayout = new javax.swing.GroupLayout(pnAddPLAllocation);
+        pnAddPLAllocation.setLayout(pnAddPLAllocationLayout);
+        pnAddPLAllocationLayout.setHorizontalGroup(
+            pnAddPLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnAddPLAllocationLayout.createSequentialGroup()
+                .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(pnAddPLAllocationLayout.createSequentialGroup()
+                .addGroup(pnAddPLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnAddPLAllocationLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(pnAddPLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel24)
+                            .addComponent(jLabel25))
+                        .addGap(44, 44, 44)
+                        .addGroup(pnAddPLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbWorkers, 0, 139, Short.MAX_VALUE)
+                            .addComponent(cbParkingLotAllot, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(pnAddPLAllocationLayout.createSequentialGroup()
+                        .addGap(106, 106, 106)
+                        .addComponent(btnSavePLAllocation, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        pnAddPLAllocationLayout.setVerticalGroup(
+            pnAddPLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnAddPLAllocationLayout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(jLabel29)
+                .addGap(27, 27, 27)
+                .addGroup(pnAddPLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(cbWorkers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(pnAddPLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(cbParkingLotAllot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(btnSavePLAllocation)
+                .addGap(11, 11, 11))
+        );
+
+        pnDeletePLAllocation.setBackground(new java.awt.Color(255, 255, 255));
+        pnDeletePLAllocation.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jLabel26.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel26.setText("Worker");
+
+        jLabel27.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        jLabel27.setText("Parking Lot");
+
+        cbWorkerDeletePLAllocation.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        cbWorkerDeletePLAllocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbWorkerDeletePLAllocationActionPerformed(evt);
+            }
+        });
+
+        cbParkingLotDeletePLAllocation.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+
+        btnDeletePLAllocation.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        btnDeletePLAllocation.setText("Delete");
+        btnDeletePLAllocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletePLAllocationActionPerformed(evt);
+            }
+        });
+
+        jLabel30.setFont(new java.awt.Font("Noto Sans", 1, 18)); // NOI18N
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel30.setText("Delete Allocation");
+
+        javax.swing.GroupLayout pnDeletePLAllocationLayout = new javax.swing.GroupLayout(pnDeletePLAllocation);
+        pnDeletePLAllocation.setLayout(pnDeletePLAllocationLayout);
+        pnDeletePLAllocationLayout.setHorizontalGroup(
+            pnDeletePLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnDeletePLAllocationLayout.createSequentialGroup()
+                .addGroup(pnDeletePLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnDeletePLAllocationLayout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addGroup(pnDeletePLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel26)
+                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31)
+                        .addGroup(pnDeletePLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbParkingLotDeletePLAllocation, 0, 143, Short.MAX_VALUE)
+                            .addComponent(cbWorkerDeletePLAllocation, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(pnDeletePLAllocationLayout.createSequentialGroup()
+                .addGap(115, 115, 115)
+                .addComponent(btnDeletePLAllocation, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(128, Short.MAX_VALUE))
+        );
+        pnDeletePLAllocationLayout.setVerticalGroup(
+            pnDeletePLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnDeletePLAllocationLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jLabel30)
+                .addGap(26, 26, 26)
+                .addGroup(pnDeletePLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(cbWorkerDeletePLAllocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(pnDeletePLAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27)
+                    .addComponent(cbParkingLotDeletePLAllocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnDeletePLAllocation)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        tbPLAllocation.setFont(new java.awt.Font("Noto Sans", 0, 14)); // NOI18N
+        tbPLAllocation.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tbPLAllocation);
+
+        javax.swing.GroupLayout pnWorkerAllocationLayout = new javax.swing.GroupLayout(pnWorkerAllocation);
+        pnWorkerAllocation.setLayout(pnWorkerAllocationLayout);
+        pnWorkerAllocationLayout.setHorizontalGroup(
+            pnWorkerAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnWorkerAllocationLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(pnWorkerAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnDeletePLAllocation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnAddPLAllocation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+        pnWorkerAllocationLayout.setVerticalGroup(
+            pnWorkerAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnWorkerAllocationLayout.createSequentialGroup()
+                .addGroup(pnWorkerAllocationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnWorkerAllocationLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(pnAddPLAllocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(pnDeletePLAllocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Allocate Worker for Parking Lot", pnWorkerAllocation);
+
+        javax.swing.GroupLayout pnParkingLotLayout = new javax.swing.GroupLayout(pnParkingLot);
+        pnParkingLot.setLayout(pnParkingLotLayout);
+        pnParkingLotLayout.setHorizontalGroup(
+            pnParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnParkingLotLayout.createSequentialGroup()
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        pnParkingLotLayout.setVerticalGroup(
+            pnParkingLotLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnParkingLotLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pnMain.add(pnParkingLot, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 710, 510));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnHome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnHome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnUpdateProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateProfileActionPerformed
-        new UpdateProfileForm().setVisible(true);
-    }//GEN-LAST:event_btnUpdateProfileActionPerformed
+    private void lbParkingLotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbParkingLotMouseClicked
+        pnParkingLot.setVisible(true);
+        pnUser.setVisible(false);
+        pnUpdateProfile.setVisible(false);
+    }//GEN-LAST:event_lbParkingLotMouseClicked
 
-    private void btnUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsersActionPerformed
-        new UsersDisplayForm().setVisible(true);
-    }//GEN-LAST:event_btnUsersActionPerformed
+    private void lbUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbUserMouseClicked
+        pnUser.setVisible(true);
+        pnParkingLot.setVisible(false);
+        pnUpdateProfile.setVisible(false);
+    }//GEN-LAST:event_lbUserMouseClicked
 
-    private void btnParkingLotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParkingLotActionPerformed
-        new ParkingLotForm().setVisible(true);
-    }//GEN-LAST:event_btnParkingLotActionPerformed
+    private void lbUpdateProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbUpdateProfileMouseClicked
+        pnUpdateProfile.setVisible(true);
+        pnParkingLot.setVisible(false);
+        pnUser.setVisible(false);
+    }//GEN-LAST:event_lbUpdateProfileMouseClicked
+
+    /**
+     * Panel: Update Profile
+     * Function called when 'Save' button of Update Profile panel is pressed
+     * Updates the profile of the currently logged in user
+     * */
+    private void btnSaveUPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveUPActionPerformed
+        String username = loggedInUser.getUsername();
+        String fullName = tfFullNameUP.getText();
+        String email = tfEmailUP.getText();
+        User user = loggedInUser;
+        HashMap<String, String> requiredFields = new HashMap<>();
+        requiredFields.put("Full Name", fullName);
+        requiredFields.put("Email", email);
+        String errorMessage = FormUtility.errorMessageForRequiredFields(requiredFields);
+        if(!errorMessage.isBlank()){
+            DisplayMessage.displayError(errorMessage);
+        }else {
+            if (user.updateProfile(username, fullName, email)) {
+                DisplayMessage.displayInfo("Profile updated successfully!");
+                loggedInUser = user;            // Now full name and email are update in 'user' object
+                tfFullNameUP.setText(loggedInUser.getFullName());
+                tfEmailUP.setText(loggedInUser.getEmail());
+            }
+        }
+    }//GEN-LAST:event_btnSaveUPActionPerformed
+
+    /**
+     * Panel: Update Profile
+     * Function called when 'Save' button of Change Password ponel is pressed
+     * Changes the password of currently logged in user
+    * */
+    private void btnChangePasswordUPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordUPActionPerformed
+        String currentPassword = String.valueOf(pfCurrentPasswordUP.getPassword());
+        String newPassword = String.valueOf(pfNewPassword.getPassword());
+
+        HashMap<String, String> requiredFields = new HashMap<>();
+        requiredFields.put("Current Password", currentPassword);
+        requiredFields.put("Email", newPassword);
+        String errorMessage = FormUtility.errorMessageForRequiredFields(requiredFields);
+        if(!errorMessage.isBlank()){
+            DisplayMessage.displayError(errorMessage);
+        }else {
+            if (newPassword.length() < 5) {
+                DisplayMessage.displayError("New password must be of at least 5 characters!");
+            } else {
+                if (loggedInUser.updatePassword(currentPassword, newPassword)) {
+                    DisplayMessage.displayInfo("Password changed successfully!");
+                } else {
+                    DisplayMessage.displayError("You have provided wrong password, Please try again!");
+                }
+            }
+        }
+    }//GEN-LAST:event_btnChangePasswordUPActionPerformed
+
+    /**
+     * Panel: Parking Lot > Delete Parking Lot
+     * Function called when 'Delete' button of Delete Parking Lot panel is pressed
+     * Deletes the selected parking lot
+     * */
+    private void btnDeletePLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePLActionPerformed
+        ParkingLotUtil parkingLotUtil = new ParkingLotUtil();
+        String parkingLotName = cbParkingLotNamesDelete.getSelectedItem().toString();
+        int parkingLotId = parkingLotUtil.getPLIdFromName(parkingLotName);
+        if(new ParkingLot().deleteParkingLot(parkingLotId)){
+            DisplayMessage.displayInfo("Parking Lot deleted successfully!");
+            updateFrame();
+        }else{
+            DisplayMessage.displayError("Error occurred while deleting the Parking Lot");
+        }
+    }//GEN-LAST:event_btnDeletePLActionPerformed
+
+    /**
+     * Panel: Parking Lot > Add / Update parking lot
+     * Function called when 'Save' button of Add / Update parking lot form is pressed
+     * Save the parking lot by also saving the parking fee and parking lot capacity data
+     *  through their respective classes.
+     * */
+    private void btnSavePLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSavePLActionPerformed
+        // Getting all the text fields in String first because exception occurs in case of
+        // directly parsing to int if no input is provided in the form
+        String name = tfName.getText();
+        String location = tfLocation.getText();
+        String bikeCapacity = ftfBikeCapacity.getText();
+        String rickshawCapacity = ftfRickshawCapacity.getText();
+        String carCapacity = ftfCarCapacity.getText();
+        String heavyVehicleCapacity = ftfHeavyVehicleCapacity.getText();
+
+        String bikeFee = ftfBikeFee.getText();
+        String rickshawFee = ftfRickshawFee.getText();
+        String carFee = ftfCarFee.getText();
+        String heavyVehicleFee = ftfHeavyVehicleFee.getText();
+
+        // Perform validation checks for all fields
+        String message = "";
+        if(location.isBlank()){
+            message += "- Location is required\n";
+        }
+        if(name.isBlank()){
+            message += "- Name is required\n";
+        }
+
+        if(bikeCapacity.isBlank()){
+            message += "- Provide valid value for Bike Capacity (In Numbers)\n";
+        }
+
+        if(carCapacity.isBlank()){
+            message += "- Provide valid value for Car Capacity (In Numbers)\n";
+        }
+        if(rickshawCapacity.isBlank()){
+            message += "- Provide valid value for Rickshaw Capacity (In Numbers)\n";
+        }
+        if(heavyVehicleCapacity.isBlank()){
+            message += "- Provide valid value for Heavy Vehicle Capacity (In Numbers)\n";
+        }
+        if(bikeFee.isBlank()){
+            message += "- Provide valid value for Bike Fee (In Numbers)\n";
+        }
+
+        if(carFee.isBlank()){
+            message += "- Provide valid value for Car Fee (In Numbers)\n";
+        }
+        if(rickshawFee.isBlank()){
+            message += "- Provide valid value for Rickshaw Fee (In Numbers)\n";
+        }
+        if(heavyVehicleFee.isBlank()){
+            message += "- Provide valid value for Heavy Vehicle Fee (In Numbers)\n";
+        }
+        if(!message.isBlank()){
+            message = "Please resolve the following errors:\n" + message;
+            DisplayMessage.displayError(message);
+        }else {
+            ParkingLot parkingLot = new ParkingLot();
+            int bikeCapacityInt = Integer.parseInt(bikeCapacity);
+            int carCapacityInt = Integer.parseInt(carCapacity);
+            int rickshawCapacityInt = Integer.parseInt(rickshawCapacity);
+            int heavyVehicleCapacityInt = Integer.parseInt(heavyVehicleCapacity);
+            float bikeFeeFloat = Float.parseFloat(bikeFee);
+            float carFeeFloat = Float.parseFloat(carFee);
+            float rickshawFeeFloat = Float.parseFloat(rickshawFee);
+            float heavyVehicleFeeFloat = Float.parseFloat(heavyVehicleFee);
+
+            parkingLot.setName(name);
+            parkingLot.setLocation(location);
+            parkingLot.setVehicleCapacity(VehicleTypes.BIKE.getValue(), bikeCapacityInt);
+            parkingLot.setVehicleCapacity(VehicleTypes.CAR.getValue(), carCapacityInt);
+            parkingLot.setVehicleCapacity(VehicleTypes.RICKSHAW.getValue(), rickshawCapacityInt);
+            parkingLot.setVehicleCapacity(VehicleTypes.HEAVY_VEHICLE.getValue(), heavyVehicleCapacityInt);
+
+            parkingLot.setParkingFee(VehicleTypes.BIKE.getValue(), bikeFeeFloat);
+            parkingLot.setParkingFee(VehicleTypes.CAR.getValue(), carFeeFloat);
+            parkingLot.setParkingFee(VehicleTypes.RICKSHAW.getValue(), rickshawFeeFloat);
+            parkingLot.setParkingFee(VehicleTypes.HEAVY_VEHICLE.getValue(), heavyVehicleFeeFloat);
+
+            // If an id is selected, then the existing parking lot will be updated
+            if(selectedParkingLotId > 0){
+                parkingLot.setId(selectedParkingLotId);
+            }
+
+            if (parkingLot.saveParkingLot()) {
+                FormUtility.clearFields(pnAddParkingLot);
+                DisplayMessage.displayInfo("Parking Lot added successfully!");
+                updateFrame();
+            } else {
+                DisplayMessage.displayError("Failed to add Parking Lot in database!");
+            }
+        }
+    }//GEN-LAST:event_btnSavePLActionPerformed
+
+    /**
+     * Panel: Parking Lot
+     * Function called when 'clear' button of Add / Update parking lot form is pressed
+     * Clears all the fields of the Add / Update parking lot form
+     * */
+    private void btnClearPLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearPLActionPerformed
+        cbParkingLotNamesUpdate.setSelectedIndex(0);
+        FormUtility.clearFields(pnAddParkingLot);
+    }//GEN-LAST:event_btnClearPLActionPerformed
+
+    /**
+     * Panel: Parking Lot > Add / Update Parking Lot
+     * Function called when the values of combo box of parking lot names in Parking lot panel changes
+     * Updates the form of Parking Lot with the values of the selected parking lot from selected parkinglot id
+     * */
+    private void cbParkingLotNamesUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbParkingLotNamesUpdateActionPerformed
+        ParkingLotUtil parkingLotUtil = new ParkingLotUtil();
+        selectedParkingLotId = -1;
+        if(cbParkingLotNamesUpdate.getSelectedItem()!= null) {
+            String parkingLotName = cbParkingLotNamesUpdate.getSelectedItem().toString();
+            if (!parkingLotName.contains("Select")) {   // If the user selected any parking lot name
+                selectedParkingLotId = parkingLotUtil.getPLIdFromName(parkingLotName);
+                ParkingLot parkingLot = parkingLotUtil.getParkingLotFromId(selectedParkingLotId);
+                tfName.setText(parkingLot.getName());
+                tfLocation.setText(parkingLot.getLocation());
+                ftfBikeCapacity.setText(Integer.toString(parkingLot.getSingleVehicleCapacity(VehicleTypes.BIKE.getValue())));
+                ftfCarCapacity.setText(Integer.toString(parkingLot.getSingleVehicleCapacity(VehicleTypes.CAR.getValue())));
+                ftfRickshawCapacity.setText(Integer.toString(parkingLot.getSingleVehicleCapacity(VehicleTypes.RICKSHAW.getValue())));
+                ftfHeavyVehicleCapacity.setText(Integer.toString(parkingLot.getSingleVehicleCapacity(VehicleTypes.HEAVY_VEHICLE.getValue())));
+
+                ftfBikeFee.setText(Float.toString(parkingLot.getSingleParkingFee(VehicleTypes.BIKE.getValue())));
+                ftfCarFee.setText(Float.toString(parkingLot.getSingleParkingFee(VehicleTypes.CAR.getValue())));
+                ftfRickshawFee.setText(Float.toString(parkingLot.getSingleParkingFee(VehicleTypes.RICKSHAW.getValue())));
+                ftfHeavyVehicleFee.setText(Float.toString(parkingLot.getSingleParkingFee(VehicleTypes.HEAVY_VEHICLE.getValue())));
+
+            }
+        }
+    }//GEN-LAST:event_cbParkingLotNamesUpdateActionPerformed
+
+    /**
+     * Panel: Parking Lot > Add Parking Lot
+     * Function called when button to save parking lot allocation is pressed.
+     * Gets the username and parking lot name which the user selected and allot
+     *   the selected parking lot to the selected user
+     * */
+    private void btnSavePLAllocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSavePLAllocationActionPerformed
+        ParkingLotUtil parkingLotUtil = new ParkingLotUtil();
+        ParkingLotAllocation parkingLotAllocation = new ParkingLotAllocation();
+        String parkingLotName = cbParkingLotAllot.getSelectedItem().toString();
+        int parkingLotId = parkingLotUtil.getPLIdFromName(parkingLotName);
+        String username = cbWorkers.getSelectedItem().toString();
+        int userId = allWorkersUsername.get(username);
+
+        parkingLotAllocation.setParkingLotId(parkingLotId);
+        parkingLotAllocation.setUserId(userId);
+        if(parkingLotAllocation.saveParkingLotAllocation()){
+            DisplayMessage.displayInfo("Saved successfully!");
+            updateFrame();
+        }else{
+            DisplayMessage.displayError("Error occurred while saving!");
+        }
+    }//GEN-LAST:event_btnSavePLAllocationActionPerformed
+
+    /**
+     * Panel: Parking Lot > Delete Parking Lot
+     * Function called when the name of worker in worker usernames combo box of parking lot panel changes.
+     * Gets the parking lots allotted to the current worker and populates the combo box of parking lots in the
+     *    combo box of parking lot names.
+     * */
+    private void cbWorkerDeletePLAllocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbWorkerDeletePLAllocationActionPerformed
+        PLAllocationUtil plAllocationUtil = new PLAllocationUtil();
+        cbParkingLotDeletePLAllocation.removeAllItems();
+        if(cbWorkerDeletePLAllocation.getSelectedItem()!= null) {
+            String selectedWorker = cbWorkerDeletePLAllocation.getSelectedItem().toString();
+            ArrayList<String> allottedParkingLots = plAllocationUtil.getPLNamesWithUsername(selectedWorker);
+            for (String parkingLot : allottedParkingLots) {
+                cbParkingLotDeletePLAllocation.addItem(parkingLot);
+            }
+        }
+    }//GEN-LAST:event_cbWorkerDeletePLAllocationActionPerformed
+
+    /**
+     * Panel: Parking Lot > Parking Lot Allocation
+     * Function called when the button to delete the parking lot allocation is pressed
+     * Delete the parking lot allocation of the selected worker
+     * */
+    private void btnDeletePLAllocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePLAllocationActionPerformed
+        ParkingLotUtil parkingLotUtil = new ParkingLotUtil();
+        String selectedWorker = cbWorkerDeletePLAllocation.getSelectedItem().toString();
+        String selectedParkingLot = cbParkingLotDeletePLAllocation.getSelectedItem().toString();
+        int selectedWorkerId = allWorkersUsername.get(selectedWorker);
+        int selectedParkingLotId = parkingLotUtil.getPLIdFromName(selectedParkingLot);
+        ParkingLotAllocation plAllocation = new ParkingLotAllocation();
+        plAllocation.setParkingLotId(selectedParkingLotId);
+        plAllocation.setUserId(selectedWorkerId);
+        if(plAllocation.deleteParkingLotAllocation()){
+            DisplayMessage.displayInfo("Removed Successfully!");
+            updateFrame();
+        }else{
+            DisplayMessage.displayError("Operation Failed!");
+        }
+    }//GEN-LAST:event_btnDeletePLAllocationActionPerformed
+
+    private void lbLogoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbLogoutMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbLogoutMouseClicked
+
+    /**
+     * Panel: User > Delete User panel
+     * Function called when 'Delete' button of Delete User panel is pressed
+     * Deletes the selected user
+     * */
+    private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
+        String selectedUser = cbUsernames.getSelectedItem().toString();
+        String message = "Are you sure you want to delete the user '" + selectedUser + "'?";
+        if(DisplayMessage.displayConfirmDialog(message) == 0){
+            User user = new User();
+            if(user.deleteUser(selectedUser)){
+                DisplayMessage.displayInfo("User '" + selectedUser + "' has been deleted successfully!");
+                updateFrame();
+
+                // Remove the username of the selected username because its deleted now
+                cbUsernames.removeItem(selectedUser);
+            }else{
+                DisplayMessage.displayError("Unable to delete the user through database!");
+            }
+        }
+    }//GEN-LAST:event_btnDeleteUserActionPerformed
+
+    private void btnClearUserFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearUserFormActionPerformed
+        FormUtility.clearFields(pnRegisterUser);
+    }//GEN-LAST:event_btnClearUserFormActionPerformed
+
+    /**
+     * Panel: User > Add User
+     * Function called when the 'Save' button of Add User panel is pressed
+     * Add new User by getting all the values entered by the user. Also check
+     *   for validations before saving the data.
+     * */
+    private void btnSaveUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveUserActionPerformed
+        ArrayList<String> usernames = new User().getAllUsernames();
+        String userTypeName = cbUserType.getSelectedItem().toString();
+        int userTypeValue = UserTypes.getValueFromName(userTypeName);
+
+        String username = tfUsername.getText();
+        String fullName = tfFullName.getText();
+        String email = tfEmail.getText();
+        char[] password = pfPassword.getPassword();
+        char[] confirmPassword = pfConfirmPassword.getPassword();
+
+        // Validate all the fields and show error message if any
+        String message = "";
+        if(username.isEmpty() || username.contains(" ")){
+            message += "- Username is required and cannot contain white spaces\n";
+        }
+        if(usernames.contains(username)){
+            message += "- The Username '" + username + "' is already registered. Use a different one\n";
+        }
+        if(fullName.isEmpty()){
+            message += "- Full Name is required\n";
+        }
+        if(!ValidateFields.validateEmail(email)){
+            message += "- Provide a valid email address\n";
+        }
+        if(password.length < 5){
+            message += "- Password is required and must be of at least 5 characters\n";
+        }
+        if(!Arrays.equals(password, confirmPassword)){
+            message += "- Both password fields must match";
+        }
+
+        if(!message.isEmpty()){
+            message = "Please resolve the following errors:\n" + message;
+            DisplayMessage.displayError(message);
+        }else{
+            User user = new User();
+            if(user.registerUser(fullName, username, password, email, userTypeValue)) {
+                String successMessage = "User '" + username + "' registered successfully!";
+                DisplayMessage.displayInfo(successMessage);
+                FormUtility.clearFields(pnRegisterUser);
+                updateFrame();
+            }else{
+                DisplayMessage.displayError("Error occurred while saving in database");
+            }
+        }
+    }//GEN-LAST:event_btnSaveUserActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,9 +1686,262 @@ public class OwnerHome extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnParkingLot;
-    private javax.swing.JButton btnUpdateProfile;
-    private javax.swing.JButton btnUsers;
-    private javax.swing.JPanel pnHome;
+    private javax.swing.JButton btnChangePasswordUP;
+    private javax.swing.JButton btnClearPL;
+    private javax.swing.JButton btnClearUserForm;
+    private javax.swing.JButton btnDeletePL;
+    private javax.swing.JButton btnDeletePLAllocation;
+    private javax.swing.JButton btnDeleteUser;
+    private javax.swing.JButton btnSavePL;
+    private javax.swing.JButton btnSavePLAllocation;
+    private javax.swing.JButton btnSaveUP;
+    private javax.swing.JButton btnSaveUser;
+    private javax.swing.JComboBox<String> cbParkingLotAllot;
+    private javax.swing.JComboBox<String> cbParkingLotDeletePLAllocation;
+    private javax.swing.JComboBox<String> cbParkingLotNamesDelete;
+    private javax.swing.JComboBox<String> cbParkingLotNamesUpdate;
+    private javax.swing.JComboBox<String> cbUserType;
+    private javax.swing.JComboBox<String> cbUsernames;
+    private javax.swing.JComboBox<String> cbWorkerDeletePLAllocation;
+    private javax.swing.JComboBox<String> cbWorkers;
+    private javax.swing.JFormattedTextField ftfBikeCapacity;
+    private javax.swing.JFormattedTextField ftfBikeFee;
+    private javax.swing.JFormattedTextField ftfCarCapacity;
+    private javax.swing.JFormattedTextField ftfCarFee;
+    private javax.swing.JFormattedTextField ftfHeavyVehicleCapacity;
+    private javax.swing.JFormattedTextField ftfHeavyVehicleFee;
+    private javax.swing.JFormattedTextField ftfRickshawCapacity;
+    private javax.swing.JFormattedTextField ftfRickshawFee;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JLabel lbCurrentUser;
+    private javax.swing.JLabel lbLogout;
+    private javax.swing.JLabel lbParkingLot;
+    private javax.swing.JLabel lbUpdateProfile;
+    private javax.swing.JLabel lbUser;
+    private javax.swing.JLabel lbUsernameUP;
+    private javax.swing.JPasswordField pfConfirmPassword;
+    private javax.swing.JPasswordField pfCurrentPasswordUP;
+    private javax.swing.JPasswordField pfNewPassword;
+    private javax.swing.JPasswordField pfPassword;
+    private javax.swing.JPanel pnAddPLAllocation;
+    private javax.swing.JPanel pnAddParkingLot;
+    private javax.swing.JPanel pnAllUsers;
+    private javax.swing.JPanel pnDeletePLAllocation;
+    private javax.swing.JPanel pnDeleteParkingLot;
+    private javax.swing.JPanel pnMain;
+    private javax.swing.JPanel pnParkingLot;
+    private javax.swing.JPanel pnRegisterUser;
+    private javax.swing.JPanel pnSideMenu;
+    private javax.swing.JPanel pnTitle;
+    private javax.swing.JPanel pnUpdateProfile;
+    private javax.swing.JPanel pnUser;
+    private javax.swing.JPanel pnWorkerAllocation;
+    private javax.swing.JScrollPane spUserList;
+    private javax.swing.JTable tbPLAllocation;
+    private javax.swing.JTable tbParkingLot;
+    private javax.swing.JTable tbUserList;
+    private javax.swing.JTextField tfEmail;
+    private javax.swing.JTextField tfEmailUP;
+    private javax.swing.JTextField tfFullName;
+    private javax.swing.JTextField tfFullNameUP;
+    private javax.swing.JTextField tfLocation;
+    private javax.swing.JTextField tfName;
+    private javax.swing.JTextField tfUsername;
     // End of variables declaration//GEN-END:variables
+
+
+    private void updateFrame(){
+        updateUserPanel();
+        updateParkingLotPanel();
+
+    }
+
+
+    private void updateUserPanel(){
+        User user = new User();
+        ArrayList<User> users = user.getAllUsers();
+        ArrayList<String> usernames = user.getAllUsernames();
+        int totalUsers = users.size();
+        Object[][] data = new Object[totalUsers][];
+        Object[] columns = {"Sr.No", "Username", "Full Name", "E-mail", "User Type"};
+
+        // Load details of all users in the table
+        int count = 0;
+        for(User user2: users){
+            int userTypeValue = user2.getUserType();
+            String userTypeName = UserTypes.getNameFromValue(userTypeValue);
+            String username = user2.getUsername();
+            String fullName = user2.getFullName();
+            String email = user2.getEmail();
+            Object[] row = {count+1, username, fullName, email, userTypeName};
+            data[count] = row;
+            count++;
+        }
+        tbUserList.setModel(new javax.swing.table.DefaultTableModel(
+                data, columns
+        ));
+
+        // Add/update entries of usernames in the combo box to delete users
+        // Remove the username of currently logged in user from the list so, that it cannot be deleted
+        String loggedInUsername = User.getLoggedInUser().getUsername();
+        usernames.remove(loggedInUsername);
+
+        // This function is called several times, so delete existing items of combo box before
+        // adding new entries. Otherwise, entries will be duplicated
+        cbUsernames.removeAllItems();
+
+        for(String username:usernames){
+            cbUsernames.addItem(username);
+        }
+    }
+
+
+    private void updateParkingLotPanel(){
+        ParkingLotUtil parkingLotUtil = new ParkingLotUtil();
+        Worker worker = new Worker();
+        ArrayList<ParkingLot> parkingLots1 = new ParkingLot().getAllParkingLot();
+        int totalParkingLots = parkingLots1.size();
+        Object[][] data = new Object[totalParkingLots][];
+        Object[] columns = {"Sr.No", "Name", "Location", "Bike Capacity", "Rickshaw Capacity", "Car Capacity", "Heavy Vehicle Capacity",
+                "Bike Fee", "Rickshaw Fee", "Car Fee", "Heavy Vehicle Fee"};
+
+        // Remove all items before adding new to avoid duplicates
+        cbParkingLotNamesDelete.removeAllItems();
+        cbParkingLotNamesUpdate.removeAllItems();
+        cbParkingLotAllot.removeAllItems();
+        cbWorkers.removeAllItems();
+        cbWorkerDeletePLAllocation.removeAllItems();
+
+        cbParkingLotNamesUpdate.addItem("...Select Item...");
+        cbParkingLotNamesUpdate.setSelectedIndex(0);
+
+        // Adding ParkingLot names in combo boxes
+        ArrayList<String> allPLNames = parkingLotUtil.getAllPLNames();
+        for(String plName:allPLNames){
+            cbParkingLotNamesDelete.addItem(plName);
+            cbParkingLotNamesUpdate.addItem(plName);
+            cbParkingLotAllot.addItem(plName);
+        }
+
+        // Add all workers' names in combo box of workers
+        allWorkersUsername = worker.getAllWorkerUsernames();
+        for(String username:allWorkersUsername.keySet()){
+            cbWorkers.addItem(username);
+        }
+
+        // Load details of all Parking Lots in the table
+        int count = 0;
+        for(ParkingLot parkingLot: parkingLots1){
+            int id = parkingLot.getId();
+            String name = parkingLot.getName();
+            String location = parkingLot.getLocation();
+
+
+            int bikeCapacity = parkingLot.getSingleVehicleCapacity(VehicleTypes.BIKE.getValue());
+            int rickshawCapacity = parkingLot.getSingleVehicleCapacity(VehicleTypes.RICKSHAW.getValue());
+            int carCapacity = parkingLot.getSingleVehicleCapacity(VehicleTypes.CAR.getValue());
+            int heavyVehicleCapacity = parkingLot.getSingleVehicleCapacity(VehicleTypes.HEAVY_VEHICLE.getValue());
+
+            float bikeFee = parkingLot.getSingleParkingFee(VehicleTypes.BIKE.getValue());
+            float rickshawFee = parkingLot.getSingleParkingFee(VehicleTypes.RICKSHAW.getValue());
+            float carFee = parkingLot.getSingleParkingFee(VehicleTypes.CAR.getValue());
+            float heavyVehicleFee = parkingLot.getSingleParkingFee(VehicleTypes.HEAVY_VEHICLE.getValue());
+
+            Object[] row = {count+1, name, location, bikeCapacity, rickshawCapacity, carCapacity, heavyVehicleCapacity,
+                    bikeFee, rickshawFee, carFee, heavyVehicleFee};
+            data[count] = row;
+            count++;
+        }
+        tbParkingLot.setModel(new javax.swing.table.DefaultTableModel(
+                data, columns
+        ));
+
+        // Display table of Parking Lot Allocation
+        PLAllocationUtil plAllocationUtil = new PLAllocationUtil();
+        HashMap<String, ArrayList<String>> allPLAllocation = plAllocationUtil.getAllPLAllocationWithUsername();
+        int rowCount = 0;
+        for(String key: allPLAllocation.keySet()){
+            rowCount += allPLAllocation.get(key).size();
+        }
+
+        Object[][] allRows = new Object[rowCount][];
+        Object[] allColumns = {"Sr No.", "Worker", "Parking Lot"};
+        int workerCounter = 0;                  // Used to Display serial numbers. Only change when new worker is added
+        int rowCounter = 0;
+        for(String key: allPLAllocation.keySet()){
+            cbWorkerDeletePLAllocation.addItem(key);
+
+            boolean isWorkerAdded = false;      // Used to add the name of worker only one time
+            ArrayList<String> parkingLots = allPLAllocation.get(key);
+
+            for(String parkingLot: parkingLots){
+                Object[] row = new Object[allColumns.length];
+                if(!isWorkerAdded){
+                    row[0] = ++workerCounter;
+                    row[1] = key;               // Key is username of worker
+                    isWorkerAdded = true;
+                }else{
+                    row[0] = "";
+                    row[1] = "";
+                }
+                row[2] = parkingLot;
+
+                allRows[rowCounter] = row;
+                rowCounter++;
+            }
+        }
+        tbPLAllocation.setModel(new javax.swing.table.DefaultTableModel(
+                allRows, allColumns
+        ));
+
+
+    }
 }

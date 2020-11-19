@@ -10,11 +10,14 @@ import parkingsystem.Enums.VehicleTypes;
 import parkingsystem.Utility.*;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -52,7 +55,8 @@ public class WorkerHome extends javax.swing.JFrame {
         
         pnHome.setVisible(true);
         pnParkVehicle.setVisible(false);
-
+        pnSalesReport.setVisible(false);
+        pnUpdateProfile.setVisible(false);
 
 
         // Get names of all parking lots which currently logged in user can manage
@@ -115,6 +119,14 @@ public class WorkerHome extends javax.swing.JFrame {
             }
         });
 
+        // Add details of currently logged in user in update profile panel
+        String username = loggedInUser.getUsername();
+        String fullName = loggedInUser.getFullName();
+        String email = loggedInUser.getEmail();
+        lbUsernameUP.setText(username);
+        tfFullNameUP.setText(fullName);
+        tfEmailUP.setText(email);
+        
 
     }
 
@@ -216,6 +228,8 @@ public class WorkerHome extends javax.swing.JFrame {
         pnMenu = new javax.swing.JPanel();
         lbParkVehicle = new javax.swing.JLabel();
         lbHome = new javax.swing.JLabel();
+        lbSalesReport = new javax.swing.JLabel();
+        lbUpdateProfile = new javax.swing.JLabel();
         pnTitle = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -259,6 +273,40 @@ public class WorkerHome extends javax.swing.JFrame {
         lbChangeAmountVExit = new javax.swing.JLabel();
         btnVehicleExit = new javax.swing.JButton();
         lbRegNumberVExit = new javax.swing.JLabel();
+        pnAllParkedVehicles = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbAllParkedVehicles = new javax.swing.JTable();
+        pnSalesReport = new javax.swing.JPanel();
+        jLabel37 = new javax.swing.JLabel();
+        dcDateFrom = new com.toedter.calendar.JDateChooser();
+        jLabel38 = new javax.swing.JLabel();
+        dcDateTo = new com.toedter.calendar.JDateChooser();
+        btnDisplayReport = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbSalesReport = new javax.swing.JTable();
+        jLabel39 = new javax.swing.JLabel();
+        lbTotalCash = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        lbTotalTransactions = new javax.swing.JLabel();
+        pnUpdateProfile = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel41 = new javax.swing.JLabel();
+        lbUsernameUP = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        tfFullNameUP = new javax.swing.JTextField();
+        tfEmailUP = new javax.swing.JTextField();
+        jLabel43 = new javax.swing.JLabel();
+        btnUpdateProfile = new javax.swing.JButton();
+        jLabel47 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        pfCurrentPasswordUP = new javax.swing.JPasswordField();
+        jLabel46 = new javax.swing.JLabel();
+        pfNewPassword = new javax.swing.JPasswordField();
+        btnChangePassword = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -414,6 +462,30 @@ public class WorkerHome extends javax.swing.JFrame {
             }
         });
 
+        lbSalesReport.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
+        lbSalesReport.setForeground(new java.awt.Color(255, 255, 255));
+        lbSalesReport.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbSalesReport.setText("Sales Report");
+        lbSalesReport.setFocusable(false);
+        lbSalesReport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbSalesReport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbSalesReportMouseClicked(evt);
+            }
+        });
+
+        lbUpdateProfile.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
+        lbUpdateProfile.setForeground(new java.awt.Color(255, 255, 255));
+        lbUpdateProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbUpdateProfile.setText("Update Profile");
+        lbUpdateProfile.setFocusable(false);
+        lbUpdateProfile.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbUpdateProfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbUpdateProfileMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnMenuLayout = new javax.swing.GroupLayout(pnMenu);
         pnMenu.setLayout(pnMenuLayout);
         pnMenuLayout.setHorizontalGroup(
@@ -422,7 +494,9 @@ public class WorkerHome extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbHome, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                    .addComponent(lbParkVehicle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbParkVehicle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbSalesReport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbUpdateProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnMenuLayout.setVerticalGroup(
@@ -432,7 +506,11 @@ public class WorkerHome extends javax.swing.JFrame {
                 .addComponent(lbHome, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lbParkVehicle, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(400, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(lbSalesReport, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lbUpdateProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(298, Short.MAX_VALUE))
         );
 
         pnMain.add(pnMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -724,6 +802,43 @@ public class WorkerHome extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Vehicle Exit", pnVehicleExit);
 
+        pnAllParkedVehicles.setBackground(new java.awt.Color(255, 255, 255));
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+
+        tbAllParkedVehicles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbAllParkedVehicles.setGridColor(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(tbAllParkedVehicles);
+
+        javax.swing.GroupLayout pnAllParkedVehiclesLayout = new javax.swing.GroupLayout(pnAllParkedVehicles);
+        pnAllParkedVehicles.setLayout(pnAllParkedVehiclesLayout);
+        pnAllParkedVehiclesLayout.setHorizontalGroup(
+            pnAllParkedVehiclesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnAllParkedVehiclesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnAllParkedVehiclesLayout.setVerticalGroup(
+            pnAllParkedVehiclesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnAllParkedVehiclesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
+        );
+
+        jTabbedPane1.addTab("All Parked Vehicles", pnAllParkedVehicles);
+
         javax.swing.GroupLayout pnParkVehicleLayout = new javax.swing.GroupLayout(pnParkVehicle);
         pnParkVehicle.setLayout(pnParkVehicleLayout);
         pnParkVehicleLayout.setHorizontalGroup(
@@ -742,6 +857,275 @@ public class WorkerHome extends javax.swing.JFrame {
         );
 
         pnMain.add(pnParkVehicle, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 124, 700, 450));
+
+        pnSalesReport.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel37.setText("Date From");
+
+        dcDateFrom.setDateFormatString("dd-MM-yyyy");
+
+        jLabel38.setText("Date To");
+
+        dcDateTo.setDateFormatString("dd-MM-yyyy");
+
+        btnDisplayReport.setText("Display Report");
+        btnDisplayReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDisplayReportActionPerformed(evt);
+            }
+        });
+
+        jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        tbSalesReport.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(tbSalesReport);
+
+        jLabel39.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
+        jLabel39.setText("Total Cash");
+
+        lbTotalCash.setFont(new java.awt.Font("Noto Sans", 0, 16)); // NOI18N
+        lbTotalCash.setText("Nil");
+
+        jLabel40.setFont(new java.awt.Font("Noto Sans", 1, 16)); // NOI18N
+        jLabel40.setText("Total Transactions");
+
+        lbTotalTransactions.setFont(new java.awt.Font("Noto Sans", 0, 16)); // NOI18N
+        lbTotalTransactions.setText("Nil");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel40))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbTotalTransactions, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbTotalCash, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(81, 81, 81))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel39)
+                    .addComponent(lbTotalCash))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel40)
+                    .addComponent(lbTotalTransactions))
+                .addGap(0, 175, Short.MAX_VALUE))
+        );
+
+        jScrollPane3.setViewportView(jPanel3);
+
+        javax.swing.GroupLayout pnSalesReportLayout = new javax.swing.GroupLayout(pnSalesReport);
+        pnSalesReport.setLayout(pnSalesReportLayout);
+        pnSalesReportLayout.setHorizontalGroup(
+            pnSalesReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnSalesReportLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel37)
+                .addGap(18, 18, 18)
+                .addComponent(dcDateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(dcDateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(btnDisplayReport)
+                .addGap(24, 24, 24))
+            .addGroup(pnSalesReportLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnSalesReportLayout.setVerticalGroup(
+            pnSalesReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnSalesReportLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(pnSalesReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnDisplayReport)
+                    .addGroup(pnSalesReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(dcDateTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dcDateFrom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        pnMain.add(pnSalesReport, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 124, 700, 450));
+
+        pnUpdateProfile.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel41.setText("Username");
+
+        lbUsernameUP.setText("Nil");
+
+        jLabel42.setText("Full Name");
+
+        jLabel43.setText("Email");
+
+        btnUpdateProfile.setText("Save");
+        btnUpdateProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateProfileActionPerformed(evt);
+            }
+        });
+
+        jLabel47.setText("Update Profile");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnUpdateProfile)
+                .addGap(40, 40, 40))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel42)
+                            .addComponent(jLabel43))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfFullNameUP)
+                            .addComponent(lbUsernameUP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfEmailUP, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(jLabel47)))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel47)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel41)
+                    .addComponent(lbUsernameUP))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel42)
+                    .addComponent(tfFullNameUP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel43)
+                    .addComponent(tfEmailUP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(46, 46, 46)
+                .addComponent(btnUpdateProfile)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel44.setText("Change Password");
+
+        jLabel45.setText("Current Password");
+
+        jLabel46.setText("New Password");
+
+        btnChangePassword.setText("Save");
+        btnChangePassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChangePasswordActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel46)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pfNewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel45)
+                        .addGap(32, 32, 32)
+                        .addComponent(pfCurrentPasswordUP, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(38, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel44)
+                        .addGap(108, 108, 108))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnChangePassword)
+                        .addGap(50, 50, 50))))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel44)
+                .addGap(40, 40, 40)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel45)
+                    .addComponent(pfCurrentPasswordUP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel46)
+                    .addComponent(pfNewPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
+                .addComponent(btnChangePassword)
+                .addContainerGap(61, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout pnUpdateProfileLayout = new javax.swing.GroupLayout(pnUpdateProfile);
+        pnUpdateProfile.setLayout(pnUpdateProfileLayout);
+        pnUpdateProfileLayout.setHorizontalGroup(
+            pnUpdateProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnUpdateProfileLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+        );
+        pnUpdateProfileLayout.setVerticalGroup(
+            pnUpdateProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnUpdateProfileLayout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(pnUpdateProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
+        );
+
+        pnMain.add(pnUpdateProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(187, 124, 700, 450));
 
         getContentPane().add(pnMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -785,12 +1169,30 @@ public class WorkerHome extends javax.swing.JFrame {
     private void lbHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbHomeMouseClicked
         pnHome.setVisible(true);
         pnParkVehicle.setVisible(false);
+        pnSalesReport.setVisible(false);
+        pnUpdateProfile.setVisible(false);
     }//GEN-LAST:event_lbHomeMouseClicked
 
     private void lbParkVehicleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbParkVehicleMouseClicked
-        pnHome.setVisible(false);
         pnParkVehicle.setVisible(true);
+        pnHome.setVisible(false);
+        pnSalesReport.setVisible(false);
+        pnUpdateProfile.setVisible(false);
     }//GEN-LAST:event_lbParkVehicleMouseClicked
+
+    private void lbSalesReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbSalesReportMouseClicked
+        pnSalesReport.setVisible(true);
+        pnHome.setVisible(false);
+        pnParkVehicle.setVisible(false);
+        pnSalesReport.setVisible(false);
+    }//GEN-LAST:event_lbSalesReportMouseClicked
+
+    private void lbUpdateProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbUpdateProfileMouseClicked
+        pnUpdateProfile.setVisible(true);
+        pnSalesReport.setVisible(false);
+        pnHome.setVisible(false);
+        pnParkVehicle.setVisible(false);
+    }//GEN-LAST:event_lbUpdateProfileMouseClicked
 
     private void cbRegNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbRegNumberActionPerformed
         selectedVehicleId = -1;
@@ -868,7 +1270,6 @@ public class WorkerHome extends javax.swing.JFrame {
                 if (parkedVehicleId > 0) {
                     ParkingReceiptFrame receiptFrame = new ParkingReceiptFrame(parkedVehicle);
                     receiptFrame.setVisible(true);
-                    DisplayMessage.displayInfo("Parked Successfully!");
                     updateFrame();
                     FormUtility.clearFields(pnParkVehicle);
                 } else {
@@ -941,7 +1342,10 @@ public class WorkerHome extends javax.swing.JFrame {
     }//GEN-LAST:event_cbTokenNumberVExitActionPerformed
 
     private void ftfPayedAmountVExitKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ftfPayedAmountVExitKeyReleased
-        float payedAmount = Float.parseFloat(ftfPayedAmountVExit.getText());
+        // Remove commas from string, if any
+        String payedAmountStr = ftfPayedAmountVExit.getText().replace("," , "");
+
+        float payedAmount = Float.parseFloat(payedAmountStr);
         if(inventory != null){
             float totalFee = inventory.getTotalFee();
             if(payedAmount > totalFee){
@@ -954,7 +1358,8 @@ public class WorkerHome extends javax.swing.JFrame {
         if(inventory == null){
             DisplayMessage.displayError("Please provide correct token number or vehicle registration number");
         }else{
-            float payedAmount = Float.parseFloat(ftfPayedAmountVExit.getText());
+            String payedAmountStr = ftfPayedAmountVExit.getText().replace("," , "");
+            float payedAmount = Float.parseFloat(payedAmountStr);
             if(payedAmount < inventory.getTotalFee()){
                 DisplayMessage.displayError("Payed amount is less than total fee\n" +
                         "Please enter amount greater than or equal to total fee!");
@@ -964,7 +1369,7 @@ public class WorkerHome extends javax.swing.JFrame {
                     if(pv.deleteParkedVehicle(parkedVehicleId)){
                         PaymentReceiptFrame receiptFrame = new PaymentReceiptFrame(inventory, payedAmount);
                         receiptFrame.setVisible(true);
-                        DisplayMessage.displayInfo("Saved");
+                        updateFrame();
                     }else{
                         DisplayMessage.displayError("Failed");
                     }
@@ -974,6 +1379,112 @@ public class WorkerHome extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnVehicleExitActionPerformed
+
+    private void btnDisplayReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayReportActionPerformed
+        Date dateFrom = dcDateFrom.getDate();
+        Date dateTo = dcDateTo.getDate();
+
+
+        HashMap<String, String> requiredFields = new HashMap<>();
+        requiredFields.put("Date From", dateFrom.toString());
+        requiredFields.put("Date To", dateTo.toString());
+
+        String errorMessage = FormUtility.errorMessageForRequiredFields(requiredFields);
+        if(!errorMessage.isBlank()){
+            DisplayMessage.displayError(errorMessage);
+        }else {
+            Timestamp dateFromTS = TimeFormatting.getTimestampFromDate(dateFrom);
+            Timestamp dateToTS = TimeFormatting.getTimestampFromDate(dateTo);
+            if (dateFromTS == null || dateToTS == null) {
+                DisplayMessage.displayError("Invalid dates provided! \nEnter again!");
+            } else if (dateToTS.getTime() < dateFromTS.getTime()) {
+                DisplayMessage.displayError("'Date To' must be greater then or equal to 'Date From' ");
+            } else{
+                Inventory inventory = new Inventory();
+
+                // Increase the date to timestamp till the end of day
+                dateToTS.setTime(dateToTS.getTime()+(86340*1000));
+
+                ArrayList<Inventory> inventoryList = inventory.getInventoryWithDates(selectedPL.getId(), dateFromTS, dateToTS);
+                Object[][] data = new Object[inventoryList.size()][];
+                Object[] columns = {"Sr No.", "Registration Number", "Vehicle Type", "Time Entrance", "Time Exit", "Total Fee"};
+                int counter = 0;
+                float totalCash = 0;
+                for(Inventory inv:inventoryList){
+                    int vehicleId = inv.getVehicleId();
+                    Vehicle vehicle = vehicleUtil.getVehicleWithId(vehicleId);
+                    int vehicleTypeValue = vehicle.getVehicleType();
+                    String vehicleTypeName = VehicleTypes.getNameFromValue(vehicleTypeValue);
+                    String regNumber = vehicle.getRegNumber();
+                    Timestamp timeEntrance = inv.getTimeEntrance();
+                    Timestamp timeExit = inv.getTimeExit();
+                    String timeEntranceStr = TimeFormatting.getDateTimeString(timeEntrance);
+                    String timeExitStr = TimeFormatting.getDateTimeString(timeExit);
+                    String totalFee = "Rs " + inv.getTotalFee();
+                    totalCash += inv.getTotalFee();
+
+                    data[counter] = new Object[]{counter+1, regNumber, vehicleTypeName, timeEntranceStr, timeExitStr, totalFee};
+                    counter++;
+                }
+                
+                tbSalesReport.setModel(new DefaultTableModel(data, columns));
+                lbTotalCash.setText("Rs "+ totalCash);
+                lbTotalTransactions.setText(counter+"");
+                
+            }
+        }
+
+
+        
+    }//GEN-LAST:event_btnDisplayReportActionPerformed
+
+    private void btnUpdateProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateProfileActionPerformed
+        String username = loggedInUser.getUsername();
+        String fullName = tfFullNameUP.getText();
+        String email = tfEmailUP.getText();
+        User user = loggedInUser;
+        HashMap<String, String> requiredFields = new HashMap<>();
+        requiredFields.put("Full Name", fullName);
+        requiredFields.put("Email", email);
+        String errorMessage = FormUtility.errorMessageForRequiredFields(requiredFields);
+        if(!errorMessage.isBlank()){
+            DisplayMessage.displayError(errorMessage);
+        }else {
+            if (user.updateProfile(username, fullName, email)) {
+                DisplayMessage.displayInfo("Profile updated successfully!");
+                loggedInUser = user;            // Now full name and email are update in 'user' object
+                tfFullNameUP.setText(loggedInUser.getFullName());
+                tfEmailUP.setText(loggedInUser.getEmail());
+            }
+        }
+
+    }//GEN-LAST:event_btnUpdateProfileActionPerformed
+
+    private void btnChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangePasswordActionPerformed
+        String currentPassword = String.valueOf(pfCurrentPasswordUP.getPassword());
+        String newPassword = String.valueOf(pfNewPassword.getPassword());
+
+        HashMap<String, String> requiredFields = new HashMap<>();
+        requiredFields.put("Current Password", currentPassword);
+        requiredFields.put("Email", newPassword);
+        String errorMessage = FormUtility.errorMessageForRequiredFields(requiredFields);
+        if(!errorMessage.isBlank()){
+            DisplayMessage.displayError(errorMessage);
+        }else {
+            if (newPassword.length() < 5) {
+                DisplayMessage.displayError("New password must be of at least 5 characters!");
+            } else {
+                if (loggedInUser.updatePassword(currentPassword, newPassword)) {
+                    DisplayMessage.displayInfo("Password changed successfully!");
+                } else {
+                    DisplayMessage.displayError("You have provided wrong password, Please try again!");
+                }
+            }
+        }
+
+    }//GEN-LAST:event_btnChangePasswordActionPerformed
+
+
 
     /**
      * @param args the command line arguments
@@ -1011,13 +1522,18 @@ public class WorkerHome extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnChangePassword;
+    private javax.swing.JButton btnDisplayReport;
     private javax.swing.JButton btnParkVehicle;
+    private javax.swing.JButton btnUpdateProfile;
     private javax.swing.JButton btnVehicleExit;
     private javax.swing.JComboBox<String> cbRegNumber;
     private javax.swing.JComboBox<String> cbSelectedParkingLot;
     private javax.swing.JComboBox<String> cbTokenNumberVExit;
     private javax.swing.JComboBox<String> cbVehicleName;
     private javax.swing.JComboBox<String> cbVehicleType;
+    private com.toedter.calendar.JDateChooser dcDateFrom;
+    private com.toedter.calendar.JDateChooser dcDateTo;
     private javax.swing.JFormattedTextField ftfPayedAmountVExit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1049,7 +1565,18 @@ public class WorkerHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1057,6 +1584,12 @@ public class WorkerHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lbBikeCapacity;
     private javax.swing.JLabel lbBikeFee;
@@ -1074,15 +1607,23 @@ public class WorkerHome extends javax.swing.JFrame {
     private javax.swing.JLabel lbRegNumberVExit;
     private javax.swing.JLabel lbRickshawCapacity;
     private javax.swing.JLabel lbRickshawFee;
+    private javax.swing.JLabel lbSalesReport;
     private javax.swing.JLabel lbTimeEntranceVExit;
     private javax.swing.JLabel lbTimeExitVExit;
     private javax.swing.JLabel lbTotalBike;
     private javax.swing.JLabel lbTotalCar;
+    private javax.swing.JLabel lbTotalCash;
     private javax.swing.JLabel lbTotalFeeVExit;
     private javax.swing.JLabel lbTotalHeavyVehicle;
     private javax.swing.JLabel lbTotalRickshaw;
+    private javax.swing.JLabel lbTotalTransactions;
+    private javax.swing.JLabel lbUpdateProfile;
+    private javax.swing.JLabel lbUsernameUP;
     private javax.swing.JLabel lbVehicleNameVExit;
     private javax.swing.JLabel lbVehicleTypeVExit;
+    private javax.swing.JPasswordField pfCurrentPasswordUP;
+    private javax.swing.JPasswordField pfNewPassword;
+    private javax.swing.JPanel pnAllParkedVehicles;
     private javax.swing.JPanel pnHome;
     private javax.swing.JPanel pnMain;
     private javax.swing.JPanel pnMenu;
@@ -1090,9 +1631,15 @@ public class WorkerHome extends javax.swing.JFrame {
     private javax.swing.JPanel pnParkedVehicles;
     private javax.swing.JPanel pnParkingFee;
     private javax.swing.JPanel pnParkingLot;
+    private javax.swing.JPanel pnSalesReport;
     private javax.swing.JPanel pnTitle;
+    private javax.swing.JPanel pnUpdateProfile;
     private javax.swing.JPanel pnVehicleEntrance;
     private javax.swing.JPanel pnVehicleExit;
+    private javax.swing.JTable tbAllParkedVehicles;
+    private javax.swing.JTable tbSalesReport;
+    private javax.swing.JTextField tfEmailUP;
+    private javax.swing.JTextField tfFullNameUP;
     private javax.swing.JTextField tfOwnerName;
     // End of variables declaration//GEN-END:variables
 
@@ -1113,6 +1660,30 @@ public class WorkerHome extends javax.swing.JFrame {
         lbTotalRickshaw.setText(totalRickshaw);
         lbTotalCar.setText(totalCar);
         lbTotalHeavyVehicle.setText(totalHeavyVehicle);
+
+        // Create/Update table of All Parked Vehicles in parked vehicle panel
+        ParkedVehicle parkedVehicle = new ParkedVehicle();
+        ArrayList<ParkedVehicle> allParkedVehicles = parkedVehicle.getParkedVehicleWithPLId(selectedPL.getId());
+        Object[] columns = {"Token Number", "Registration Number", "Vehicle Type", "Entrance Time"};
+        Object[][] data = new Object[allParkedVehicles.size()][];
+
+        int counter = 0;
+        for(ParkedVehicle pv:allParkedVehicles){
+            int token = pv.getId();
+            int vehicleId = pv.getVehicleId();
+            Timestamp entranceTime = pv.getParkTime();
+            String entranceTimeStr = TimeFormatting.getDateTimeString(entranceTime);
+            Vehicle vehicle = vehicleUtil.getVehicleWithId(vehicleId);
+            int vehicleTypeValue = vehicle.getVehicleType();
+            String vehicleTypeName = VehicleTypes.getNameFromValue(vehicleTypeValue);
+            String regNumber = vehicle.getRegNumber();
+
+            data[counter++] = new Object[] {token, regNumber, vehicleTypeName, entranceTimeStr};
+        }
+
+        tbAllParkedVehicles.setModel(new javax.swing.table.DefaultTableModel(
+                data, columns
+        ));
 
     }
 }

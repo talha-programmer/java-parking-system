@@ -3,6 +3,7 @@ package parkingsystem.BusinessLogic;
 import parkingsystem.Database.InventoryDB;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class Inventory {
     private int id, parkingLotId, vehicleId;
@@ -50,6 +51,14 @@ public class Inventory {
         this.totalFee = totalFee;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public boolean saveInventory(){
         int id = db.saveInventory(this);
         if(id > 0){
@@ -57,5 +66,9 @@ public class Inventory {
             return true;
         }
         return false;
+    }
+
+    public ArrayList<Inventory> getInventoryWithDates(int parkingLotId, Timestamp dateFrom, Timestamp dateTo) {
+        return db.getInventoryWithDates(parkingLotId, dateFrom, dateTo);
     }
 }

@@ -108,8 +108,10 @@ public class User {
      * @return true if password updated successfully, otherwise false
     * */
     public boolean updatePassword(String currentPassword, String newPassword){
-        if(new PasswordAuthentication().authenticate(currentPassword, this.password)){
-            return db.updatePassword(this.username, newPassword);
+        PasswordAuthentication authentication = new PasswordAuthentication();
+        if(authentication.authenticate(currentPassword, this.password)){
+            String hashedPassword = authentication.hash(newPassword);
+            return db.updatePassword(this.username, hashedPassword);
         }
 
         return false;

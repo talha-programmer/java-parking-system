@@ -24,13 +24,12 @@ import java.util.HashMap;
  * @author talha
  */
 public class ParkingLotForm extends javax.swing.JFrame {
-    private ArrayList<ParkingLot> parkingLots = null;
     private int selectedParkingLotId = -1;
     private HashMap<String, Integer> allWorkersUsername = null;
     private HashMap<String, ArrayList<String>> allPLAllocation = null;
 
     private ParkingLotUtil parkingLotUtil = null;
-    private PLAllocationUtil plAllocationUtil = null;
+
     /**
      * Creates new form ParkingLotForm
      */
@@ -789,11 +788,11 @@ public class ParkingLotForm extends javax.swing.JFrame {
 
     private void updateFrame(){
         parkingLotUtil = new ParkingLotUtil();
-        plAllocationUtil = new PLAllocationUtil();
+        PLAllocationUtil plAllocationUtil = new PLAllocationUtil();
 
         Worker worker = new Worker();
-        parkingLots = new ParkingLot().getAllParkingLot();
-        int totalParkingLots = parkingLots.size();
+        ArrayList<ParkingLot> parkingLots1 = new ParkingLot().getAllParkingLot();
+        int totalParkingLots = parkingLots1.size();
         Object[][] data = new Object[totalParkingLots][];
         Object[] columns = {"Sr.No", "Name", "Location", "Bike Capacity", "Rickshaw Capacity", "Car Capacity", "Heavy Vehicle Capacity",
                 "Bike Fee", "Rickshaw Fee", "Car Fee", "Heavy Vehicle Fee"};
@@ -824,7 +823,7 @@ public class ParkingLotForm extends javax.swing.JFrame {
 
         // Load details of all Parking Lots in the table
         int count = 0;
-        for(ParkingLot parkingLot: parkingLots){
+        for(ParkingLot parkingLot: parkingLots1){
             int id = parkingLot.getId();
             String name = parkingLot.getName();
             String location = parkingLot.getLocation();
