@@ -7,15 +7,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Database {
-    /*private final String HOST = "localhost";
+    private final String HOST = "localhost";
     private final String DBNAME = "parking_system";
     private final String USERNAME = "root";
-    private final String PASSWORD = "";*/
+    private final String PASSWORD = "";
 
-    private final String HOST = "ziailighting.com";
+    /*private final String HOST = "ziailighting.com";
     private final String DBNAME = "ziailigh_parking_system";
     private final String USERNAME = "ziailigh_admin";
-    private final String PASSWORD = "DB.password789";
+    private final String PASSWORD = "DB.password789";*/
     protected Connection conn = null;
 
     public Database() {

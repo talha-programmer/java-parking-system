@@ -62,6 +62,11 @@ public class WorkerHome extends javax.swing.JFrame {
         // Get names of all parking lots which currently logged in user can manage
         // and add the names in combo box
         ArrayList<String> allocatedParkingLots = plAllocationUtil.getPLNamesWithUsername(loggedInUser.getUsername());
+        if(allocatedParkingLots == null){
+            DisplayMessage.displayError("No parking lot alloted to you!\n You cannot login if no parking lot is alloted by the owner!");
+            System.exit(0);
+        }
+        
         for(String plName: allocatedParkingLots){
             if(plName != null) {
                 cbSelectedParkingLot.addItem(plName);
