@@ -1681,7 +1681,7 @@ public class OwnerHome extends javax.swing.JFrame {
         String parkingLotName = cbParkingLotAllot.getSelectedItem().toString();
         int parkingLotId = parkingLotUtil.getPLIdFromName(parkingLotName);
         String username = cbWorkers.getSelectedItem().toString();
-        int userId = allWorkersUsername.get(username);
+        int userId = allWorkersUsername.getOrDefault(username, null);
 
         parkingLotAllocation.setParkingLotId(parkingLotId);
         parkingLotAllocation.setUserId(userId);
@@ -2058,7 +2058,6 @@ public class OwnerHome extends javax.swing.JFrame {
         // Update parking lot names in sales report combo box
         ArrayList<String> allPLNames = new ParkingLotUtil().getAllPLNames();
         cbSelectedParkingLot.removeAllItems();
-        System.out.println(allPLNames);
         cbSelectedParkingLot.addItem("...Select Item....");
         for(String name: allPLNames){
             cbSelectedParkingLot.addItem(name);

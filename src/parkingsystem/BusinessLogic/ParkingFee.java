@@ -38,6 +38,10 @@ public class ParkingFee {
         return db.saveParkingFee(this);
     }
 
+    public boolean deleteAllParkingFee(int parkingLotId) {
+        return db.deleteAllParkingFee(parkingLotId);
+    }
+
     public HashMap<Integer, Float> getParkingFee(int parkingLotId){
         return db.getParkingFee(parkingLotId);
     }

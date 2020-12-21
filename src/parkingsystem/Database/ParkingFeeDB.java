@@ -58,11 +58,11 @@ public class ParkingFeeDB extends Database{
     }
 
     /**
-     * Delete the data of all vehicle's capacity of a parking lot through
+     * Delete the data of all vehicle's parking fee of a parking lot through
      * parking lot id. To delete a parking lot, we must delete all data
      * of parking vehicle's capacity from the database
      * */
-    public boolean deleteAllVehicleCapacities(int parkingLotId) {
+    public boolean deleteAllParkingFee(int parkingLotId) {
         String query = "DELETE FROM parking_fee ";
         query += "WHERE parking_lot_id = ? ";
 

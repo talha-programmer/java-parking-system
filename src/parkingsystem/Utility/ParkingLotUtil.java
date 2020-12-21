@@ -24,11 +24,11 @@ public class ParkingLotUtil {
     }
 
     public ParkingLot getParkingLotFromId(int id){
-        return parkingLotWithIds.get(id);
+        return parkingLotWithIds.getOrDefault(id, null);
     }
 
     public ParkingLot getParkingLotFromName(String name){
-        return parkingLotWithNames.get(name);
+        return parkingLotWithNames.getOrDefault(name, null);
     }
 
     public String getPLNameFromId(int id){
@@ -37,7 +37,11 @@ public class ParkingLotUtil {
     }
 
     public int getPLIdFromName(String name){
-        return parkingLotWithNames.get(name).getId();
+        ParkingLot pl = parkingLotWithNames.getOrDefault(name, null);
+        if(pl == null){
+            return -1;
+        }
+        return pl.getId();
     }
 
     public HashMap<Integer, ParkingLot> getAllParkingLotWithIds() {

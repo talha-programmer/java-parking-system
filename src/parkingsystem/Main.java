@@ -17,15 +17,6 @@ import parkingsystem.Utility.PasswordAuthentication;
  * @author talha
  */
 public class Main {
-    /*public static void main(String[] args) {
-        *//*User user = new User();
-
-        System.out.println(user.registerUser("M Talha", "talha2", "pass", "mail", 1));
-        System.out.println(user.getId());*//*
-
-        System.out.println(new PasswordAuthentication().authenticate("pass", "$31$16$zS5oFRlj_zQLqhza1YJ4PK9fcaKK0ndH6zYzWAvFOcg"));
-    }*/
-
 
     /**
      * @param args the command line arguments

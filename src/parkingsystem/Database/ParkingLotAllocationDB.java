@@ -77,4 +77,23 @@ public class ParkingLotAllocationDB extends Database{
         }
         return false;
     }
+
+    public boolean deletePLAllocationWithPLid(int parkingLotId) {
+        String query = "DELETE FROM parking_lot_allocation ";
+        query += "WHERE parking_lot_id = ?";
+
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, parkingLotId);
+            int rowsEffected = statement.executeUpdate();
+            if(rowsEffected > 0){
+                return true;
+            }
+
+        } catch (SQLException exception) {
+            String message = exception.getMessage();
+            DisplayMessage.displayError(message);
+        }
+        return false;
+    }
 }

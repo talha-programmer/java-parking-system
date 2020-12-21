@@ -4,7 +4,6 @@ import parkingsystem.Database.ParkingLotDB;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ParkingLot {
     private int id = -1;
@@ -30,7 +29,7 @@ public class ParkingLot {
     }
 
     public int getSingleVehicleCapacity(int vehicleType){
-        return vehicleCapacity.get(vehicleType);
+        return vehicleCapacity.getOrDefault(vehicleType, null);
     }
 
     public void setParkingFee(int vehicleType, float feePerHour){
@@ -38,7 +37,7 @@ public class ParkingLot {
     }
 
     public float getSingleParkingFee(int vehicleType){
-        return parkingFeeMap.get(vehicleType);
+        return parkingFeeMap.getOrDefault(vehicleType, null);
     }
 
 
@@ -76,8 +75,9 @@ public class ParkingLot {
             }
             insertedId = this.id;
 
-            // Delete all vehicle's capacity and add them again in case of update parking lot
+            // Delete all vehicle's capacity and parking fee and add them again in case of update parking lot
             parkingLotCapacity.deleteAllVehicleCapacities(this.id);
+            parkingFee.deleteAllParkingFee(this.id);
         }else {
             insertedId = db.saveParkingLot(this);
         }
@@ -88,7 +88,7 @@ public class ParkingLot {
                 parkingLotCapacity = new ParkingLotCapacity();
                 parkingLotCapacity.setParkingLotId(this.id);
                 parkingLotCapacity.setVehicleType(key);
-                parkingLotCapacity.setCapacity(this.vehicleCapacity.get(key));
+                parkingLotCapacity.setCapacity(this.vehicleCapacity.getOrDefault(key, null));
 
                 if(!parkingLotCapacity.saveParkingLotCapacity()){
                     return false;
@@ -98,7 +98,7 @@ public class ParkingLot {
                 parkingFee = new ParkingFee();
                 parkingFee.setParkingLotId(this.id);
                 parkingFee.setVehicleType(key);
-                parkingFee.setFee(this.parkingFeeMap.get(key));
+                parkingFee.setFee(this.parkingFeeMap.getOrDefault(key, null));
 
                 if(!parkingFee.saveParkingFee()){
                     return false;
@@ -120,13 +120,13 @@ public class ParkingLot {
     }
 
     public boolean deleteParkingLot(int id){
-        // Delete the data of parking lot vehicle's capacity before deleting the parking lot
-        if(parkingLotCapacity.deleteAllVehicleCapacities(id)){
-            if(db.deleteParkingLot(id)){
-                return true;
-            }
-        }
-         return false;
+        // Delete the data of parking lot vehicle's capacity, parking fee and
+        // parking lot allocation before deleting the parking lot
+        parkingLotCapacity.deleteAllVehicleCapacities(id);
+        parkingFee.deleteAllParkingFee(id);
+        new ParkingLotAllocation().deletePLAllocationWithPLid(id);
+
+        return db.deleteParkingLot(id);
     }
 
 }

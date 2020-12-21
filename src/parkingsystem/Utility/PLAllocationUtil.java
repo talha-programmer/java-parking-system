@@ -41,7 +41,7 @@ public class PLAllocationUtil {
     }
 
     public ArrayList<String> getPLNamesWithUsername(String username){
-        return plAllocationWithUsername.get(username);
+        return plAllocationWithUsername.getOrDefault(username, null);
     }
 
     public HashMap<String, ArrayList<String>> getAllPLAllocationWithUsername() {

@@ -37,4 +37,8 @@ public class ParkingLotAllocation {
     public boolean deleteParkingLotAllocation(){
         return db.deleteParkingLotAllocation(this);
     }
+
+    public boolean deletePLAllocationWithPLid(int parkingLotId){
+        return db.deletePLAllocationWithPLid(parkingLotId);
+    }
 }

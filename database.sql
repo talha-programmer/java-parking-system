@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 28, 2020 at 10:10 AM
+-- Generation Time: Dec 21, 2020 at 05:45 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -38,23 +38,6 @@ CREATE TABLE `inventory` (
   `total_fee` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `inventory`
---
-
-INSERT INTO `inventory` (`id`, `vehicle_id`, `parking_lot_id`, `time_entrance`, `time_exit`, `total_fee`) VALUES
-(1, 14, 7, '2020-11-16 15:21:26', '2020-11-17 07:24:33', 321),
-(2, 14, 7, '2020-11-16 15:21:26', '2020-11-17 07:36:24', 324.667),
-(3, 14, 7, '2020-11-16 15:21:26', '2020-11-17 07:36:24', 324.667),
-(4, 14, 7, '2020-11-16 15:21:26', '2020-11-17 07:36:24', 324.667),
-(5, 15, 7, '2020-11-16 15:26:55', '2020-11-17 07:40:10', 648.667),
-(6, 15, 7, '2020-11-16 15:26:55', '2020-11-17 07:43:20', 650.667),
-(7, 18, 7, '2020-11-16 15:42:07', '2020-11-17 13:15:57', 862),
-(8, 17, 7, '2020-11-16 15:34:10', '2020-11-17 15:27:05', 954.667),
-(9, 4, 7, '2020-11-15 19:11:43', '2020-11-17 15:42:02', 1780),
-(10, 14, 7, '2020-11-16 15:21:26', '2020-11-19 07:48:31', 1289),
-(11, 12, 7, '2020-11-16 14:13:04', '2020-11-22 08:54:54', 5547.33);
-
 -- --------------------------------------------------------
 
 --
@@ -73,17 +56,7 @@ CREATE TABLE `parked_vehicle` (
 --
 
 INSERT INTO `parked_vehicle` (`id`, `parking_lot_id`, `vehicle_id`, `time_parked`) VALUES
-(2, 7, 5, '2020-11-15 20:00:00'),
-(3, 7, 6, '2020-11-16 06:14:31'),
-(4, 7, 7, '2020-11-16 06:20:05'),
-(5, 7, 8, '2020-11-16 06:29:14'),
-(6, 7, 9, '2020-11-16 07:07:04'),
-(7, 7, 10, '2020-11-16 07:07:51'),
-(8, 7, 11, '2020-11-16 07:08:30'),
-(9, 7, 12, '2020-11-16 14:10:09'),
-(11, 7, 13, '2020-11-16 15:16:54'),
-(14, 7, 16, '2020-11-16 15:27:51'),
-(17, 7, 18, '2020-11-22 08:54:07');
+(18, 11, 10, '2020-12-21 04:39:43');
 
 -- --------------------------------------------------------
 
@@ -102,38 +75,10 @@ CREATE TABLE `parking_fee` (
 --
 
 INSERT INTO `parking_fee` (`parking_lot_id`, `vehicle_type`, `parking_fee`) VALUES
-(1, 0, 30),
-(1, 1, 10),
-(1, 2, 40),
-(1, 3, 50),
-(4, 0, 10),
-(4, 1, 20),
-(4, 2, 20),
-(4, 3, 40),
-(7, 0, 20),
-(7, 1, 35),
-(7, 2, 50),
-(7, 3, 100),
-(7, 0, 20),
-(7, 1, 35),
-(7, 2, 40),
-(7, 3, 100),
-(8, 0, 30),
-(8, 1, 40),
-(8, 2, 50),
-(8, 3, 100),
-(9, 0, 10),
-(9, 1, 20),
-(9, 2, 30),
-(9, 3, 50),
-(10, 0, 20),
-(10, 1, 35),
-(10, 2, 40),
-(10, 3, 100),
-(7, 0, 20),
-(7, 1, 35),
-(7, 2, 50),
-(7, 3, 100);
+(11, 0, 20),
+(11, 1, 25),
+(11, 2, 35),
+(11, 3, 50);
 
 -- --------------------------------------------------------
 
@@ -152,7 +97,7 @@ CREATE TABLE `parking_lot` (
 --
 
 INSERT INTO `parking_lot` (`id`, `name`, `location`) VALUES
-(7, 'New Parking', 'Lahore');
+(11, 'New Parking', 'Lahore');
 
 -- --------------------------------------------------------
 
@@ -170,9 +115,7 @@ CREATE TABLE `parking_lot_allocation` (
 --
 
 INSERT INTO `parking_lot_allocation` (`user_id`, `parking_lot_id`) VALUES
-(11, 7),
-(11, 8),
-(11, 9);
+(14, 11);
 
 -- --------------------------------------------------------
 
@@ -191,10 +134,10 @@ CREATE TABLE `parking_lot_capacity` (
 --
 
 INSERT INTO `parking_lot_capacity` (`parking_lot_id`, `vehicle_type`, `capacity`) VALUES
-(7, 0, 20),
-(7, 1, 10),
-(7, 2, 20),
-(7, 3, 3);
+(11, 0, 10),
+(11, 1, 20),
+(11, 2, 30),
+(11, 3, 5);
 
 -- --------------------------------------------------------
 
@@ -216,11 +159,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `full_name`, `email`, `user_type`) VALUES
-(2, 'talha', '$31$16$mSPBQMSPN8azhIWPJskleEHcJx-NMxx6rO3hG4tKXfs', 'M Talha', 'mail@sample.com', 0),
-(9, 'user', '$31$16$WI5Dfz--liylq_KEwsg_XBnpclEfB5a3cVhqsIyqCPk', 'sample user', 'mail@mail.com', 0),
-(11, 'worker', '$31$16$nxn0P44RBQBQVFh6F44RofFs5kesqvHkwAqVMr-53GI', 'Ahmed Ali', 'gmail@gmail.com', 1),
-(12, 'worker2', '$31$16$7brWk8nrU1cwW1UyDRvc8i7Pr5E2MCjPLs-RvvKiyHs', 'Ismail Khan', 'mail@google.com', 1),
-(13, 'admin', '$31$16$zTTq8HUkEN99J-rOhzCxOAFoOBn4C1Yf1lilSjQwURk', 'Admin', 'mail@admin.com', 0);
+(13, 'admin', '$31$16$zTTq8HUkEN99J-rOhzCxOAFoOBn4C1Yf1lilSjQwURk', 'Admin', 'mail@admin.com', 0),
+(14, 'worker', '$31$16$6vN3eT5sDZC7rMaY_4k0HV6TXK4OJAxoa1FMpNrX4O8', 'New Worker', 'worker@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -305,19 +245,19 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `parked_vehicle`
 --
 ALTER TABLE `parked_vehicle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `parking_lot`
 --
 ALTER TABLE `parking_lot`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `vehicle`

@@ -8,6 +8,7 @@ public enum UserTypes {
 
     private final String name;
     private final int value;
+
     private UserTypes(String name, int value) {
         this.name = name;
         this.value = value;

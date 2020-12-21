@@ -20,6 +20,6 @@ public class VehicleUtil {
     }
 
     public Vehicle getVehicleWithId(int vehicleId){
-        return allVehicleWithIds.get(vehicleId);
+        return allVehicleWithIds.getOrDefault(vehicleId, null);
     }
 }
